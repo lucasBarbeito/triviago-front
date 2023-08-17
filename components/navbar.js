@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -10,11 +11,10 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
-const settings = ['Mi perfil', 'Cerrar sesión']; // Cambiado 'Account' por 'Logout'
-
-function ResponsiveAppBar() {
+const ResponsiveAppBar= () =>  {
+  const settings = ['Mi perfil', 'Cerrar sesión'];
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const router = useRouter();
