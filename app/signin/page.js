@@ -11,10 +11,8 @@ const SigninPage = () => {
     return (
         <div className={styles.pageContainer}>
             <div className={styles.wrapperLeft}>
-                <div>
-                    <LoginHeader/>
-                    <SigninForm/>
-                </div>
+                <LoginHeader/>
+                <SigninForm/>
             </div>
             <div className={styles.wrapperRight}>
                 <LoginTitle/>

@@ -41,11 +41,9 @@ const SigninForm = () => {
             {/*CALENDARIO:*/}
 
             <div className={styles.labelContainer}>
-                <div>
-                    <label className={styles.label}>Fecha de nacimiento</label>
-                    <input id="date" type="date" defaultValue={currentDate} className={styles.inputCalendar} max={currentDate} />
-                    <div className={styles.line}></div>
-                </div>
+                <label className={styles.label}>Fecha de nacimiento</label>
+                <input id="date" type="date" defaultValue={currentDate} className={styles.inputCalendar} max={currentDate} />
+                <div className={styles.line}></div>
             </div>
 
 

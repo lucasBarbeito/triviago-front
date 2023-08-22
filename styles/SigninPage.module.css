@@ -7,18 +7,11 @@
     align-items: center;
     background-color: #FFFFFF;
     position: relative;
-    padding: 136px 179px 137px 179px;
+    padding: 200px;
 }
 
 /*.miniContainer{*/
-/*    display: flex;*/
-/*    width: 720px;*/
-/*    height: 50%;*/
-/*    flex-direction: column;*/
-/*    justify-content: center;*/
-/*    align-items: center;*/
-/*    flex-shrink: 0;*/
-/*    position: relative;*/
+/*    padding: 50%;*/
 
 /*}*/
 
