@@ -56,7 +56,7 @@ const ResponsiveAppBar = () => {
               left={10}
               border={2}
               onClick={handleLogoClick}
-              sx={{ cursor: 'pointer', mr: 2, display: { xs: 'none', md: 'flex' } }}
+              sx={{ cursor: 'pointer', mr: 2, display: { xs: 'none', md: 'flex' }, border: 1, opacity: 1 }}
             />
           </IconButton>
           
