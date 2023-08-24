@@ -15,7 +15,6 @@
     display: block;
     margin-bottom: 9px;
     margin-top: 33px;
-    margin-left: 10px;
 }
 
 .form-container input {
@@ -26,7 +25,7 @@
     height: 44px;
     flex-shrink: 0;
     color: #667085;
-    margin: 9px;
+    margin: 0px;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -45,3 +44,46 @@
     text-indent: 18px;
 }
 
+.button {
+    width: 360px;
+    height: 44px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: #0C6;
+    color: #FFF;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    margin-top: 33px;
+    border: 0px;
+}
+
+.text{
+    color: #000;
+    text-align: center;
+    font-family: Inter, sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-top: 22px;
+}
+
+.link{
+    color: #0C6;
+    font-family: Inter, sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    background-color: #FFFFFF;
+}
+
+
+.bigContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
