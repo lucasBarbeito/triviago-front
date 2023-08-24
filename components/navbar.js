@@ -43,7 +43,7 @@ const ResponsiveAppBar = () => {
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: '#00CC66', width: '100vw', margin: 0 }}>
+    <AppBar position="static" sx={{ backgroundColor: '#00CC66'}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <IconButton onClick={handleLogoClick} color="inherit">
