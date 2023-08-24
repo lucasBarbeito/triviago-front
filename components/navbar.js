@@ -19,15 +19,8 @@ const ResponsiveAppBar= () =>  {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const router = useRouter();
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = () => {
@@ -73,7 +66,7 @@ const ResponsiveAppBar= () =>  {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            
           </Typography>
 
           <Box sx={{ flexGrow: 1 }} />
