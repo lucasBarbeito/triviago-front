@@ -1,6 +1,5 @@
 import React from 'react';
-import ResponsiveAppBar from '../components/navbar';
-import '../styles/navbarStyles.css';
+import ResponsiveAppBar from '../components/ResponsiveAppBar';
 
 export default function RootLayout({ children }) {
   return (
