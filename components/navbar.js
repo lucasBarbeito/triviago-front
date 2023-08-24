@@ -65,7 +65,18 @@ const ResponsiveAppBar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                {/* <Avatar alt="Remy Sharp" src="/usericon.png" /> */}
+                <Image
+              src="/usericon.png"
+              alt="usericon"
+              width={51}
+              height={51}
+              top={12}
+              left={1374}
+              border={2}
+              onClick={handleOpenUserMenu}
+              sx={{ cursor: 'pointer', mr: 2, display: { xs: 'none', md: 'flex' }, border: 1, opacity: 1 }}
+            />
               </IconButton>
             </Tooltip>
             <Menu
