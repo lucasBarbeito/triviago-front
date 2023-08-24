@@ -4,17 +4,17 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
+import Image from 'next/image';
 
-const ResponsiveAppBar= () =>  {
-  const settings = ['Mi perfil', 'Cerrar sesión'];
+const settings = ['Mi perfil', 'Cerrar sesión'];
+
+const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const router = useRouter();
@@ -46,29 +46,19 @@ const ResponsiveAppBar= () =>  {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <IconButton onClick={handleLogoClick} color="inherit">
-            <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+            <Image
+              src="/components/logo.png"
+              alt="Logo"
+              width={62}
+              height={62}
+              top={9}
+              left={10}
+              border={2}
+              onClick={handleLogoClick}
+              sx={{ cursor: 'pointer', mr: 2, display: { xs: 'none', md: 'flex' } }}
+            />
           </IconButton>
-          <Typography
-            variant="h6"
-            noWrap
-            onClick={handleLogoClick}
-            component="a"
-            href="/"
-            sx={{
-              cursor: 'pointer',
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              width: 1440,
-              height:80,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            
-          </Typography>
-
+          
           <Box sx={{ flexGrow: 1 }} />
 
           <Box sx={{ flexGrow: 0 }}>
@@ -96,7 +86,7 @@ const ResponsiveAppBar= () =>  {
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center">
-                    {setting === 'Profile' ? (
+                    {setting === 'Mi perfil' ? (
                       <a href="/profile">{setting}</a>
                     ) : (
                       <a href="/logout">{setting}</a>
@@ -110,5 +100,6 @@ const ResponsiveAppBar= () =>  {
       </Container>
     </AppBar>
   );
-}
+};
+
 export default ResponsiveAppBar;
