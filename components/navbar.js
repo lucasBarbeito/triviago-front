@@ -9,6 +9,7 @@ import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import Typography from '@mui/material/Typography';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
