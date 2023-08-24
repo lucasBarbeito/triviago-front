@@ -41,7 +41,7 @@ const ResponsiveAppBar= () =>  {
 
   const handleLogoutClick = () => {
     handleCloseUserMenu();
-    //funcion de cerrar sesion
+    router.push('/logout');
   };
 
   const handleLogoClick = () => {
@@ -49,7 +49,7 @@ const ResponsiveAppBar= () =>  {
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: '#004D40' }}>
+    <AppBar position="static" sx={{ backgroundColor: '#00CC66' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <IconButton onClick={handleLogoClick} color="inherit">
@@ -66,7 +66,8 @@ const ResponsiveAppBar= () =>  {
               mr: 2,
               display: { xs: 'none', md: 'flex' },
               fontFamily: 'monospace',
-              fontWeight: 700,
+              width: 1440,
+              height:80,
               letterSpacing: '.3rem',
               color: 'inherit',
               textDecoration: 'none',
