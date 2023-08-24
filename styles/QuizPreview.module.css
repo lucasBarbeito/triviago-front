@@ -1,0 +1,84 @@
+
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 770px;
+    height: 160px;
+    box-sizing: border-box;
+    background-color: rgb(255, 255, 255);
+    overflow: hidden;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    padding: 17px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    /* font-family: Inter, sans-serif;   */
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+.title {
+    display: flex;
+    justify-content: flex-start;
+    /* font-family: Inter, sans-serif; */
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 34px;
+    letter-spacing: 0em;
+    text-align: left;
+
+}
+
+.date {
+    display: flex;
+    justify-content: flex-end;
+    /* font-family: Inter, sans-serif; */
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: 0em;
+    text-align: justify;
+    color: #667085;
+    ;
+}
+
+.tags {
+    /* font-family: Inter, sans-serif; */
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: 0em;
+    text-align: justify;
+    color: #667085;
+}
+
+.description {
+    /* font-family: Inter, sans-serif; */
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: 0em;
+    text-align: justify;
+    flex-grow: 1;
+    margin-bottom: 1rem; /* Aumenta el margen inferior para separar de las calificaciones */
+    max-height: 44px; /* 22px (line height) * 2 (2 líneas) */
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* Mostrar solo 2 líneas */
+    text-overflow: ellipsis;
+  }
+  
+  .rating {
+    /* font-family: Inter, sans-serif; */
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: 0em;
+    text-align: justify;
+    margin-top: auto; /* Empuja las calificaciones hacia abajo */
+  }
