@@ -30,12 +30,12 @@ const SigninForm = () => {
 
             <div className={styles.labelContainer}>
                 <label className={styles.label}>Nombre</label>
-                <input className={styles.input} type="email" id="email" name="email" placeholder="Ingresa tu nombre" />
+                <input className={styles.input} type="text" id="name" name="name" placeholder="Ingresa tu nombre" />
             </div>
 
             <div className={styles.labelContainer}>
                 <label className={styles.label}>Apellido</label>
-                <input className={styles.input} type="email" id="email" name="email" placeholder="Ingresa tu apellido" />
+                <input className={styles.input} type="text" id="surname" name="surname" placeholder="Ingresa tu apellido" />
             </div>
 
             {/*CALENDARIO:*/}
