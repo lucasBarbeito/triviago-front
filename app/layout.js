@@ -1,7 +1,7 @@
 import React from 'react';
 import ResponsiveAppBar from '../components/navbar';
 
-export default function RootLayout({ children }) {
+const RootLayout = ({ children }) => {
   return (
     <html lang="en">
       <body>
@@ -10,4 +10,6 @@ export default function RootLayout({ children }) {
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;
