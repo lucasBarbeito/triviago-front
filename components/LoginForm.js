@@ -3,15 +3,17 @@ import React, {useState} from 'react';
 import styles from '../styles/LoginForm.module.css';
 import {Slide, Snackbar} from "@mui/material";
 import {Alert} from "@mui/lab";
+import {useRequestService} from "@/app/service/request.service";
+import {useRouter} from "next/router";
 
 
 const LoginForm = () => {
 
     const [password, setPassword] = useState("");
     const [email, setEmail]  = useState("");
-    const [open, setOpen] = React.useState(false);
-    const [message, setMessage] = React.useState("ERROR");
-
+    const [open, setOpen] = useState(false);
+    const [message, setMessage] = useState("ERROR");
+    const router = useRouter()
 
     function handlePassword(event){
         setPassword(event.target.value)
@@ -20,7 +22,7 @@ const LoginForm = () => {
         setEmail(event.target.value)
     }
 
-    function logInState(event){
+    const logInState = (event) => {
         event.preventDefault()
         const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
         if (!email.match(emailPattern)) {
@@ -34,8 +36,16 @@ const LoginForm = () => {
             setOpen(true);
             return
         }
-        console.log("Inicio de sesión exitoso:", email, password);
-        return
+
+        const service = useRequestService()
+        service .login({email: email, password: password} )
+                .then(()=> router
+                .push("/home"))
+                .catch((e) => {
+                    setMessage(e.message)
+                    setOpen(true)
+                })
+
     }
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {

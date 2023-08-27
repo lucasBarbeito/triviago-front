@@ -13,7 +13,7 @@ const SigninForm = () => {
     const [email, setEmail]  = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword]  = useState("");
-    const inputName = document.getElementById("name");
+   // const inputName = document.getElementById("name");
     const [open, setOpen] = React.useState(false);
     const [message, setMessage] = React.useState("ERROR");
 

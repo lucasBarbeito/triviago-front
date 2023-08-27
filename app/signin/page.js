@@ -1,3 +1,4 @@
+'use client'
 import React from 'react';
 import SigninForm from '../../components/SigninForm';
 import styles from '../../styles/SigninPage.module.css';
