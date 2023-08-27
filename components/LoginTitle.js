@@ -12,7 +12,6 @@ const LoginTitle = () => {
                 </div>
                 <p className={styles.logoTriviago}>riviago</p>
             </div>
-
             <p className={styles.text}>Descubre, aprende y diviértete con nuestros quizzes</p>
         </div>
     );
