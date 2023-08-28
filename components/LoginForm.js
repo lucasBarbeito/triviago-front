@@ -1,10 +1,12 @@
-"use client"
+'use client'
+
 import React, {useState} from 'react';
 import styles from '../styles/LoginForm.module.css';
 import {Slide, Snackbar} from "@mui/material";
 import {Alert} from "@mui/lab";
-import {useRequestService} from "@/app/service/request.service";
-import {useRouter} from "next/router";
+import {useRequestService} from "@/service/request.service";
+import {useRouter} from "next/navigation";
+
 
 
 const LoginForm = () => {
@@ -39,8 +41,7 @@ const LoginForm = () => {
 
         const service = useRequestService()
         service .login({email: email, password: password} )
-                .then(()=> router
-                .push("/home"))
+                .then(()=> router.push("/home"))
                 .catch((e) => {
                     setMessage(e.message)
                     setOpen(true)
