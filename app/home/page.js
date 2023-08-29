@@ -4,7 +4,6 @@ import QuizPreview from '@/components/QuizPreview';
 import styles from '@/styles/HomeScreen.module.css';
 
 
-
 const HomeScreen = () => {
     const quizData = {
         title: 'Título del quiz',
