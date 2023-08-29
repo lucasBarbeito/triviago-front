@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../styles/QuizFilter.module.css';
 import Form from 'react-bootstrap/Form';
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css'; // Import the DatePicker CSS
+import 'react-datepicker/dist/react-datepicker.css';
 
 const QuizFilter = () => {
     const [startDate, setStartDate] = useState(null);
