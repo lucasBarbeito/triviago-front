@@ -1,23 +1,23 @@
 import React from 'react';
-import '../styles/PrivateQuizSearcher.module.css';
+import styles from '../styles/PrivateQuizSearcher.module.css';
 import Form from 'react-bootstrap/Form';
 import Image from "next/image";
 
 const PrivateQuizSearcher = () => {
     return (
-        <div className="privateQuizSearcherContainer">
-            <p className="privateQuizSearcherTitle">Código de invitación</p>
-            <div className="privateQuizSearcherSearchContainer">
+        <div className={styles.privateQuizSearcherContainer}>
+            <p className={styles.privateQuizSearcherTitle}>Código de invitación</p>
+            <div className={styles.privateQuizSearcherSearchContainer}>
                 <Form.Control
                     type="search"
-                    className="privateQuizSearcherSearchInput"
+                    className={styles.privateQuizSearcherSearchInput}
                 />
-                    <Image
-                        src="../images/Search.jpg"
-                        className="privateQuizSearcherSearchButton"
-                        width={37}
-                        height={37}
-                    />
+                <Image
+                    src="/images/Search.jpg"
+                    className={styles.privateQuizSearcherSearchButton}
+                    width={37}
+                    height={37}
+                />
             </div>
         </div>
     );
