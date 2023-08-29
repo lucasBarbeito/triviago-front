@@ -49,6 +49,7 @@ const ResponsiveAppBar = () => {
     >
     <div 
     style={{
+      margin:0,
       paddingRight: 0,
       paddingLeft: 0,
     }}
