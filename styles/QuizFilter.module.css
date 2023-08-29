@@ -4,25 +4,16 @@
     flex-shrink: 0;
     background: #FFF;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    padding: 17px 16px 15px 15px;
 }
 
 .quizFilterTitle {
     font-family: Inter,sans-serif;
-    color: palevioletred;
+    color: #000;
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
-
-}
-
-.quizFilterSearchContainer {
-    display: flex;
-    align-items: center;
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 5px;
 }
 
 .quizFilterSearchInput {
@@ -34,8 +25,18 @@
     background: #FFF;
 }
 
-.quizFilterDoubleInput {
-    width: 89.692px;
+.quizFilterDoubleInputFst {
+    width: 90px;
+    height: 44px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    border: 1px solid #D0D5DD;
+    background: #FFF;
+    flex: 0 0 30%;
+}
+
+.quizFilterDoubleInputSnd {
+    width: 90px;
     height: 44px;
     flex-shrink: 0;
     border-radius: 8px;
@@ -50,10 +51,21 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+    display: flex;
+    justify-content: left;
+    align-items: center;
 }
 
 .quizFilterSearchButton {
     border: none;
     background-color: white;
     cursor: pointer;
+}
+
+.line{
+    width: 12px;
+    height: 1px;
+    background: #667085;
+    margin-left: 10px;
+    margin-right: 10px;
 }

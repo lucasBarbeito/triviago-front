@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../styles/QuizFilter.module.css';
+import styles from '../styles/QuizFilter.module.css';
 import Form from 'react-bootstrap/Form';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -17,38 +17,78 @@ const QuizFilter = () => {
     };
 
     return (
-        <div className="quizFilterContainer">
-            <p className="quizFilterTitle">Título</p>
-            <div className="quizFilterSearchContainer">
-                <Form.Control
-                    type="search"
-                    className="quizFilterSearchInput"
-                />
-            </div>
-            <p className="quizFilterTitle">Etiquetas</p>
-            <div className="quizFilterSearchContainer">
-                <Form.Control
-                    type="search"
-                    className="quizFilterSearchInput"
-                />
-            </div>
-            <p className="quizFilterTitle">Fecha</p>
-            <div className="quizFilterInputPlaceholder">
-                <div className="quizFilterDoubleInput">
+        <div className={styles.quizFilterContainer}>
+            <p className={styles.quizFilterTitle}>Título</p>
+            <Form.Control
+                type="search"
+                className={styles.quizFilterSearchInput}
+            />
+            <p className={styles.quizFilterTitle}>Etiquetas</p>
+            <Form.Control
+                type="search"
+                className={styles.quizFilterSearchInput}
+            />
+            <p className={styles.quizFilterTitle}>Fecha</p>
+            <div className={styles.quizFilterInputPlaceholder}>
+                <div>
                     <DatePicker
                         selected={startDate}
                         onChange={handleStartDateChange}
                         placeholderText="Desde"
+                        className={styles.quizFilterDoubleInputFst}
                     />
                 </div>
-                <div className="quizFilterDoubleInput">
+                <div className={styles.line}></div>
+                <div>
                     <DatePicker
                         selected={endDate}
                         onChange={handleEndDateChange}
                         placeholderText="Hasta"
+                        className={styles.quizFilterDoubleInputSnd}
                     />
                 </div>
             </div>
+            <p className={styles.quizFilterTitle}>Preguntas</p>
+            <div className={styles.quizFilterInputPlaceholder}>
+                <div>
+                    <DatePicker
+                        selected={startDate}
+                        onChange={handleStartDateChange}
+                        placeholderText="Mínimo"
+                        className={styles.quizFilterDoubleInputFst}
+                    />
+                </div>
+                <div className={styles.line}></div>
+                <div>
+                    <DatePicker
+                        selected={endDate}
+                        onChange={handleEndDateChange}
+                        placeholderText="Máximo"
+                        className={styles.quizFilterDoubleInputSnd}
+                    />
+                </div>
+            </div>
+            <p className={styles.quizFilterTitle}>Calificación</p>
+            <div className={styles.quizFilterInputPlaceholder}>
+                <div>
+                    <DatePicker
+                        selected={startDate}
+                        onChange={handleStartDateChange}
+                        placeholderText="Mínimo"
+                        className={styles.quizFilterDoubleInputFst}
+                    />
+                </div>
+                <div className={styles.line}></div>
+                <div>
+                    <DatePicker
+                        selected={endDate}
+                        onChange={handleEndDateChange}
+                        placeholderText="Máximo"
+                        className={styles.quizFilterDoubleInputSnd}
+                    />
+                </div>
+            </div>
+            <p className={styles.quizFilterTitle}>Seguidores</p>
         </div>
     );
 };
