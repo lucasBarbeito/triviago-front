@@ -13,7 +13,7 @@
     align-items: center;
 }
 
-.titleComentsText{
+.titleSelectedText{
     display: flex;
     width: 383px;
     height: 22px;
@@ -34,7 +34,7 @@
     flex-direction: row;
 }
 
-.titleRateText{
+.titleNotSelected{
     color: #A9A9A9;
     display: flex;
     width: 383px;
@@ -80,13 +80,13 @@
     flex-direction: row;
 }
 
-.dividerComentLine{
+.dividerSelectedLine{
     width: 385px;
     height: 100%;
     background: #0C6;
 }
 
-.dividerClasificationLine{
+.dividerNotSelectedLine{
     width: 385px;
     height: 1px;
     background: #A9A9A9;
