@@ -317,7 +317,7 @@ const HomeScreen = () => {
             nav
         </div>
         <div className={styles.content}>
-            <button className={styles.button} >+</button>
+            <button className={styles.button} onClick={()=>{alert('Add a new Quiz')}}>+</button>
         <div className={styles.columns}>
             <div className={styles.left}>Left</div>
             <div className={styles.center}>
