@@ -1,7 +1,6 @@
 import React from 'react';
 import '../styles/PrivateQuizSearcher.css';
 import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
 import Image from "next/image";
 
 const PrivateQuizSearcher = () => {
@@ -13,7 +12,6 @@ const PrivateQuizSearcher = () => {
                     type="search"
                     className="privateQuizSearcherSearchInput"
                 />
-
                     <Image
                         src="/images/Search.png"
                         className="privateQuizSearcherSearchButton"
