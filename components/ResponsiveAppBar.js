@@ -12,6 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const settings = ['Mi perfil', 'Cerrar sesión'];
 
@@ -45,7 +46,7 @@ const ResponsiveAppBar = () => {
   return (
     <AppBar 
     position="static" 
-    sx={{ backgroundColor: '#00CC66', margin: '0px' }}
+    sx={{ backgroundColor: '#00CC66', margin: '0px', position: 'sticky', top: 0 }}
     >
     <div 
     style={{
@@ -103,16 +104,17 @@ const ResponsiveAppBar = () => {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem>
                   <Typography textAlign="center">
-                    {setting === 'Mi perfil' ? (
-                      <a href="/profile">{setting}</a>
-                    ) : (
-                      <a href="/logout">{setting}</a>
-                    )}
+                    <Link href="/profile">Mi perfil</Link>
                   </Typography>
                 </MenuItem>
-              ))}
+                <MenuItem>
+                <Typography textAlign="center">
+                  <Link href="/logout">Cerrar Sesion</Link>
+                </Typography>
+              </MenuItem>
+            
             </Menu>
           </Box>
         </Toolbar>
