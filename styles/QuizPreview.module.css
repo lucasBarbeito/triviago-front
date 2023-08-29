@@ -30,7 +30,14 @@
     line-height: 34px;
     letter-spacing: 0em;
     text-align: left;
-
+    max-height: 34px;
+    text-overflow: ellipsis;
+    max-width: max-content;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1; /* Mostrar solo 2 líneas */
+    text-overflow: ellipsis;
 }
 
 .date {
@@ -43,6 +50,7 @@
     letter-spacing: 0em;
     text-align: justify;
     color: #667085;
+    min-width: fit-content
     ;
 }
 
