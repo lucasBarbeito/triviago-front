@@ -13,7 +13,7 @@ const PrivateQuizSearcher = () => {
                     className={styles.privateQuizSearcherSearchInput}
                 />
                 <Image
-                    src="/images/Search.jpg"
+                    src="/images/Search.png"
                     className={styles.privateQuizSearcherSearchButton}
                     width={37}
                     height={37}
