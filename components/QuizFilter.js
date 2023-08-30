@@ -3,13 +3,16 @@ import styles from '../styles/QuizFilter.module.css';
 import Form from 'react-bootstrap/Form';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import CheckBoxOutlineBlank from '../images/CheckBoxOutlineBlank.png';
+import CheckBoxOutlineBlank from '../public/images/CheckBoxOutlineBlank.png';
+import MultipleSelectCheckmarks from "@/components/MultipleSelectCheckmarks";
+import Image from "next/image";
+
 
 const QuizFilter = () => {
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
-    const [minQuestions, setMinQuestions] = useState(null);
-    const [maxQuestions, setMaxQuestions] = useState(null);
+    const [minQuestions, setMinQuestions] = useState('');
+    const [maxQuestions, setMaxQuestions] = useState('');
     const [minCalification, setMinCalification] = useState(null);
     const [maxCalification, setMaxCalification] = useState(null);
 
@@ -21,20 +24,39 @@ const QuizFilter = () => {
         setEndDate(date);
     };
 
-    const handleMinQuestionsChange = (event) => {
-        setMinQuestions(event.target.value);
-    };
-
-    const handleMaxQuestionsChange = (event) => {
-        setMaxQuestions(event.target.value);
-    };
 
     const handleMinCalificationChange = (event) => {
-        setMinCalification(event.target.value);
+        const inputValue = event.target.value;
+        if (
+            (!isNaN(parseFloat(inputValue)) && inputValue >= 0 && inputValue <= 5) ||
+            inputValue === ''
+        ) {
+            setMinCalification(inputValue);
+        }
     };
 
     const handleMaxCalificationChange = (event) => {
-        setMaxCalification(event.target.value);
+        const inputValue = event.target.value;
+        if (
+            (!isNaN(parseFloat(inputValue)) && inputValue >= 0 && inputValue <= 5) ||
+            inputValue === ''
+        ) {
+            setMaxCalification(inputValue);
+        }
+    };
+
+    const handleMinQuestionsChange = (event) => {
+        const inputValue = event.target.value;
+        if (!isNaN(parseInt(inputValue)) || inputValue === '') {
+            setMinQuestions(inputValue);
+        }
+    };
+
+    const handleMaxQuestionsChange = (event) => {
+        const inputValue = event.target.value;
+        if (!isNaN(parseInt(inputValue)) || inputValue === '') {
+            setMaxQuestions(inputValue);
+        }
     };
 
     const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
@@ -45,27 +67,46 @@ const QuizFilter = () => {
 
     const CheckboxButton = ({ onClick }) => (
         <button className={styles.checkboxButton} onClick={onClick}>
-            <img src={CheckBoxOutlineBlank} alt="Checkbox" className={styles.checkboxIcon} />
+            <Image src="/images/CheckBoxOutlineBlank" alt="Checkbox" width={24} height={24} />
         </button>
     );
 
     const isCreationDateValid = startDate === null || endDate === null || startDate <= endDate;
 
-    const isQuestionCountValid =
+    const isQuestionValid =
         (minQuestions === '' && maxQuestions === '') ||
         (minQuestions === '' && !isNaN(parseInt(maxQuestions))) ||
         (maxQuestions === '' && !isNaN(parseInt(minQuestions))) ||
-        (parseInt(minQuestions) <= parseInt(maxQuestions));
+        (parseInt(minQuestions) <= parseInt(maxQuestions) || isNaN(parseInt(maxQuestions)));
 
-    const isCalificationValid = (minCalification === '' && maxCalification === '') || (minCalification <= maxCalification);
-    const isQuestionValid = (minQuestions === '' && maxQuestions === '') || (minQuestions <= maxQuestions);
+    const isCalificationValid =
+        (minCalification === '' && maxCalification === '') ||
+        (minCalification === '' && !isNaN(parseFloat(maxCalification)) && maxCalification <= 5) ||
+        (maxCalification === '' && !isNaN(parseFloat(minCalification)) && minCalification >= 0) ||
+        (parseFloat(minCalification) <= parseFloat(maxCalification)) ||
+        isNaN(parseFloat(maxCalification)) ||
+        isNaN(parseFloat(minCalification));
+
+    const handleClearButtonClick = () => {
+        setStartDate(null);
+        setEndDate(null);
+        setMinQuestions('');
+        setMaxQuestions('');
+        setMinCalification('');
+        setMaxCalification('');
+        setIsCheckboxChecked(false);
+    };
 
     return (
         <div className={styles.quizFilterContainer}>
             <p className={styles.quizFilterTitle}>Título</p>
             <Form.Control type="search" className={styles.quizFilterSearchInput} />
             <p className={styles.quizFilterTitle}>Etiquetas</p>
-            <Form.Control type="search" className={styles.quizFilterSearchInput} />
+            <MultipleSelectCheckmarks
+                tag={"Etiquetas"}
+                options={["Hola", "Chau"]}
+                values={[]}
+            />
             <p className={styles.quizFilterTitle}>Fecha</p>
             <div className={styles.quizFilterInputPlaceholder}>
                 <div>
@@ -140,9 +181,9 @@ const QuizFilter = () => {
                     />
                 </div>
             </div>
-            {(!isCalificationValid) && (
+            {!isCalificationValid && (
                 <p className={styles.quizFilterTitle} style={{ color: 'red' }}>
-                    Mínimo debe ser menor o igual al máximo.
+                    Rango de calificación inválido.
                 </p>
             )}
             <div className={styles.seguidores}>
@@ -150,7 +191,9 @@ const QuizFilter = () => {
                 <p>Seguidores</p>
             </div>
             <div className={styles.buttonContainer}>
-                <button className={styles.clearButton}>Limpiar</button>
+                <button className={styles.clearButton} onClick={handleClearButtonClick}>
+                    Limpiar
+                </button>
                 <button className={styles.searchButton}>Buscar</button>
             </div>
         </div>
