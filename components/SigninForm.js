@@ -10,8 +10,8 @@ const SigninForm = () => {
     const [email, setEmail]  = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword]  = useState("");
-    const [open, setOpen] = React.useState(false);
-    const [message, setMessage] = React.useState("ERROR");
+    const [open, setOpen] = useState(false);
+    const [message, setMessage] = useState("ERROR");
 
     function handleName(event){
         setName(event.target.value)

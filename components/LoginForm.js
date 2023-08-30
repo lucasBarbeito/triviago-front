@@ -7,8 +7,8 @@ import {Alert} from "@mui/lab";
 const LoginForm = () => {
     const [password, setPassword] = useState("");
     const [email, setEmail]  = useState("");
-    const [open, setOpen] = React.useState(false);
-    const [message, setMessage] = React.useState("ERROR");
+    const [open, setOpen] = useState(false);
+    const [message, setMessage] = useState("ERROR");
 
     function handlePassword(event){
         setPassword(event.target.value)
