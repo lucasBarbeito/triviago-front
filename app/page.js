@@ -2,7 +2,7 @@ import Typography from '@mui/material/Typography';
 
 export default function Page() {
   return ( <Typography textAlign="center">
-  Home
+  Inicio de Sesion/Registro
 </Typography>
   )
 }
