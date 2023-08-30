@@ -1,6 +1,8 @@
 "use client"
 import React, {useState} from 'react';
 import styles from '../styles/SigninForm.module.css';
+import {Slide, Snackbar} from "@mui/material";
+import {Alert} from "@mui/lab";
 
 
 
@@ -11,6 +13,9 @@ const SigninForm = () => {
     const [email, setEmail]  = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword]  = useState("");
+    const inputName = document.getElementById("name");
+    const [open, setOpen] = React.useState(false);
+    const [message, setMessage] = React.useState("ERROR");
 
     function handleName(event){
         setName(event.target.value)
@@ -33,30 +38,43 @@ const SigninForm = () => {
         const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
         if(name == ""){
-            console.log("El nombre no puede estar vacío.");
+            setMessage("El nombre no puede estar vacío.")
+            setOpen(true);
             return
         }
 
         if(surname == ""){
-            console.log("El apellido no puede estar vacío.");
+            setMessage("El apellido no puede estar vacío.")
+            setOpen(true);
             return
         }
 
         if (!email.match(emailPattern)) {
-            console.log("El formato del correo electrónico no es válido.");
+            setMessage("El formato del correo electrónico no es válido.")
+            setOpen(true);
             return
         }
         if(password !== confirmPassword){
-            console.log("Las contraseñas no coinciden.");
+            setMessage("Las contraseñas no coinciden.")
+            setOpen(true);
             return
         }
         if (password.length < 8) {
-            console.log("La contraseña debe tener al menos 8 caracteres.");
+            setMessage("La contraseña debe tener al menos 8 caracteres.")
+            setOpen(true);
             return
         }
         console.log("Creacion de cuenta exitoso");
         return
     }
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
 
     const currentDate = new Date().toISOString().split('T')[0];
 
@@ -101,6 +119,12 @@ const SigninForm = () => {
                 <button className={styles.button} onClick={signinState}>Registrarte</button>
                 <p className={styles.text}>¿Ya tienes una cuenta? <a href="/login" className={styles.link}>Inicia sesión</a></p>
             </div>
+
+            <Snackbar open={open} autoHideDuration={5000} onClose={handleClose} TransitionComponent={Slide} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+                <Alert onClose={handleClose} severity="error">
+                    {message}
+                </Alert>
+            </Snackbar>
         </form>
     );
 };
