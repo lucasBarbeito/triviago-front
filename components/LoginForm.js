@@ -1,17 +1,14 @@
 "use client"
-import React, {useState} from 'react';
+import {useState} from 'react';
 import styles from '../styles/LoginForm.module.css';
 import {Slide, Snackbar} from "@mui/material";
 import {Alert} from "@mui/lab";
 
-
 const LoginForm = () => {
-
     const [password, setPassword] = useState("");
     const [email, setEmail]  = useState("");
-    const [open, setOpen] = React.useState(false);
-    const [message, setMessage] = React.useState("ERROR");
-
+    const [open, setOpen] = useState(false);
+    const [message, setMessage] = useState("ERROR");
 
     function handlePassword(event){
         setPassword(event.target.value)
@@ -19,7 +16,6 @@ const LoginForm = () => {
     function handleEmail(event){
         setEmail(event.target.value)
     }
-
     function logInState(event){
         event.preventDefault()
         const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -28,7 +24,6 @@ const LoginForm = () => {
             setOpen(true);
             return
         }
-
         if (password.length < 8) {
             setMessage("La contraseña debe tener al menos 8 caracteres.")
             setOpen(true);
@@ -54,12 +49,9 @@ const LoginForm = () => {
                 <label htmlFor="password">Contraseña</label>
                 <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" onChange={handlePassword}/>
             </div>
-
             <button className={styles.button} onClick={logInState}>Iniciar sesión</button>
-
             <p className={styles.text}>¿No tienes una cuenta? <a href="/signin" className={styles.link}>Regístrate</a></p>
             <p className={styles.text}><a href="#" className={styles.link}>¿Olvidaste tu contraseña?</a></p>
-
             <Snackbar open={open} autoHideDuration={5000} onClose={handleClose} TransitionComponent={Slide} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
                 <Alert onClose={handleClose} severity="error">
                     {message}
@@ -68,5 +60,4 @@ const LoginForm = () => {
         </form>
     );
 };
-
 export default LoginForm;
