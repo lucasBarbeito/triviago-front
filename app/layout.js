@@ -1,5 +1,6 @@
 import React from 'react';
 import ResponsiveAppBar from '../components/ResponsiveAppBar';
+import '../app/globals.css';
 
 const RootLayout = ({ children }) => {
   return (
