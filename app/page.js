@@ -1,3 +1,5 @@
 export default function Page() {
-  return <h1>Inicio de sesión/registro</h1>
+  return <Typography textAlign="center">
+  Home
+</Typography>
 }
