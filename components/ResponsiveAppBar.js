@@ -5,8 +5,6 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
@@ -46,7 +44,7 @@ const ResponsiveAppBar = () => {
   return (
     <AppBar 
     position="static" 
-    sx={{ backgroundColor: '#00CC66', margin: '0px', position: 'sticky', top: 0 }}
+    sx={{ backgroundColor: '#00CC66', margin: '0px', position: 'sticky', top: 0, paddingLeft: '20px',  paddingRight: '20px' }}
     >
     <div 
     style={{
@@ -106,12 +104,16 @@ const ResponsiveAppBar = () => {
             >
                 <MenuItem>
                   <Typography textAlign="center">
-                    <Link href="/profile">Mi perfil</Link>
+                  <Link href="/profile" style={{ color: 'black', textDecoration: 'none' }}>
+                      Mi perfil
+                      </Link>
                   </Typography>
                 </MenuItem>
                 <MenuItem>
                 <Typography textAlign="center">
-                  <Link href="/logout">Cerrar Sesion</Link>
+                <Link href="/logout" style={{ color: 'black', textDecoration: 'none' }}>
+                    Cerrar Sesion
+                    </Link>
                 </Typography>
               </MenuItem>
             
