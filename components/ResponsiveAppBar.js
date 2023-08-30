@@ -43,8 +43,13 @@ const ResponsiveAppBar = () => {
     router.push('/home');
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    router.push('/home')
+  }
+
   return (
-    <AppBar 
+    <AppBar
     position="static" 
     sx={{ backgroundColor: '#00CC66', margin: '0px', position: 'sticky', top: 0, paddingLeft: '20px',  paddingRight: '20px' }}
     >
@@ -113,7 +118,7 @@ const ResponsiveAppBar = () => {
                 </MenuItem>
                 <MenuItem>
                 <Typography textAlign="center">
-                  <Link href="/logout" style={{ color: 'black', textDecoration: 'none' }}>
+                  <Link onClick = {handleLogout} style={{ color: 'black', textDecoration: 'none' }}>
                     Cerrar Sesion
                     </Link>
                 </Typography>
