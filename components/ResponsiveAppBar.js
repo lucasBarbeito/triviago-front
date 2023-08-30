@@ -56,7 +56,7 @@ const ResponsiveAppBar = () => {
         <Toolbar disableGutters>
           <IconButton onClick={handleLogoClick} color="inherit">
             <Image
-              src="/logo.png"
+              src="/Logo.png"
               alt="Logo"
               width={62}
               height={62}
