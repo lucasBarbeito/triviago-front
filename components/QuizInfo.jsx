@@ -6,10 +6,12 @@ import RatingSection from './RatingSection';
 import { Inter } from 'next/font/google';
 import { faBookmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import axios from "axios";
+
 
 const inter = Inter({ subsets: ['latin'] });
 
-const QuizInfo = ({ id, title, tags, createdAt, description, rating, questionCount, owner }) => {
+const QuizInfo = ({ id, title, tags, createdAt, description, rating, questionCount, owner="example@gmail.com" }) => {
   return (
     <>
     <div className={`${styles.container} ${inter.className}`} >
