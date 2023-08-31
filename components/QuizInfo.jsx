@@ -26,9 +26,9 @@ const QuizInfo = ({ title, tags, createdAt, description, rating, questionCount, 
                         </button>
                     </div>
                 </div>
-                <div className={styles.tags}>
-                    {tags.join(', ')}
-                </div>
+                    {tags&&(<div className={styles.tags}>
+                        {tags.join(', ')}
+                    </div>)}
                 <div className={styles.description}>
                     {description}
                 </div>
