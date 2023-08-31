@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
+import {Button} from "@mui/material";
 
 const settings = ['Mi perfil', 'Cerrar sesión'];
 
@@ -45,7 +46,7 @@ const ResponsiveAppBar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('token')
-    router.push('/home')
+    router.push('/login')
   }
 
   return (
@@ -118,9 +119,9 @@ const ResponsiveAppBar = () => {
                 </MenuItem>
                 <MenuItem>
                 <Typography textAlign="center">
-                  <Link onClick = {handleLogout} style={{ color: 'black', textDecoration: 'none' }}>
+                  <Button onClick = {handleLogout} style={{ color: 'black', textDecoration: 'none' }}>
                     Cerrar Sesion
-                    </Link>
+                    </Button>
                 </Typography>
               </MenuItem>
             
