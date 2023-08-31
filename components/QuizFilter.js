@@ -100,12 +100,14 @@ const QuizFilter = () => {
             <p className={styles.quizFilterTitle}>Título</p>
             <Form.Control type="search" className={styles.quizFilterSearchInput} />
             <p className={styles.quizFilterTitle}>Etiquetas</p>
-            <MultipleSelectCheckmarks
-                tag={"Etiquetas"}
-                options={["Hola", "Chau"]}
-                values={selectedTags}
-                onChange={handleTagChange}
-            />
+            <div>
+                <MultipleSelectCheckmarks
+                    tag={"Etiquetas"}
+                    options={["Etiqueta1", "Etiqueta2"]}
+                    values={selectedTags}
+                    onChange={handleTagChange}
+                />
+            </div>
             <p className={styles.quizFilterTitle}>Fecha</p>
             <div className={styles.quizFilterInputPlaceholder}>
                 <div>

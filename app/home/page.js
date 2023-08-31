@@ -1,8 +1,11 @@
+"use client";
+
 import React from 'react';
 import { Box, Container, Grid, Stack, Item } from '@mui/material';
 import QuizPreview from '@/components/QuizPreview';
 import styles from '@/styles/HomeScreen.module.css';
 import ResponsiveAppBar from "@/components/ResponsiveAppBar";
+import QuizFilter from "@/components/QuizFilter";
 
 
 const HomeScreen = () => {
@@ -115,6 +118,7 @@ const HomeScreen = () => {
         <ResponsiveAppBar />
         <Box>
             <br></br>
+            <QuizFilter/>
             <Container>
                 <QuizPreview {...quizData}/>
             </Container>

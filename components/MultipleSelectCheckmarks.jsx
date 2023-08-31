@@ -10,20 +10,18 @@ const MultipleSelectCheckmarks = ({tag, onChange, values, options}) => {
             style: {
                 maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
                 width: 219,
-                margin: 1
+                margin: 1,
             },
         },
     }
     return (
-        <FormControl sx={{ m: 0, width: 219 }}>
-            <InputLabel id="demo-multiple-checkbox-label">{tag}</InputLabel>
+        <FormControl sx={{ width: 219 }}>
             <Select
                 labelId="demo-multiple-checkbox-label"
                 id="demo-multiple-checkbox"
                 multiple
                 value={values}
                 onChange={onChange}
-                input={<OutlinedInput label={tag} />}
                 renderValue={(selected) => selected.join(', ')}
                 MenuProps={MenuProps}
             >
