@@ -92,6 +92,7 @@ const QuizFilter = () => {
         setMinCalification(null);
         setMaxCalification(null);
         setIsCheckboxChecked(false);
+        setSelectedTags([]);
     };
 
     return (
