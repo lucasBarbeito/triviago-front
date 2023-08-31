@@ -9,12 +9,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const inter = Inter({ subsets: ['latin'] });
 
-const QuizInfo = ({ title, tags, createdAt, description, rating, questionCount, owner }) => {
+const QuizInfo = ({ id, title, tags, createdAt, description, rating, questionCount, owner }) => {
   return (
     <>
-    <div className={`${styles.container} ${inter.className}`}>
+    <div className={`${styles.container} ${inter.className}`} >
         <Stack spacing={1.75} sx={{ height: '100%' }}>
-            <div className={styles.info}>
+            <div className={styles.info} >
                 <Stack spacing={0.75} sx={{ height: '100%' }}>
                 <div className={styles.header}>
                     <div className={styles.title}>
