@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React, {useState} from 'react';
 import { Box, Container, Grid, Stack, Item } from '@mui/material';
 import QuizPreview from '@/components/QuizPreview';
 import styles from '@/styles/HomeScreen.module.css';
@@ -113,13 +113,22 @@ const HomeScreen = () => {
         }
     ];
 
+    const [value,setValue] = useState("")
+
+    const onChange = (event) => {
+        setValue(event.target.value)
+    }
+
+    const onSubmit = () => {
+        console.log(value);
+    }
 
     return (
     <div>
         <ResponsiveAppBar />
         <Box>
             <br></br>
-            <PrivateQuizSearcher/>
+            <PrivateQuizSearcher value={value} onChange={onChange} onClick={onSubmit}/>
             <br></br>
             <QuizFilter/>
             <Container>
