@@ -3,10 +3,9 @@ import styles from '../styles/QuizFilter.module.css';
 import Form from 'react-bootstrap/Form';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import CheckBoxOutlineBlank from '../public/images/CheckBoxOutlineBlank.png';
 import MultipleSelectCheckmarks from "@/components/MultipleSelectCheckmarks";
 import Image from "next/image";
-
+import Checkbox from '@mui/material/Checkbox';
 
 const QuizFilter = () => {
     const [startDate, setStartDate] = useState(null);
@@ -15,6 +14,7 @@ const QuizFilter = () => {
     const [maxQuestions, setMaxQuestions] = useState('');
     const [minCalification, setMinCalification] = useState(null);
     const [maxCalification, setMaxCalification] = useState(null);
+    const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
 
     const handleStartDateChange = (date) => {
         setStartDate(date);
@@ -59,17 +59,9 @@ const QuizFilter = () => {
         }
     };
 
-    const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
-
-    const handleCheckboxClick = () => {
-        setIsCheckboxChecked(!isCheckboxChecked);
+    const handleCheckboxChange = (event) => {
+        setIsCheckboxChecked(event.target.checked);
     };
-
-    const CheckboxButton = ({ onClick }) => (
-        <button className={styles.checkboxButton} onClick={onClick}>
-            <Image src="/images/CheckBoxOutlineBlank" alt="Checkbox" width={24} height={24} />
-        </button>
-    );
 
     const isCreationDateValid = startDate === null || endDate === null || startDate <= endDate;
 
@@ -92,8 +84,8 @@ const QuizFilter = () => {
         setEndDate(null);
         setMinQuestions('');
         setMaxQuestions('');
-        setMinCalification('');
-        setMaxCalification('');
+        setMinCalification(null);
+        setMaxCalification(null);
         setIsCheckboxChecked(false);
     };
 
@@ -187,7 +179,10 @@ const QuizFilter = () => {
                 </p>
             )}
             <div className={styles.seguidores}>
-                <CheckboxButton onClick={handleCheckboxClick} />
+                <Checkbox
+                    checked={isCheckboxChecked}
+                    onChange={handleCheckboxChange}
+                />
                 <p>Seguidores</p>
             </div>
             <div className={styles.buttonContainer}>
