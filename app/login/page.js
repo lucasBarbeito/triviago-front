@@ -6,7 +6,6 @@ import styles from '../../styles/LoginPage.module.css';
 import LoginHeader from '../../components/LoginHeader';
 import LoginTitle from "../../components/LoginTitle";
 
-
 const LoginPage = () => {
     return (
         <div className={styles.pageContainer}>
@@ -20,5 +19,4 @@ const LoginPage = () => {
         </div>
     );
 };
-
 export default LoginPage;

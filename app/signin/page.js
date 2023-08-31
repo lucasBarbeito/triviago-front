@@ -5,7 +5,6 @@ import styles from '../../styles/SigninPage.module.css';
 import LoginHeader from '../../components/LoginHeader';
 import LoginTitle from "../../components/LoginTitle";
 
-
 const SigninPage = () => {
 
     return (
@@ -20,5 +19,4 @@ const SigninPage = () => {
         </div>
     );
 };
-
 export default SigninPage;
