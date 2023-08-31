@@ -119,7 +119,15 @@ const ResponsiveAppBar = () => {
                 </MenuItem>
                 <MenuItem>
                 <Typography textAlign="center">
-                  <Button onClick = {handleLogout} style={{ color: 'black', textDecoration: 'none' }}>
+                  <Button onClick = {handleLogout}
+                          style={{
+                            color: 'black',
+                            textDecoration: 'none',
+                            padding :0,
+                            textTransform:'none',
+                            fontSize:'1rem'
+                          }}
+                  >
                     Cerrar Sesion
                     </Button>
                 </Typography>
