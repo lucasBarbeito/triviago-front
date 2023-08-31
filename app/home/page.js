@@ -1,16 +1,12 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Box, Container, Grid, Stack, Item } from '@mui/material';
+import { Pagination } from '@mui/material';
 import QuizPreview from '@/components/QuizPreview';
 import styles from '@/styles/HomeScreen.module.css';
 import ResponsiveAppBar from "@/components/ResponsiveAppBar";
 import QuizFilter from "@/components/QuizFilter";
 import PrivateQuizSearcher from "@/components/PrivateQuizSearcher";
-import { faAdd } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
-
 
 const HomeScreen = () => {
     const quizData = {
@@ -314,15 +310,15 @@ const HomeScreen = () => {
 
     return (
     <div className={styles.wrapper}>
-        <div className={styles.header}>
-            navbar
-            <br></br>
-            nav
-        </div>
+        <ResponsiveAppBar/>
         <div className={styles.content}>
             <button className={styles.button} onClick={()=>{alert('Add a new Quiz')}}>+</button>
         <div className={styles.columns}>
-            <div className={styles.left}>Left</div>
+            <div className={styles.left}>
+                <PrivateQuizSearcher/>
+                <br/>
+                <QuizFilter/>
+            </div>
             <div className={styles.center}>
                 <div className={styles.quizzes}>
                     {currentQuizzes.map((quiz, index) => (
@@ -340,7 +336,7 @@ const HomeScreen = () => {
                     />
                 </div>
             </div>
-            <div className={styles.right}>Right</div>
+            {/*<div className={styles.right}>Right</div>*/}
         </div>
         </div>
 
