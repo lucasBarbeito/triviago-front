@@ -24,6 +24,11 @@ const QuizFilter = () => {
         setEndDate(date);
     };
 
+    const [selectedTags, setSelectedTags] = useState([]);
+
+    const handleTagChange = (event) => {
+        setSelectedTags(event.target.value);
+    };
 
     const handleMinCalificationChange = (event) => {
         const inputValue = event.target.value;
@@ -97,7 +102,8 @@ const QuizFilter = () => {
             <MultipleSelectCheckmarks
                 tag={"Etiquetas"}
                 options={["Hola", "Chau"]}
-                values={[]}
+                values={selectedTags}
+                onChange={handleTagChange}
             />
             <p className={styles.quizFilterTitle}>Fecha</p>
             <div className={styles.quizFilterInputPlaceholder}>

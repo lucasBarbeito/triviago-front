@@ -14,8 +14,9 @@ const MultipleSelectCheckmarks = ({tag, onChange, values, options}) => {
             },
         },
     }
-    return(
+    return (
         <FormControl sx={{ m: 0, width: 219 }}>
+            <InputLabel id="demo-multiple-checkbox-label">{tag}</InputLabel>
             <Select
                 labelId="demo-multiple-checkbox-label"
                 id="demo-multiple-checkbox"
@@ -27,7 +28,7 @@ const MultipleSelectCheckmarks = ({tag, onChange, values, options}) => {
                 MenuProps={MenuProps}
             >
                 {options.map((name) => (
-                    <MenuItem key={name} value={name} >
+                    <MenuItem key={name} value={name}>
                         <Checkbox checked={values.indexOf(name) > -1} />
                         <ListItemText primary={name} />
                     </MenuItem>
