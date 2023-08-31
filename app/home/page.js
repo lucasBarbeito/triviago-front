@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Container, Grid, Stack, Item } from '@mui/material';
 import QuizPreview from '@/components/QuizPreview';
 import styles from '@/styles/HomeScreen.module.css';
+import ResponsiveAppBar from "@/components/ResponsiveAppBar";
 
 
 const HomeScreen = () => {
@@ -110,7 +111,8 @@ const HomeScreen = () => {
     
 
     return (
-    <div style={{width: '100vh', height: '100vh'}}>
+    <div>
+        <ResponsiveAppBar />
         <Box>
             <br></br>
             <Container>
