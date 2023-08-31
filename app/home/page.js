@@ -1,9 +1,12 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Box, Container, Grid, Stack, Item, Pagination } from '@mui/material';
+import { Box, Container, Grid, Stack, Item } from '@mui/material';
 import QuizPreview from '@/components/QuizPreview';
 import styles from '@/styles/HomeScreen.module.css';
+import ResponsiveAppBar from "@/components/ResponsiveAppBar";
+import QuizFilter from "@/components/QuizFilter";
+import PrivateQuizSearcher from "@/components/PrivateQuizSearcher";
 import { faAdd } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
@@ -301,7 +304,7 @@ const HomeScreen = () => {
             commentCount: 70,
         }
     ];
-    
+
     const [currentPage, setCurrentPage] = useState(1);
     const quizzesPerPage = 10; // Cambiar el número de parkings por página según tus necesidades
     const {quizzesQuantity, setQuizzesQuantity} = useState(quizArray.length)
@@ -329,10 +332,10 @@ const HomeScreen = () => {
                     ))}
                 </div>
                 <div className={styles.pagination}>
-                    <Pagination 
-                        count={Math.ceil(quizArray.length / quizzesPerPage)} 
-                        page={currentPage} 
-                        onChange={(event, value) => setCurrentPage(value)} 
+                    <Pagination
+                        count={Math.ceil(quizArray.length / quizzesPerPage)}
+                        page={currentPage}
+                        onChange={(event, value) => setCurrentPage(value)}
                         variant="outlined"
                     />
                 </div>

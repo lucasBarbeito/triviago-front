@@ -33,7 +33,6 @@
     text-indent: 18px;
 }
 
-
 .form-container input::placeholder{
     color: #667085;
     font-family: Inter, sans-serif;
@@ -80,7 +79,6 @@
     line-height: normal;
     background-color: #FFFFFF;
 }
-
 
 .bigContainer{
     display: flex;
