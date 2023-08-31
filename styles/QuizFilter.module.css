@@ -1,0 +1,154 @@
+.quizFilterContainer {
+    width: 250px;
+    height: 600px;
+    flex-shrink: 0;
+    background: #FFF;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    padding: 1px 16px 15px 15px;
+    box-sizing: border-box;
+}
+
+.quizFilterTitle {
+    font-family: Inter,sans-serif;
+    color: #000;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    display: flex;
+    margin-bottom: 5px;
+    margin-top: 20px;
+}
+
+.quizFilterSearchInput {
+    width: 219px;
+    height: 55px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    border: 1px solid #D0D5DD;
+    background: #FFF;
+}
+
+.quizFilterDoubleInputFst {
+    width: 90px;
+    height: 44px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    border: 1px solid #D0D5DD;
+    background: #FFF;
+    color: #667085;
+    font-family: Inter,sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    padding-left: 4px;
+}
+
+.quizFilterDoubleInputSnd {
+    width: 90px;
+    height: 44px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    border: 1px solid #D0D5DD;
+    background: #FFF;
+    color: #667085;
+    font-family: Inter,sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    padding-left: 4px;
+}
+
+.quizFilterInputPlaceholder {
+    color: #667085;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.quizFilterSearchButton {
+    border: none;
+    background-color: white;
+    cursor: pointer;
+}
+
+.line{
+    width: 12px;
+    height: 1px;
+    background: #667085;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.seguidores {
+    font-family: Inter,sans-serif;
+    color: #000;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    margin-left: -5px;
+}
+.checkboxButton {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    /*margin-right: 10px;*/
+}
+
+.buttonContainer {
+    color: #FFF;
+    text-align: center;
+    font-family: Inter,sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.searchButton {
+    width: 89px;
+    height: 32px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: #0C6;
+    border: none;
+    color: #FFF;
+    text-align: center;
+    font-family: Inter,sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.clearButton {
+    width: 90px;
+    height: 32px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    border: none;
+    color: #000;
+    background: #FFF;
+    text-align: center;
+    font-family: Inter,sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
