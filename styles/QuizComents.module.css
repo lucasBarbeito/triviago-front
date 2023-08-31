@@ -6,7 +6,7 @@
 
 .componentBox{
     padding-top: 10px;
-    height: 725px;
+    /*height: 725px;*/
     display:flex;
     flex-direction: column;
     justify-content: center;
