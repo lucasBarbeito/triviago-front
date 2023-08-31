@@ -2,6 +2,8 @@ import React from 'react';
 import styles from '../styles/PrivateQuizSearcher.module.css';
 import Form from 'react-bootstrap/Form';
 import Image from "next/image";
+import {useRequestService} from "@/service/request.service";
+import {router} from "next/client";
 
 const PrivateQuizSearcher = () => {
     return (
@@ -21,6 +23,13 @@ const PrivateQuizSearcher = () => {
             </div>
         </div>
     );
+
+    const service = useRequestService()
+    service.findById({})
+        .then( () => router.push("/home"))
+        .catch((e) => {
+
+        })
 };
 
 export default PrivateQuizSearcher;
