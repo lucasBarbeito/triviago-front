@@ -29,19 +29,19 @@ const LoginForm = () => {
         event.preventDefault()
         const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
         if (!email.match(emailPattern)) {
-            setMessage("El formato del correo electrónico no es válido.")
+            setMessage("Credenciales incorrectas.")
             setOpen(true);
             return
         }
 
         if (password.length < 8) {
-            setMessage("La contraseña debe tener al menos 8 caracteres.")
+            setMessage("Credenciales incorrectas.")
             setOpen(true);
             return
         }
 
         const service = useRequestService()
-        service .login({email: email, password: password} )
+        service .login({username: email, password: password} )
                 .then(()=> router.push("/home"))
                 .catch((e) => {
                     setMessage(e.message)
