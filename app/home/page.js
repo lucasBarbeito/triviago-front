@@ -6,6 +6,7 @@ import QuizPreview from '@/components/QuizPreview';
 import styles from '@/styles/HomeScreen.module.css';
 import ResponsiveAppBar from "@/components/ResponsiveAppBar";
 import QuizFilter from "@/components/QuizFilter";
+import PrivateQuizSearcher from "@/components/PrivateQuizSearcher";
 
 
 const HomeScreen = () => {
@@ -117,6 +118,8 @@ const HomeScreen = () => {
     <div>
         <ResponsiveAppBar />
         <Box>
+            <br></br>
+            <PrivateQuizSearcher/>
             <br></br>
             <QuizFilter/>
             <Container>
