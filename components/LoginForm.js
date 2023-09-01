@@ -1,14 +1,22 @@
-"use client"
-import {useState} from 'react';
+
+'use client'
+
+import React, {useState} from 'react';
 import styles from '../styles/LoginForm.module.css';
 import {Slide, Snackbar} from "@mui/material";
 import {Alert} from "@mui/lab";
+import {useRequestService} from "@/service/request.service";
+import {useRouter} from "next/navigation";
+
+
 
 const LoginForm = () => {
+
     const [password, setPassword] = useState("");
     const [email, setEmail]  = useState("");
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState("ERROR");
+    const router = useRouter()
 
     function handlePassword(event){
         setPassword(event.target.value)
@@ -16,21 +24,30 @@ const LoginForm = () => {
     function handleEmail(event){
         setEmail(event.target.value)
     }
-    function logInState(event){
+
+    const logInState = (event) => {
         event.preventDefault()
         const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
         if (!email.match(emailPattern)) {
-            setMessage("El formato del correo electrónico no es válido.")
+            setMessage("Credenciales incorrectas.")
             setOpen(true);
             return
         }
+
         if (password.length < 8) {
-            setMessage("La contraseña debe tener al menos 8 caracteres.")
+            setMessage("Credenciales incorrectas.")
             setOpen(true);
             return
         }
-        console.log("Inicio de sesión exitoso:", email, password);
-        return
+
+        const service = useRequestService()
+        service .login({username: email, password: password} )
+                .then(()=> router.push("/home"))
+                .catch((e) => {
+                    setMessage(e.message)
+                    setOpen(true)
+                })
+
     }
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -49,9 +66,12 @@ const LoginForm = () => {
                 <label htmlFor="password">Contraseña</label>
                 <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" onChange={handlePassword}/>
             </div>
+
             <button className={styles.button} onClick={logInState}>Iniciar sesión</button>
+
             <p className={styles.text}>¿No tienes una cuenta? <a href="/signin" className={styles.link}>Regístrate</a></p>
             <p className={styles.text}><a href="#" className={styles.link}>¿Olvidaste tu contraseña?</a></p>
+
             <Snackbar open={open} autoHideDuration={5000} onClose={handleClose} TransitionComponent={Slide} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
                 <Alert onClose={handleClose} severity="error">
                     {message}
@@ -60,4 +80,5 @@ const LoginForm = () => {
         </form>
     );
 };
+
 export default LoginForm;
