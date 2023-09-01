@@ -5,7 +5,7 @@ const url = "http://localhost:8080"
 const RequestService = {
 
     findById: async (quizId) => {
-        const response = await axios.get(`${url}/quiz/${quizId}`, {
+        const response = await axios.get(`/quiz/private/{invitationCode}`, {
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("token")
             }
@@ -13,7 +13,8 @@ const RequestService = {
         if (response.status === 200) {
             return response.data;
         } else {
-            throw new Error("Hubo un error en la búsqueda de quizzes, por favor intenta más tarde")
+            throw new Error("Falta interar")
+            //throw new Error("Hubo un error en la búsqueda de quizzes, por favor intenta más tarde")
         }
     }
 
