@@ -100,3 +100,20 @@
     font-weight: 400;
     line-height: normal;
 }
+
+.inputTag{
+    color: #667085;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    display: flex;
+    height: 25px;
+    flex-direction: column;
+    justify-content: center;
+    flex-shrink: 0;
+    border: none;
+    text-indent: 18px;
+    borderBottom: 'none'
+}
