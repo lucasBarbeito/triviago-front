@@ -1,4 +1,5 @@
 import React from 'react';
+import vectorImage from '../public/vector.png';
 import {
   Avatar,
   Box,
@@ -13,6 +14,7 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import'../public/Vector'
 
 const CommentComponent = () => {
   return (
@@ -47,12 +49,13 @@ const CommentComponent = () => {
         <Box display="flex" alignItems="center" marginTop={1}>
           <IconButton aria-label="Me gusta">
           <Image
-              src="/Vector.png"
-              alt="Vector"
+              src={vectorImage}
+              alt="vector"
               width={24}
               height={24}
               top={268}
               left={18}
+              sx={{ cursor: 'pointer', mr: 2, display: { xs: 'none', md: 'flex' }, border: 1, opacity: 1 }}
             />
           </IconButton>
           <IconButton aria-label="No me gusta">
