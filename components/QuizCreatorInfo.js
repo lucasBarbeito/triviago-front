@@ -1,7 +1,15 @@
+"use client"
+
 import styles from '../styles/QuizCreatorInfo.module.css';
-import React from "react";
+import {useState} from "react";
+import Image from 'next/image';
 
 const QuizCreatorInfo = () => {
+    const [privacy, setPrivacy] = useState(false);
+    function changePrivacy(event) {
+        setPrivacy(!privacy);
+    }
+
     return(
         <div className={styles.componentBox}>
             <div className={styles.titleText}>Nuevo quiz</div>
@@ -29,10 +37,8 @@ const QuizCreatorInfo = () => {
                     <label htmlFor="title" className={styles.labelTitle}>Visibilidad</label>
                     <div className={styles.privateContainer}>
                         <p className={styles.text}>Privado</p>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="34" height="18" viewBox="0 0 34 18" fill="none">
-                            <rect x="5" y="2" width="29" height="14" rx="7" fill="#D3D3D3"/>
-                            <circle cx="9" cy="9" r="9" fill="#A9A9A9"/>
-                        </svg>
+                            {privacy ? <Image src="/assets/images/activeSwitch.png" alt={""} width={"34"} height={"18"} onClick={changePrivacy}/>
+                                : <Image src="/assets/images/notActiveSwitch.png" alt={""} width={"34"} height={"18"} onClick={changePrivacy}/>}
                     </div>
                 </div>
             </div>
