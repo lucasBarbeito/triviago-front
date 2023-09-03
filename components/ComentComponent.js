@@ -1,7 +1,6 @@
 import React from 'react';
 import vectorImage from '../public/vector.png';
 import {
-  Avatar,
   Box,
   Button,
   Card,
@@ -12,86 +11,174 @@ import {
   Typography,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
-import'../public/Vector'
 
 const CommentComponent = () => {
   return (
-    <Card variant="outlined">
+    <Card variant="outlined" style={{
+      border: '1px',
+      borderColor: '#667085',
+      color: '#FFFFFF',
+      width: '769px',
+      height: '605px',
+      margin: '0 auto',
+      top: '446px',
+      left: '336px'
+     }}>
       <CardContent>
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Box>
             <Typography variant="username" style={{ 
-              color: 'black',
-              fontWeight: 900,
-              width: '181.76364135742188px', 
-              height: '51.91666793823242px',
-              top: '156.5416717529297px',
-              left: '17.9765625px'
+              color: '#000000',
+              font: 'Inter',
+              fontSize: '18px',
+              size: '18',
+              weight: '700',
+              height: '22px',
+              align: 'justified',
               }}>
               usuario1@mail.comㅤ
             </Typography>
-            <Typography variant="caption" style={{ fontSize: '12px' }}>
+            <Typography variant="caption" style={{ 
+              color: '#667085',
+              font: 'Inter',
+              fontWeight: '400',
+              fontSize: '16px',
+              }}>
               Fecha del Comentarioㅤ
             </Typography>
-            <Typography variant="hour" style={{ fontSize: '12px' }}>
+            <Typography variant="hour" style={{ 
+              color: '#667085',
+              font: 'Inter',
+              fontWeight: '400',
+              fontSize: '16px' 
+              }}>
               Hora
             </Typography>
           </Box>
-          <IconButton aria-label="Eliminar" color="error">
-            <DeleteIcon />
-          </IconButton>
+          <Box>
+            <IconButton aria-label="Editar comentario" color="#667085;" sx={{ position: 'relative', zIndex: 0 }}>
+              <EditIcon />
+            </IconButton>
+            <IconButton aria-label="Eliminar comentario" color="error" sx={{ position: 'relative', zIndex: 0 }}>
+              <DeleteIcon />
+            </IconButton>
+          </Box>
         </Box>
-        <Typography variant="body1" style={{ marginTop: '8px', color: 'green' }}>
-          Contenido del comentario Lorem ipsum dolor sit amet...
+        <Typography variant="body1" style={{ 
+          color: '#000000',
+          marginTop: '8px', 
+          width: '730px',
+          height: '44px',
+          top: '208px',
+          left: '18px',
+          }}>
+          (Contenido del comentario) Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </Typography>
         <Box display="flex" alignItems="center" marginTop={1}>
           <IconButton aria-label="Me gusta">
-          <Image
-              src={vectorImage}
-              alt="vector"
-              width={24}
-              height={24}
-              top={268}
-              left={18}
-              sx={{ cursor: 'pointer', mr: 2, display: { xs: 'none', md: 'flex' }, border: 1, opacity: 1 }}
-            />
+            <ThumbUpIcon />
           </IconButton>
+          <Typography variant="body2" style={{ margin: '0 8px', color: '#667085'}}>
+            12
+          </Typography>
           <IconButton aria-label="No me gusta">
             <ThumbDownIcon />
           </IconButton>
-          <Typography variant="body2" style={{ marginLeft: '8px' }}>
-            3
-          </Typography>
         </Box>
       </CardContent>
-      <CardActions>
-        <TextField
-          variant="outlined"
-          placeholder="Responder al comentario..."
-          fullWidth
-        />
-        <Button variant="contained" color="primary">
-          Responder
-        </Button>
+      <CardActions sx={{
+         display: 'flex',
+         justifyContent: 'space-between',
+         alignItems: 'center',
+         width: '730.05px',
+         height: '66px'
+         }}
+      >
+     <TextField
+       variant="outlined"
+       placeholder="Agrega un comentario..."
+       fullWidth
+     />
       </CardActions>
-      <CardContent>
-        <Box marginLeft={3}>
-          {/* Respuestas */}
-          <div>
-            <Typography variant="subtitle2" style={{ color: 'purple' }}>
-              Nombre de Usuario
+          <Box display="flex" justifyContent="flex-end" marginTop={1}>
+            <Button variant="outlined" sx={{
+              width: '96px',
+              height: '32px',
+              marginRight: '8px', // Espacio entre los botones
+             }}
+            >
+             Cancelar
+            </Button>
+            <Button variant="contained" sx={{
+             width: '98px',
+             height: '32px',
+             background: '#00CC66',
+             }}
+            >
+            Responder
+          </Button>
+    </Box>
+    <CardContent>
+      <Box marginLeft={3}>
+        {/* Respuestas */}
+        <div>
+          <Typography variant="username2" style={{ 
+              color: '#000000',
+              font: 'Inter',
+              fontSize: '18px',
+              size: '18',
+              weight: '700',
+              height: '22px',
+              align: 'justified',
+              }}>
+              usuario2@mail.comㅤ
             </Typography>
-            <Typography variant="body2" style={{ color: 'gray' }}>
+          <Typography variant="caption" style={{ 
+              color: '#667085',
+              font: 'Inter',
+              fontWeight: '400',
+              fontSize: '16px',
+              }}>
+              Fecha del Comentarioㅤ
+            </Typography>
+          <Typography variant="hour" style={{ 
+              color: '#667085',
+              font: 'Inter',
+              fontWeight: '400',
+              fontSize: '16px' 
+              }}>
+              Hora
+            </Typography>
+          <Typography variant="body2" style={{ 
+              color: '#000000',
+              marginTop: '8px', 
+              width: '730px',
+              height: '44px',
+              top: '208px',
+              left: '18px',
+              }}>
               Respuesta al comentario Lorem ipsum dolor sit amet...
             </Typography>
-          </div>
-          {/* Otras respuestas aquí */}
-        </Box>
-      </CardContent>
+          <Box display="flex" alignItems="center" marginTop={1}>
+            <IconButton aria-label="Me gusta">
+              <ThumbUpIcon />
+            </IconButton>
+            <Typography variant="body2" style={{ margin: '0 8px', color: '#667085'}}>
+              -3
+            </Typography>
+            <IconButton aria-label="No me gusta">
+              <ThumbDownIcon />
+            </IconButton>
+          </Box>
+         </div>
+         {/* Otras respuestas aquí */}
+    </Box>
+    </CardContent>
     </Card>
-  );
+  )
 };
 
 export default CommentComponent;
