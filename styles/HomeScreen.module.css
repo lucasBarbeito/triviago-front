@@ -1,0 +1,123 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    max-height: 100vh;
+    height: 100%;
+    width: 100%;
+    
+    overflow-y: hidden;
+}
+
+.content::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  .content::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 5px;
+  }
+  
+  .content::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+  }
+
+
+.header {
+    background-color: rgb(1, 200, 77);
+    width: 100%;
+    /* height: 3rem; */
+    position: relative;
+    flex: 0 1 auto;
+    z-index: 99;
+}
+
+.content {
+  flex: 1;
+    padding: 2.5rem;
+    
+    position: relative;
+    overflow: auto;
+    background-color: #ddd;
+    min-height: 100%;
+}
+
+.columns {
+    display: flex;
+    min-height: 100%;
+  }
+  
+  .left, .center, .right {
+    padding: 10px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+  }
+  
+  .left {
+    flex: 0 0 16.66%;
+    /* background-color: lightblue; */
+  }
+  
+  .center {
+    flex: 1;
+    /* flex-grow: 1; */
+    /* background-color: lightgreen; */
+    display: flex;
+    flex-direction: column;
+    gap: 2rem; /* Separación entre los elementos */
+    align-items: center;
+    justify-content: space-between;
+    min-height: 100%;
+
+  }
+  
+  .right {
+    flex: 0 0 15%;
+    /* background-color: lightpink; */
+  }
+  
+  .quizItem {
+    /* padding: 10px; */
+    /* border: 1px solid #ddd; */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centrar el contenido horizontalmente */
+  }
+  
+  .button {
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 100%;
+    background-color: #00CC66;
+    color: #ddd;
+    align-items: center; 
+    justify-content: center;
+    /* margin-bottom: 10rem; */
+    transition: all 0.2s ease-in-out;
+    font-size:2.75rem;
+  
+    position: fixed;
+    bottom: 20px; /* Ajusta esta propiedad para controlar la distancia desde la parte inferior */
+    right: 20px; /* Ajusta esta propiedad para controlar la distancia desde la parte derecha */
+    z-index: 1000; /* Asegura que el botón esté en la parte superior en caso de superposición */
+
+    
+}
+
+.button:hover {
+  background-color: #009a4d;
+}
+
+.quizzes {
+  /* align-self: flex-start; */
+  flex: 1;
+    /* background-color: lightgreen; */
+    display: flex;
+    flex-direction: column;
+    gap: 2rem; /* Separación entre los elementos */
+    align-items: center;
+}
+
+/* .pagination { */
+  /* margin-bottom: 1rem;   */
+/* } */

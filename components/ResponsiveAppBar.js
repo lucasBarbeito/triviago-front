@@ -56,7 +56,7 @@ const ResponsiveAppBar = () => {
         <Toolbar disableGutters>
           <IconButton onClick={handleLogoClick} color="inherit">
             <Image
-              src="/logo.png"
+              src="/assets/images/logo.png"
               alt="Logo"
               width={62}
               height={62}
@@ -74,7 +74,7 @@ const ResponsiveAppBar = () => {
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Image
-              src="/usericon.png"
+              src="/assets/images/usericon.png"
               alt="usericon"
               width={51}
               height={51}
