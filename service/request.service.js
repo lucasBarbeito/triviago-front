@@ -13,8 +13,7 @@ const RequestService = {
         if (response.status === 200) {
             return response.data;
         } else {
-            throw new Error("Falta interar")
-            //throw new Error("Hubo un error en la búsqueda de quizzes, por favor intenta más tarde")
+            throw new Error("Hubo un error en la búsqueda de quizzes, por favor intenta más tarde")
         }
     }
 
