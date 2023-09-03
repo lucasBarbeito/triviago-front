@@ -30,20 +30,22 @@ const CommentComponent = () => {
               height: '22px',
               align: 'justified',
               }}>
-              usuario1@mail.comㅤ
+              usuario1@mail.com
             </Typography>
             <Typography variant="caption" style={{ 
               color: '#667085',
               font: 'Inter',
               fontWeight: '400',
               fontSize: '16px',
+              marginLeft: '6px',
               }}>
-              Fecha del Comentarioㅤ
+              Fecha del Comentario
             </Typography>
             <Typography variant="hour" style={{ 
               color: '#667085',
               font: 'Inter',
               fontWeight: '400',
+              marginLeft: '6px',
               fontSize: '16px' 
               }}>
               Hora
@@ -91,13 +93,16 @@ const CommentComponent = () => {
        variant="outlined"
        placeholder="Agrega un comentario..."
        fullWidth
+       multiline
+       minRows={1}
+       maxRows={6}
      />
       </CardActions>
           <Box display="flex" justifyContent="flex-end" marginTop={1}>
             <Button variant="outlined" sx={{
               width: '96px',
               height: '32px',
-              marginRight: '8px',
+              marginRight: '16px',
              }}
             >
              Cancelar
@@ -106,6 +111,7 @@ const CommentComponent = () => {
              width: '98px',
              height: '32px',
              background: '#00CC66',
+             marginRight: '14px',
              }}
             >
             Responder
