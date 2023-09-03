@@ -1,4 +1,4 @@
-import CommentComponent from '@/components/ComentComponent';
+import CommentComponent from '@/components/CommentComponent';
 
 export default function Page() {
     return  <h1>

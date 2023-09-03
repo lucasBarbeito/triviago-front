@@ -1,15 +1,5 @@
 import React from 'react';
-import vectorImage from '../public/vector.png';
-import {
-  Box,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  IconButton,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Box, Button, Card, CardActions, CardContent, IconButton, TextField, Typography,} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
@@ -93,7 +83,6 @@ const CommentComponent = () => {
          display: 'flex',
          justifyContent: 'space-between',
          alignItems: 'center',
-         width: '730.05px',
          height: '66px'
          }}
       >
@@ -123,7 +112,6 @@ const CommentComponent = () => {
     </Box>
     <CardContent>
       <Box marginLeft={3}>
-        {/* Respuestas */}
         <div>
           <Typography variant="username2" style={{ 
               color: '#000000',
@@ -174,7 +162,6 @@ const CommentComponent = () => {
             </IconButton>
           </Box>
          </div>
-         {/* Otras respuestas aquí */}
     </Box>
     </CardContent>
     </Card>
