@@ -7,6 +7,8 @@ import styles from '@/styles/HomeScreen.module.css';
 import ResponsiveAppBar from "@/components/ResponsiveAppBar";
 import QuizFilter from "@/components/QuizFilter";
 import PrivateQuizSearcher from "@/components/PrivateQuizSearcher";
+import {useRequestService} from "@/service/request.service";
+import {router} from "next/client";
 
 
 const HomeScreen = () => {
@@ -120,7 +122,8 @@ const HomeScreen = () => {
     }
 
     const onSubmit = () => {
-        console.log(value);
+        //const service = useRequestService()
+        //service.findById(value).then(r => )
     }
 
     return (
