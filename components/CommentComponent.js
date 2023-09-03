@@ -15,7 +15,8 @@ const CommentComponent = () => {
       height: '605px',
       margin: '0 auto',
       top: '446px',
-      left: '336px'
+      left: '336px',
+      boxShadow: '0px 3.872286558151245px 3.872286558151245px 0px #00000040'
      }}>
       <CardContent>
         <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -96,7 +97,7 @@ const CommentComponent = () => {
             <Button variant="outlined" sx={{
               width: '96px',
               height: '32px',
-              marginRight: '8px', // Espacio entre los botones
+              marginRight: '8px',
              }}
             >
              Cancelar
