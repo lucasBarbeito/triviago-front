@@ -6,6 +6,11 @@ import styles from '../../styles/QuizCreatorPage.module.css';
 
 
 const CreationPage = () => {
+import QuizCreatorInfo from "@/components/QuizCreatorInfo";
+import React from "react";
+
+const CreationPage = () => {
+
     return (
         <div>
             <ResponsiveAppBar/>
@@ -13,6 +18,7 @@ const CreationPage = () => {
             <div className={styles.quizQuestionContainer}>
                 <QuizQuestion/>
             </div>
+            <QuizCreatorInfo/>
         </div>
     )
 }
