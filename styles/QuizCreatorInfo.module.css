@@ -1,13 +1,20 @@
 .componentBox{
     padding-top: 10px;
     width: 770px;
-    height: 432px;
+    height: auto; /* Allow the textarea to grow vertically */
     display:flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     background: #FFF;
     box-shadow: 0px 3.87229px 3.87229px 0px rgba(0, 0, 0, 0.25);
+
+    /* Center the element in the middle of the screen */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
 }
 
 .titleText{
@@ -89,6 +96,7 @@
     flex-direction: row;
     width: 100%;
     gap: 10px;
+    margin-bottom: 30px;
 }
 
 .text{
@@ -116,4 +124,28 @@
     border: none;
     text-indent: 18px;
     borderBottom: 'none'
+}
+
+.textAreaInput{
+    color: #667085;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    display: flex;
+    height: auto;
+    min-height: 22px;
+    flex-direction: column;
+    justify-content: center;
+    flex-shrink: 0;
+    border: none;
+    max-width: 100%;
+    min-width: 100%;
+    overflow-y: hidden;
+    resize: none;
+}
+
+.textAreaInput:focus {
+    outline: none;
 }

@@ -1,24 +1,25 @@
 "use client"
 
 import styles from '../styles/QuizCreatorInfo.module.css';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Image from 'next/image';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import {Switch} from "@mui/material";
 
 const QuizCreatorInfo = () => {
 
     const tags = [
-        'Tag#1',
-        'Tag#2',
-        'Tag#3',
-        'Tag#4',
-        'Tag#5',
-        'Tag#6',
-        'Tag#7',
-        'Tag#8',
-        'Tag#9',
-        'Tag#10',
+        'Etiqueta#1',
+        'Etiqueta#2',
+        'Etiqueta#3',
+        'Etiqueta#4',
+        'Etiqueta#5',
+        'Etiqueta#6',
+        'Etiqueta#7',
+        'Etiqueta#8',
+        'Etiqueta#9',
+        'Etiqueta#10',
     ];
 
     const [privacy, setPrivacy] = useState(false);
@@ -34,6 +35,8 @@ const QuizCreatorInfo = () => {
     }
     function handleDescription(event){
         setDescription(event.target.value)
+        event.target.style.height = 'auto'
+        event.target.style.height = (event.target.scrollHeight + 5)+'px'
     }
     const handleTag = (event) => {
         const { target: { value },} = event;
@@ -71,7 +74,7 @@ const QuizCreatorInfo = () => {
 
                 <div className={styles.labelsInterior}>
                     <label htmlFor="title" className={styles.labelTitle}>Descripción</label>
-                    <input type="text" id="title" name="title" className={styles.inputText} placeholder="Agrega una descripción..." onChange={handleDescription}/>
+                    <textarea type="text" id="description" name="description" className={styles.textAreaInput} placeholder="Agrega una descripción..." onChange={handleDescription}/>
                     <div className={styles.line}/>
                 </div>
 
@@ -79,7 +82,7 @@ const QuizCreatorInfo = () => {
                     <label htmlFor="title" className={styles.labelTitle}>Visibilidad</label>
                     <div className={styles.privateContainer}>
                         <p className={styles.text}>Privado</p>
-                            {privacy ? <Image src="/assets/images/activeSwitch.png" alt={""} width={"34"} height={"18"} onClick={changePrivacy}/>
+                        {privacy ? <Image src="/assets/images/activeSwitch.png" alt={""} width={"34"} height={"18"} onClick={changePrivacy}/>
                                 : <Image src="/assets/images/notActiveSwitch.png" alt={""} width={"34"} height={"18"} onClick={changePrivacy}/>}
                     </div>
                 </div>
