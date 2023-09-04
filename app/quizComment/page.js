@@ -1,5 +1,5 @@
-import CommentComponent from "@/components/CommentComponent";
-import ResponsiveAppBar from "@/components/ResponsiveAppBar";
+import CommentComponent from "../../components/CommentComponent.js";
+import ResponsiveAppBar from "../../components/ResponsiveAppBar";
 
 export default function Page() {
     return  <div> 
