@@ -47,6 +47,7 @@ const ResponsiveAppBar = () => {
   const handleLogout = () => {
     localStorage.removeItem('token')
     router.push('/login')
+
   }
 
   return (
