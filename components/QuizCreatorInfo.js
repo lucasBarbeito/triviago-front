@@ -5,7 +5,7 @@ import {useEffect, useState} from "react";
 import Image from 'next/image';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
-import {Switch} from "@mui/material";
+import {OutlinedInput, Switch} from "@mui/material";
 
 const QuizCreatorInfo = () => {
 
@@ -35,8 +35,8 @@ const QuizCreatorInfo = () => {
     }
     function handleDescription(event){
         setDescription(event.target.value)
-        event.target.style.height = 'auto'
-        event.target.style.height = (event.target.scrollHeight + 5)+'px'
+        event.target.style.height = '22px'
+        event.target.style.height = (event.target.scrollHeight + 1)+'px'
     }
     const handleTag = (event) => {
         const { target: { value },} = event;
