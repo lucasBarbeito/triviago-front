@@ -1,9 +1,15 @@
-import CommentComponent from "../../components/CommentComponent.js";
-import ResponsiveAppBar from "../../components/ResponsiveAppBar";
+import ResponsiveAppBar from "@/components/ResponsiveAppBar";
+import CommentComponent from "@/components/CommentComponent";
+import React from "react";
 
-export default function Page() {
-    return  <div> 
-        <ResponsiveAppBar/>
-        <CommentComponent />
+const CommentPage= () => {
+
+    return (
+        <div>
+            <ResponsiveAppBar/>
+            <br/>
+            <CommentComponent/>
         </div>
+    )
 }
+export default CommentPage;
