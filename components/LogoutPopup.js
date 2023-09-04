@@ -1,9 +1,9 @@
 import React from 'react';
-import './LogoutPopup.css';
+import styles from '../styles/LogoutPopup.css';
 
 const LogoutPopup = ({ onClose }) => {
     return (
-        <div className="logout-popup">
+        <div className={styles.logoutPopup} >
             <div className="popup-content">
                 <p>Sesión cerrada exitosamente</p>
                 <button onClick={onClose}>Cerrar</button>

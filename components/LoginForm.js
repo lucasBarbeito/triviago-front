@@ -1,29 +1,47 @@
-
 'use client'
 
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from '../styles/LoginForm.module.css';
 import {Slide, Snackbar} from "@mui/material";
 import {Alert} from "@mui/lab";
 import {useRequestService} from "@/service/request.service";
 import {useRouter} from "next/navigation";
-
-
+import LogoutPopup from './LogoutPopup';
 
 const LoginForm = () => {
 
     const [password, setPassword] = useState("");
-    const [email, setEmail]  = useState("");
+    const [email, setEmail] = useState("");
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState("ERROR");
-    const router = useRouter()
-
+    const [showPopup, setShowPopup] = useState(false);
+    const router = useRouter();
     function handlePassword(event){
         setPassword(event.target.value)
     }
+
     function handleEmail(event){
         setEmail(event.target.value)
     }
+
+    useEffect(() => {
+        // Verifica si se redirigió desde la página de logout
+        if (router.query && router.query.logout) {
+            setShowPopup(true); // Muestra el pop-up si se redirigió desde el logout
+        }
+    }, [router.query]);
+
+
+    const handleClosePopup = () => {
+        setShowPopup(false); // Oculta el pop-up al hacer clic en "Cerrar"
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    };
 
     const logInState = (event) => {
         event.preventDefault()
@@ -49,15 +67,13 @@ const LoginForm = () => {
                 })
 
     }
-    const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        setOpen(false);
-    };
+
 
     return (
         <form className={styles['form-container']}>
+            <div>
+                {showPopup && <LogoutPopup onClose={handleClosePopup} />} {/* Muestra el pop-up si showPopup es true */}
+            </div>
             <div>
                 <label htmlFor="email">Email</label>
                 <input type="email" id="email" name="email" placeholder="Ingresa tu email" onChange={handleEmail}/>

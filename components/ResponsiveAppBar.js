@@ -30,14 +30,10 @@ const ResponsiveAppBar = () => {
     setAnchorElUser(null);
   };
 
+
   const handleProfileClick = () => {
     handleCloseUserMenu();
     router.push('/profile');
-  };
-
-  const handleLogoutClick = () => {
-    handleCloseUserMenu();
-    router.push('/logout');
   };
 
   const handleLogoClick = () => {
@@ -46,8 +42,8 @@ const ResponsiveAppBar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('token')
-    router.push('/login')
-
+    // Redirige al usuario al inicio de sesión con el parámetro en la URL
+    router.push('/login?logout=true');
   }
 
   return (
