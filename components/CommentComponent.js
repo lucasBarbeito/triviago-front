@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Button, Card, CardActions, CardContent, IconButton, TextField, Typography,} from '@mui/material';
+import { Box, Button, Card, CardActions, CardContent, DatePicker, TimePicker, IconButton, TextField, Typography,} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
@@ -96,6 +96,8 @@ const CommentComponent = () => {
        multiline
        minRows={1}
        maxRows={6}
+       InputProps={{ style: { height: 'auto' } }}
+       sx={{ overflow: 'hidden' }}
      />
       </CardActions>
           <Box display="flex" justifyContent="flex-end" marginTop={1}>
@@ -115,12 +117,12 @@ const CommentComponent = () => {
              }}
             >
             Responder
-          </Button>
-    </Box>
-    <CardContent>
-      <Box marginLeft={3}>
-        <div>
-          <Typography variant="username2" style={{ 
+               </Button>
+             </Box>
+             <CardContent>
+          <Box marginLeft={3}>
+              <div>
+             <Typography variant="username2" style={{ 
               color: '#000000',
               font: 'Inter',
               fontSize: '18px',
@@ -129,24 +131,18 @@ const CommentComponent = () => {
               height: '22px',
               align: 'justified',
               }}>
-              usuario2@mail.comㅤ
+              usuario2@mail.com
             </Typography>
-          <Typography variant="caption" style={{ 
-              color: '#667085',
-              font: 'Inter',
-              fontWeight: '400',
-              fontSize: '16px',
-              }}>
-              Fecha del Comentarioㅤ
-            </Typography>
-          <Typography variant="hour" style={{ 
-              color: '#667085',
-              font: 'Inter',
-              fontWeight: '400',
-              fontSize: '16px' 
-              }}>
-              Hora
-            </Typography>
+            <DatePicker
+             value={new Date()}
+             format="dd/MM/yyyy"
+              style={{ color: '#667085', font: 'Inter', fontWeight: '400', fontSize: '16px', marginLeft: '6px' }}
+            />
+            <TimePicker
+            value={new Date()}
+            format="hh:mm a"
+            style={{ color: '#667085', font: 'Inter', fontWeight: '400', fontSize: '16px', marginLeft: '6px' }}
+            />
           <Typography variant="body2" style={{ 
               color: '#000000',
               marginTop: '8px', 
