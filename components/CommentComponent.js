@@ -1,9 +1,13 @@
+"use client";
 import React from 'react';
-import { Box, Button, Card, CardActions, CardContent, DatePicker, TimePicker, IconButton, TextField, Typography,} from '@mui/material';
+import { Box, Button, Card, CardActions, CardContent, IconButton, TextField, Typography,} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+
+const currentDate = new Date();
+const formattedDateTime = currentDate.toLocaleString(); //hora actual, cambiar a la hora que realizo el comentario
 
 const CommentComponent = () => {
   return (
@@ -25,6 +29,7 @@ const CommentComponent = () => {
               color: '#000000',
               font: 'Inter',
               fontSize: '18px',
+              fontWeight: 'bold',
               size: '18',
               weight: '700',
               height: '22px',
@@ -32,17 +37,11 @@ const CommentComponent = () => {
               }}>
               usuario1@mail.com
             </Typography>
-            <DatePicker
-             value={new Date()}
-             format="dd/MM/yyyy"
-              style={{ color: '#667085', font: 'Inter', fontWeight: '400', fontSize: '16px', marginLeft: '6px' }}
-            />
-            <TimePicker
-            value={new Date()}
-            format="hh:mm a"
-            style={{ color: '#667085', font: 'Inter', fontWeight: '400', fontSize: '16px', marginLeft: '6px' }}
-            />
+            <Typography variant="date" color="#667085" style={{ fontSize: '14px', marginLeft: '8px' }}>
+               {formattedDateTime}
+            </Typography>
           </Box>
+
           <Box>
             <IconButton aria-label="Editar comentario" color="#667085;" sx={{ position: 'relative', zIndex: 0 }}>
               <EditIcon />
@@ -81,16 +80,15 @@ const CommentComponent = () => {
          height: '66px'
          }}
       >
-     <TextField
-       variant="outlined"
-       placeholder="Agrega un comentario..."
-       fullWidth
-       multiline
-       minRows={1}
-       maxRows={6}
-       InputProps={{ style: { height: 'auto' } }}
-       sx={{ overflow: 'hidden' }}
-     />
+       <TextField 
+          variant="standard" 
+          id="standard-multiline-flexible"
+          label="Agrega un comentario..."
+          multiline
+          maxRows={4}
+          fullWidth
+          background= "#FFFFFF"
+        />
       </CardActions>
           <Box display="flex" justifyContent="flex-end" marginTop={1}>
             <Button variant="outlined" sx={{
@@ -118,6 +116,7 @@ const CommentComponent = () => {
               color: '#000000',
               font: 'Inter',
               fontSize: '18px',
+              fontWeight: 'bold',
               size: '18',
               weight: '700',
               height: '22px',
@@ -125,16 +124,9 @@ const CommentComponent = () => {
               }}>
               usuario2@mail.com
             </Typography>
-            <DatePicker
-             value={new Date()}
-             format="dd/MM/yyyy"
-              style={{ color: '#667085', font: 'Inter', fontWeight: '400', fontSize: '16px', marginLeft: '6px' }}
-            />
-            <TimePicker
-            value={new Date()}
-            format="hh:mm a"
-            style={{ color: '#667085', font: 'Inter', fontWeight: '400', fontSize: '16px', marginLeft: '6px' }}
-            />
+            <Typography variant="date2" color="#667085" style={{ fontSize: '14px', marginLeft: '8px' }}>
+               {formattedDateTime}
+            </Typography>
           <Typography variant="body2" style={{ 
               color: '#000000',
               marginTop: '8px', 
@@ -157,8 +149,8 @@ const CommentComponent = () => {
             </IconButton>
           </Box>
          </div>
-    </Box>
-    </CardContent>
+        </Box>
+       </CardContent>
     </Card>
   )
 };
