@@ -32,24 +32,16 @@ const CommentComponent = () => {
               }}>
               usuario1@mail.com
             </Typography>
-            <Typography variant="caption" style={{ 
-              color: '#667085',
-              font: 'Inter',
-              fontWeight: '400',
-              fontSize: '16px',
-              marginLeft: '6px',
-              }}>
-              Fecha del Comentario
-            </Typography>
-            <Typography variant="hour" style={{ 
-              color: '#667085',
-              font: 'Inter',
-              fontWeight: '400',
-              marginLeft: '6px',
-              fontSize: '16px' 
-              }}>
-              Hora
-            </Typography>
+            <DatePicker
+             value={new Date()}
+             format="dd/MM/yyyy"
+              style={{ color: '#667085', font: 'Inter', fontWeight: '400', fontSize: '16px', marginLeft: '6px' }}
+            />
+            <TimePicker
+            value={new Date()}
+            format="hh:mm a"
+            style={{ color: '#667085', font: 'Inter', fontWeight: '400', fontSize: '16px', marginLeft: '6px' }}
+            />
           </Box>
           <Box>
             <IconButton aria-label="Editar comentario" color="#667085;" sx={{ position: 'relative', zIndex: 0 }}>
