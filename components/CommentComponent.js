@@ -77,37 +77,27 @@ const CommentComponent = () => {
          display: 'flex',
          justifyContent: 'space-between',
          alignItems: 'center',
-         height: '66px'
-         }}
-      >
+         height: 'auto'
+         }}>
        <TextField 
           variant="standard" 
           id="standard-multiline-flexible"
           label="Agrega un comentario..."
           multiline
-          maxRows={4}
+          maxRows={7}
           fullWidth
           background= "#FFFFFF"
         />
       </CardActions>
-          <Box display="flex" justifyContent="flex-end" marginTop={1}>
-            <Button variant="outlined" sx={{
-              width: '96px',
-              height: '32px',
-              marginRight: '16px',
-             }}
-            >
-             Cancelar
+          <Box display="flex" justifyContent="flex-end">
+            <Box sx={{marginTop: '8px'}}>
+            <Button variant="outlined" sx={{ width: '96px', height: '32px', marginRight: '8px' }}>
+              Cancelar
             </Button>
-            <Button variant="contained" sx={{
-             width: '98px',
-             height: '32px',
-             background: '#00CC66',
-             marginRight: '14px',
-             }}
-            >
-            Responder
-               </Button>
+            <Button variant="contained" sx={{ width: '98px', height: '32px', background: '#00CC66', marginRight: '8px' }}>
+              Responder
+            </Button>
+            </Box>
              </Box>
              <CardContent>
           <Box marginLeft={3}>
