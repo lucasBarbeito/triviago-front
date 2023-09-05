@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styles from '../styles/LoginForm.module.css';
 import {useRequestService} from "@/service/request.service";
 import {useRouter} from "next/navigation";
