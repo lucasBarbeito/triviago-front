@@ -21,7 +21,7 @@ const HomeScreen = () => {
         commentCount: 120,
     };
 
-    const quizArray = [
+    let quizArray = [
         {
             id: 1,
             title: 'Título del quiz',
@@ -341,11 +341,13 @@ const HomeScreen = () => {
     }
 
     const onSubmit = () => {
-        //const service = useRequestService()
-        //service.findById(value).then(r => )
+        const service = useRequestService()
+        const quiz = service.findById(value).catch((e) => {
+        })
+        quizArray = [quiz];
     }
     const [currentPage, setCurrentPage] = useState(1);
-    const quizzesPerPage = 10; // Cambiar el número de parkings por página según tus necesidades
+    const quizzesPerPage = 10;
     const {quizzesQuantity, setQuizzesQuantity} = useState(quizArray.length)
     const lastIndex = currentPage * quizzesPerPage;
     const firstIndex = lastIndex - quizzesPerPage;
@@ -358,7 +360,7 @@ const HomeScreen = () => {
             <button className={styles.button} onClick={()=>{alert('Add a new Quiz')}}>+</button>
         <div className={styles.columns}>
             <div className={styles.left}>
-                <PrivateQuizSearcher/>
+                <PrivateQuizSearcher value={value} onChange={onChange} onClick={onSubmit}/>
                 <br/>
                 <QuizFilter/>
             </div>

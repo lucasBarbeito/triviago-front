@@ -5,17 +5,23 @@ const url = "http://localhost:8080"
 
 const RequestService = {
 
-    findById: async (quizId) => {
-        const response = await axios.get(`/quiz/private/{invitationCode}`, {
-            headers: {
-                "Authorization": "Bearer " + localStorage.getItem("token")
+    findById: async (invitationCode) => {
+        console.log(invitationCode)
+        console.log(localStorage.getItem("token"))
+        try {
+            const response = await axios.get(`${url}/quiz/private/${invitationCode}`,{
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`
+                }
+            })
+            if (response.status === 200) {
+                return response.data;
             }
-        })
-        if (response.status === 200) {
-            return response.data;
-        } else {
-            throw new Error("Hubo un error en la búsqueda de quizzes, por favor intenta más tarde")
+        } catch (error) {
+            console.log("error", error)
         }
+
     },
 
 
