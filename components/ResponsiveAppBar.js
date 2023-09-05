@@ -5,8 +5,6 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
@@ -15,7 +13,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import {Button} from "@mui/material";
 
-const settings = ['Mi perfil', 'Cerrar sesión'];
 
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -43,7 +40,7 @@ const ResponsiveAppBar = () => {
   const handleLogout = () => {
     localStorage.removeItem('token')
     // Redirige al usuario al inicio de sesión con el parámetro en la URL
-    router.push('/login?logout=true');
+    router.push('/login');
   }
 
   return (
