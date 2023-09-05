@@ -5,7 +5,7 @@ const url = "http://localhost:8080"
 
 const RequestService = {
 
-    findById: async (invitationCode) => {
+    findByInvitationCode: async (invitationCode) => {
         console.log(invitationCode)
         console.log(localStorage.getItem("token"))
         try {

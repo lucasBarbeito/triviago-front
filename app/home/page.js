@@ -342,7 +342,7 @@ const HomeScreen = () => {
 
     const onSubmit = () => {
         const service = useRequestService()
-        const quiz = service.findById(value).catch((e) => {
+        const quiz = service.findByInvitationCode(value).catch((e) => {
         })
         quizArray = [quiz];
     }
