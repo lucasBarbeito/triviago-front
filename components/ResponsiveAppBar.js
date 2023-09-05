@@ -107,7 +107,7 @@ const ResponsiveAppBar = () => {
             >
                 <MenuItem>
                   <Typography textAlign="center">
-                    <Link href="/profile" style={{ color: 'black', textDecoration: 'none' }}>
+                  <Link href="/profile" style={{ color: 'black', textDecoration: 'none' }}>
                       Mi perfil
                       </Link>
                   </Typography>
