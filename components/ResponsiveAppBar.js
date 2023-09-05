@@ -39,6 +39,7 @@ const ResponsiveAppBar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('token')
+    localStorage.setItem('logout', 'true')
     // Redirige al usuario al inicio de sesión con el parámetro en la URL
     router.push('/login');
   }

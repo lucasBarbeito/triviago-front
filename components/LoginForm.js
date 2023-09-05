@@ -67,6 +67,7 @@ const LoginForm = () => {
             <p className={styles.text}><a href="#" className={styles.link}>¿Olvidaste tu contraseña?</a></p>
 
 
+
         </form>
     );
 };
