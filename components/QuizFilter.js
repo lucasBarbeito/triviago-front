@@ -6,6 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import MultipleSelectCheckmarks from "@/components/MultipleSelectCheckmarks";
 import Image from "next/image";
 import Checkbox from '@mui/material/Checkbox';
+import {useRequestService} from "@/service/request.service";
 
 const QuizFilter = () => {
     const [startDate, setStartDate] = useState('');
@@ -15,6 +16,8 @@ const QuizFilter = () => {
     const [minCalification, setMinCalification] = useState(null);
     const [maxCalification, setMaxCalification] = useState(null);
     const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
+    const [buttonDisabled, setButtonDisabled] = useState(false);
+    const [quizzes, setQuizzes] = useState([]);
 
     const handleStartDateChange = (date) => {
         setStartDate(date);
@@ -68,6 +71,45 @@ const QuizFilter = () => {
         setIsCheckboxChecked(event.target.checked);
     };
 
+    const [quizFilter, setQuizFilter] = useState({
+        userId: null,
+        title: '',
+        labels: [],
+        dateFrom: null,
+        dateTo: null,
+        creationDate: null,
+        minQuestion: null,
+        maxQuestion: null,
+        rating: null,
+        minRating: null,
+        maxRating: null,
+    });
+
+    function handleSearch() {
+        setButtonDisabled(true);
+        useRequestService.findPublicQuiz(quizFilter)
+            .then((data) => {
+                setQuizzes(data);
+            })
+            .catch((error) => {
+                throw new Error("Hubo un error en la búsqueda de quizzes, por favor intenta más tarde")
+            })
+            .finally(() => {
+                setButtonDisabled(false);
+            });
+    }
+
+    const handleClearButtonClick = () => {
+        setStartDate(null);
+        setEndDate(null);
+        setMinQuestions('');
+        setMaxQuestions('');
+        setMinCalification('');
+        setMaxCalification('');
+        setIsCheckboxChecked(false);
+        setSelectedTags([]);
+    };
+
     const isCreationDateValid = startDate === null || endDate === null || startDate <= endDate;
 
     const isQuestionValid =
@@ -84,16 +126,6 @@ const QuizFilter = () => {
         isNaN(parseFloat(maxCalification)) ||
         isNaN(parseFloat(minCalification));
 
-    const handleClearButtonClick = () => {
-        setStartDate(null);
-        setEndDate(null);
-        setMinQuestions('');
-        setMaxQuestions('');
-        setMinCalification('');
-        setMaxCalification('');
-        setIsCheckboxChecked(false);
-        setSelectedTags([]);
-    };
 
     return (
         <div className={styles.quizFilterContainer}>
@@ -198,7 +230,7 @@ const QuizFilter = () => {
                 <button className={styles.clearButton} onClick={handleClearButtonClick}>
                     Limpiar
                 </button>
-                <button className={styles.searchButton}>Buscar</button>
+                <button onClick={handleSearch} disabled={buttonDisabled} className={styles.searchButton}>Buscar</button>
             </div>
         </div>
     );
