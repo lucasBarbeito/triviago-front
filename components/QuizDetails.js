@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react';
-import { Typography, FormControl, Radio, RadioGroup, FormControlLabel, Checkbox } from '@mui/material';
+import { Typography, FormControl, Radio, RadioGroup, FormControlLabel, Checkbox, Box } from '@mui/material';
 
 const QuizDetails = ({ question, answers, multipleCorrectAnswers }) => {
     const [selectedAnswers, setSelectedAnswers] = useState([]);
@@ -19,8 +19,23 @@ const QuizDetails = ({ question, answers, multipleCorrectAnswers }) => {
     };
 
     return (
-        <div>
-            <Typography variant="h6">{question}</Typography>
+        <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+            width="770px"
+            height="281px"
+            top="416px"
+            left="335px"
+            bgcolor="#FFFFFF"
+            boxShadow="0px 3.872286558151245px 3.872286558151245px 0px #00000040"
+            margin="0 auto"
+            marginTop="40px"
+            textAlign="center"
+            padding="16px"
+        >
+            <Typography variant="h6" style={{ marginBottom: '16px' }}>{question}</Typography>
             <FormControl component="fieldset">
                 <RadioGroup>
                     {answers.map((answer, index) => (
@@ -34,8 +49,9 @@ const QuizDetails = ({ question, answers, multipleCorrectAnswers }) => {
                     ))}
                 </RadioGroup>
             </FormControl>
-        </div>
+        </Box>
     );
 };
 
 export default QuizDetails;
+
