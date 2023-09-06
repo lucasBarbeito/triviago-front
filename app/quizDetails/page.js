@@ -7,7 +7,6 @@ const detailsPage = () => {
     return (
         <div>
             <ResponsiveAppBar/>
-            <br/>
             <QuizDetails/>
         </div>
     )
