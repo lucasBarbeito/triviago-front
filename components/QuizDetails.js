@@ -22,7 +22,7 @@ const QuizDetails = ({ question, answers, multipleCorrectAnswers }) => {
         <Box
             display="flex"
             flexDirection="column"
-            alignItems="center"
+            alignItems="start" // Alinea las opciones a la izquierda
             justifyContent="center"
             width="770px"
             height="281px"
@@ -35,16 +35,52 @@ const QuizDetails = ({ question, answers, multipleCorrectAnswers }) => {
             textAlign="center"
             padding="16px"
         >
-            <Typography variant="h6" style={{ marginBottom: '16px' }}>{question}</Typography>
+            <Typography
+                variant="h6"
+                style={{
+                    color: '#000000',
+                    marginBottom: '16px',
+                    fontFamily: 'Inter',
+                    fontSize: '28px',
+                    fontWeight: 'bold',
+                    lineHeight: '33.89px',
+                    letterSpacing: '0em',
+                    textAlign: 'justified',
+                }}
+            >
+                {question}
+            </Typography>
             <FormControl component="fieldset">
                 <RadioGroup>
                     {answers.map((answer, index) => (
                         <FormControlLabel
                             key={index}
                             value={answer}
-                            control={multipleCorrectAnswers ? <Checkbox checked={selectedAnswers.includes(answer)} /> : <Radio />}
-                            label={answer}
+                            control={
+                                multipleCorrectAnswers ? (
+                                    <Checkbox
+                                        checked={selectedAnswers.includes(answer)}
+                                    />
+                                ) : (
+                                    <Radio />
+                                )
+                            }
+                            label={
+                                <Typography
+                                    style={{
+                                        fontFamily: 'Inter',
+                                        fontSize: '18px',
+                                        fontWeight: 400,
+                                        lineHeight: '22px',
+                                        letterSpacing: '0em',
+                                        textAlign: 'justified',
+                                    }}
+                                >
+                                    {answer}
+                                </Typography>
+                            }
                             onChange={handleAnswerSelection}
+                            style={{ justifyContent: 'flex-start' }}
                         />
                     ))}
                 </RadioGroup>
@@ -54,4 +90,3 @@ const QuizDetails = ({ question, answers, multipleCorrectAnswers }) => {
 };
 
 export default QuizDetails;
-
