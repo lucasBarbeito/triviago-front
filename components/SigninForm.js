@@ -96,7 +96,9 @@ const SigninForm = () => {
         setOpen(false);
     };
 
-    const currentDate = new Date().toISOString().split('T')[0];
+    const currentDate = new Date();
+    currentDate.setFullYear(2017);
+    const formattedDate = currentDate.toISOString().split('T')[0];
 
     return (
         <form className={styles.formContainer}>
@@ -115,7 +117,7 @@ const SigninForm = () => {
 
             <div className={styles.labelContainer}>
                 <label className={styles.label}>Fecha de nacimiento</label>
-                <input id="date" type="date" defaultValue={currentDate} className={styles.inputCalendar} max={currentDate} onChange={handleBirthDate}/>
+                <input id="date" type="date" defaultValue={formattedDate} className={styles.inputCalendar} max={formattedDate} onChange={handleBirthDate}/>
                 <div className={styles.line}></div>
             </div>
 
