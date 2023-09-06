@@ -4,4 +4,41 @@
     flex-direction: column;
     width: 100%;
     max-width: 100vw;
+    gap: 15px;
+}
+
+.addAnswerContainer{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 5px;
+    cursor: pointer
+}
+
+.addAnswerText{
+    color: #667085;
+    text-align: center;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    cursor: pointer
+}
+
+.buttonCreate{
+    width: 166px;
+    height: 38px;
+    flex-shrink: 0;
+    color: #FFF;
+    text-align: center;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    border-radius: 8px;
+    background: #0C6;
+    border: none;
+    cursor: pointer;
 }

@@ -17,10 +17,18 @@ const QuizQuestion = ({deleteFunction}) => {
     function addAnswer() {
         if(currAnswer.length > 0){
             setAnswers([...answers, { text: currAnswer, type: multplCorrect ? 'checkbox' : 'radio' , isCorrect: isCorrectCurr}]);
+            setAnswerAreaHeight()
             setCurrAnswer("")
             setIsCorrectCurr(false)
         }
     }
+
+    const setAnswerAreaHeight = () => {
+        const answerArea = document.getElementById("answerArea");
+        if (answerArea) {
+            answerArea.style.height = "27px";
+        }
+    };
 
     function removeAnswer(index) {
         const updatedAnswers = [...answers];
@@ -28,8 +36,10 @@ const QuizQuestion = ({deleteFunction}) => {
         setAnswers(updatedAnswers);
     }
 
-    function handleAnswerTextChange(newText) {
-        setCurrAnswer(newText)
+    function handleAnswerTextChange(event) {
+        setCurrAnswer(event.target.value)
+        event.target.style.height = '22px'
+        event.target.style.height = (event.target.scrollHeight + 1)+'px'
     }
 
     function correctHandler (){
@@ -85,14 +95,19 @@ const QuizQuestion = ({deleteFunction}) => {
                                     <Image src="/assets/images/correct.png" alt={""} width={"24"} height={"24"} onClick={correctHandler}/> :
                                     <Image src="/assets/images/notCorrect.png" alt={""} width={"24"} height={"24"} onClick={correctHandler}/>
                                 }
-                                <input
+                                <textarea
+                                    type="answerArea"
+                                    id="answerArea"
+                                    name="answerArea"
                                     className={styles.answerInput}
                                     placeholder="Respuesta..."
                                     value = {currAnswer}
-                                    onChange={(e) => handleAnswerTextChange(e.target.value)}
+                                    // onChange={(e) => handleAnswerTextChange(e.target.value)}
+                                    onChange={handleAnswerTextChange}
                                 />
+                                <Image src="/assets/images/CheckCircle.png" alt={""} width={"24"} height={"24"} onClick={addAnswer} />
                             </div>
-                            <Image src="/assets/images/CheckCircle.png" alt={""} width={"24"} height={"24"} onClick={addAnswer}/>
+                            {/*<Image src="/assets/images/CheckCircle.png" alt={""} width={"24"} height={"24"} onClick={addAnswer}/>*/}
                         </div>
                         <div className={styles.line}/>
                     </div>
