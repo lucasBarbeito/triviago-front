@@ -12,8 +12,8 @@ const QuizFilter = () => {
     const [endDate, setEndDate] = useState(null);
     const [minQuestions, setMinQuestions] = useState('');
     const [maxQuestions, setMaxQuestions] = useState('');
-    const [minCalification, setMinCalification] = useState(null);
-    const [maxCalification, setMaxCalification] = useState(null);
+    const [minCalification, setMinCalification] = useState('');
+    const [maxCalification, setMaxCalification] = useState('');
     const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
 
     const handleStartDateChange = (date) => {
@@ -53,6 +53,7 @@ const QuizFilter = () => {
     const handleMinQuestionsChange = (event) => {
         const inputValue = event.target.value;
         if (!isNaN(parseInt(inputValue)) || inputValue === '') {
+            console.log(inputValue)
             setMinQuestions(inputValue);
         }
     };

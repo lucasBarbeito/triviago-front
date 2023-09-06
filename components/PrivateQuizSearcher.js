@@ -17,6 +17,7 @@ const PrivateQuizSearcher = () => {
                     className={styles.privateQuizSearcherSearchButton}
                     width={37}
                     height={37}
+                    alt={""}
                 />
             </div>
         </div>
