@@ -3,9 +3,9 @@ import ResponsiveAppBar from '@/components/ResponsiveAppBar';
 import QuizDetails from '@/components/QuizDetails';
 
 const MyQuizComponent = () => {
-    const question1 = "¿Cuál es la capital de Francia?";
-    const answers1 = ["París", "Londres", "Madrid", "Berlín"];
-    const question2 = "¿Cuál es el nombre de Messi?";
+    const question1 = "Pregunta 1";
+    const answers1 = ["Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod"];
+    const question2 = "Pregunta 2";
     const answers2 = ["Lionel", "Andrés", "Pedro", "Raul"];
     const multipleCorrectAnswers = true; // true = multiple, false = 1 sola respuesta correcta
 

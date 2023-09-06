@@ -22,7 +22,7 @@ const QuizDetails = ({ question, answers, multipleCorrectAnswers }) => {
         <Box
             display="flex"
             flexDirection="column"
-            alignItems="start" // Alinea las opciones a la izquierda
+            alignItems="start"
             justifyContent="center"
             width="770px"
             height="281px"
@@ -45,7 +45,10 @@ const QuizDetails = ({ question, answers, multipleCorrectAnswers }) => {
                     fontWeight: 'bold',
                     lineHeight: '33.89px',
                     letterSpacing: '0em',
-                    textAlign: 'justified',
+                    textAlign: 'left',
+                    alignItems: 'left',
+                    alignContent: 'left',
+                    textAlignLast:'left'
                 }}
             >
                 {question}
