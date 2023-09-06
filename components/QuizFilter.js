@@ -13,11 +13,12 @@ const QuizFilter = () => {
     const [endDate, setEndDate] = useState('');
     const [minQuestions, setMinQuestions] = useState('');
     const [maxQuestions, setMaxQuestions] = useState('');
-    const [minCalification, setMinCalification] = useState(null);
-    const [maxCalification, setMaxCalification] = useState(null);
+    const [minCalification, setMinCalification] = useState('');
+    const [maxCalification, setMaxCalification] = useState('');
     const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
     const [buttonDisabled, setButtonDisabled] = useState(false);
     const [quizzes, setQuizzes] = useState([]);
+    const requestService = useRequestService()
 
     const handleStartDateChange = (date) => {
         setStartDate(date);
@@ -72,7 +73,6 @@ const QuizFilter = () => {
     };
 
     const [quizFilter, setQuizFilter] = useState({
-        userId: null,
         title: '',
         labels: [],
         dateFrom: null,
@@ -87,7 +87,8 @@ const QuizFilter = () => {
 
     function handleSearch() {
         setButtonDisabled(true);
-        useRequestService.findPublicQuiz(quizFilter)
+
+        requestService.findPublicQuiz(quizFilter)
             .then((data) => {
                 setQuizzes(data);
             })

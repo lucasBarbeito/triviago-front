@@ -38,7 +38,7 @@ const RequestService = {
         console.log(quizFilter)
         console.log(localStorage.getItem("token"))
         try {
-            const response = await axios.get(`${url}/quiz`, quizFilter, {
+            const response = await axios.get(`${url}/quiz`, {
                 headers: {
                     'Content-type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem("token")}`
