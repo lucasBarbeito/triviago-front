@@ -32,7 +32,7 @@ const QuizDetails = ({ question, answers, multipleCorrectAnswers }) => {
             boxShadow="0px 3.872286558151245px 3.872286558151245px 0px #00000040"
             margin="0 auto"
             marginTop="40px"
-            textAlign="center"
+            textAlign="left"
             padding="16px"
         >
             <Typography
@@ -45,10 +45,6 @@ const QuizDetails = ({ question, answers, multipleCorrectAnswers }) => {
                     fontWeight: 'bold',
                     lineHeight: '33.89px',
                     letterSpacing: '0em',
-                    textAlign: 'left',
-                    alignItems: 'left',
-                    alignContent: 'left',
-                    textAlignLast:'left'
                 }}
             >
                 {question}
