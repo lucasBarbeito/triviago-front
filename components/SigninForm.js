@@ -1,17 +1,26 @@
-"use client"
-import {useState} from 'react';
+'use client'
+import React, {useState} from 'react';
 import styles from '../styles/SigninForm.module.css';
 import {Slide, Snackbar} from "@mui/material";
 import {Alert} from "@mui/lab";
+import {useRequestService} from "@/service/request.service";
+import {useRouter} from "next/navigation";
+
+
 
 const SigninForm = () => {
+
     const [name, setName]  = useState("");
     const [surname, setSurname]  = useState("");
     const [email, setEmail]  = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword]  = useState("");
-    const [open, setOpen] = useState(false);
-    const [message, setMessage] = useState("ERROR");
+    const [birthDate, setBirthDate] = useState("")
+   // const inputName = document.getElementById("name");
+    const [open, setOpen] = React.useState(false);
+    const [message, setMessage] = React.useState("ERROR");
+
+    const router = useRouter()
 
     function handleName(event){
         setName(event.target.value)
@@ -28,17 +37,22 @@ const SigninForm = () => {
     function handleConfirmPassword(event){
         setConfirmPassword(event.target.value)
     }
+
+    const handleBirthDate = (event) => {
+        setBirthDate(event.target.value)
+    }
+
     function signinState(event){
         event.preventDefault()
         const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
-        if(name == ""){
+        if(name === ""){
             setMessage("El nombre no puede estar vacío.")
             setOpen(true);
             return
         }
 
-        if(surname == ""){
+        if(surname === ""){
             setMessage("El apellido no puede estar vacío.")
             setOpen(true);
             return
@@ -59,9 +73,21 @@ const SigninForm = () => {
             setOpen(true);
             return
         }
-        console.log("Creacion de cuenta exitoso");
-        return
+
+
+        // aca van los datos como los recibe el back
+        const service = useRequestService()
+        service .signUp({firstName: name, lastName: surname, birthDate: birthDate, email:email, password:password})
+            .then( () => router.push("/home"))
+            .catch((e) => {
+                setMessage(e.message)
+                setOpen(true)
+            })
+
+
+
     }
+
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
@@ -69,10 +95,12 @@ const SigninForm = () => {
 
         setOpen(false);
     };
+
     const currentDate = new Date().toISOString().split('T')[0];
 
     return (
         <form className={styles.formContainer}>
+
             <div className={styles.labelContainer}>
                 <label className={styles.label}>Nombre</label>
                 <input className={styles.input} type="text" id="name" name="name" placeholder="Ingresa tu nombre" onChange={handleName}/>
@@ -82,27 +110,36 @@ const SigninForm = () => {
                 <label className={styles.label}>Apellido</label>
                 <input className={styles.input} type="text" id="surname" name="surname" placeholder="Ingresa tu apellido" onChange={handleSurname}/>
             </div>
+
+            {/*CALENDARIO:*/}
+
             <div className={styles.labelContainer}>
                 <label className={styles.label}>Fecha de nacimiento</label>
-                <input id="date" type="date" defaultValue={currentDate} className={styles.inputCalendar} max={currentDate} />
+                <input id="date" type="date" defaultValue={currentDate} className={styles.inputCalendar} max={currentDate} onChange={handleBirthDate}/>
                 <div className={styles.line}></div>
             </div>
+
+
             <div className={styles.labelContainer}>
                 <label className={styles.label}>Email</label>
                 <input className={styles.input} type="email" id="email" name="email" placeholder="Ingresa tu email" onChange={handleEmail}/>
             </div>
+
             <div className={styles.labelContainer}>
                 <label className={styles.label}>Contraseña</label>
                 <input className={styles.input} type="password" id="password" name="password" placeholder="Ingresa tu contraseña" onChange={handlePassword}/>
             </div>
+
             <div className={styles.labelContainer}>
                 <label className={styles.label}>Confirmar contraseña</label>
                 <input className={styles.input} type="password" id="confirmPassword" name="confirmPassword" placeholder="Ingresa tu contraseña" onChange={handleConfirmPassword}/>
             </div>
+
             <div className={styles.actionContainer}>
                 <button className={styles.button} onClick={signinState}>Registrarte</button>
                 <p className={styles.text}>¿Ya tienes una cuenta? <a href="/login" className={styles.link}>Inicia sesión</a></p>
             </div>
+
             <Snackbar open={open} autoHideDuration={5000} onClose={handleClose} TransitionComponent={Slide} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
                 <Alert onClose={handleClose} severity="error">
                     {message}
@@ -111,4 +148,5 @@ const SigninForm = () => {
         </form>
     );
 };
+
 export default SigninForm;
