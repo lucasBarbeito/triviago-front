@@ -85,7 +85,6 @@ const QuizFilter = () => {
         isNaN(parseFloat(minCalification));
 
     const handleClearButtonClick = () => {
-        alert('asd')
         setStartDate(null);
         setEndDate(null);
         setMinQuestions('');
