@@ -9,7 +9,7 @@ import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 const currentDate = new Date();
 const formattedDateTime = currentDate.toLocaleString(); //hora actual, cambiar a la hora que realizo el comentario
 
-const CommentComponent = () => {
+const CommentComponent = ({id, content, userMail, likes}) => {
   return (
     <Card variant="outlined" style={{
       border: '1px',

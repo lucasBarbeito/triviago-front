@@ -33,8 +33,43 @@ const RequestService = {
             throw new error(response.data.error)
         }
 
-    }
+    },
 
+    fetchComments : async (quizId) => {
+        try {
+            const response = await axios.get(`${url}/quiz/${quizId}/comment`,
+            {
+                headers:{
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+            });
+            if (response.status === 200) {
+                return response.data        // devuelve la lista de comentarios
+            }
+        } catch (error) {
+            console.error('Error al obtener los comentarios:', error);
+        }
+    },
+
+    logComment: async (quizId, commentContent) => {
+        try {
+            const response = await axios.post(`${url}/${quizId}/comment`,
+            {
+                content: commentContent,
+            },
+            {
+                headers:{
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }}
+            );
+
+            if (response.status === 200) {
+                return response.data
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
 }
 

@@ -1,11 +1,23 @@
 "use client"
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import styles from '../styles/QuizComents.module.css';
+import {useRequestService} from "@/service/request.service";
+import CommentComponent from "@/components/CommentComponent";
 
 const QuizComents = () => {
 
     const [comment, setComment] = useState("");
     const [openComment, setOpenComment] = useState(true);
+
+    const [comments, setComments] = useState([])
+    const [quizId, setQuizId] = useState(1)
+    const service = useRequestService()
+
+    useEffect(() => {
+        service.fetchComments().then(commentsList => {
+            setComments(commentsList)
+        })
+    }, [quizId]);
 
     function handleComment(event){
         setComment(event.target.value)
@@ -17,11 +29,13 @@ const QuizComents = () => {
     }
 
     function logComment(){
-        if(comment != "") {
-            cancelComment()
+        if(comment !== "") {
             console.log(comment)
+            cancelComment()
         }
     }
+
+
 
     function handleCommentBoxOpen(){
         console.log(openComment)
