@@ -24,7 +24,7 @@ const ResultPage = () => {
 
     const params = useParams ();
 
-    // Obtén el valor del parámetro 'id' de los parámetros de búsqueda
+    // obtiene el id de los parámetros de búsqueda (url)
     const id = params.id;
 
     const handleClose = (event, reason) => {
@@ -42,9 +42,6 @@ const ResultPage = () => {
                     headers: {
                         Authorization: `Bearer ${token}` // Token en el header
                     },
-                    // body: {
-                    //   mail: email // Nombre de usuario en el body
-                    // }
                 };
                 const response = await axios.get(API_URL + "/quiz/" + id, config);
 
