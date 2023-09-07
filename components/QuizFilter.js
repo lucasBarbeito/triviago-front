@@ -12,8 +12,8 @@ const QuizFilter = () => {
     const [endDate, setEndDate] = useState('');
     const [minQuestions, setMinQuestions] = useState('');
     const [maxQuestions, setMaxQuestions] = useState('');
-    const [minCalification, setMinCalification] = useState(null);
-    const [maxCalification, setMaxCalification] = useState(null);
+    const [minCalification, setMinCalification] = useState('');
+    const [maxCalification, setMaxCalification] = useState('');
     const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
 
     const handleStartDateChange = (date) => {
