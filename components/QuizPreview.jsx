@@ -11,7 +11,7 @@ const QuizPreview = ({ id, title, tags, createdAt, description, rating, question
     const router = useRouter()
 
     const handleQuizClick = (quizId) => {
-        router.push(`/quiz/${quizId}/result`)
+        router.push(`/quiz/${quizId}/details`)
     }
   return (
     <div className={`${styles.container} ${inter.className}`} onClick={() => {handleQuizClick(id)}}>
