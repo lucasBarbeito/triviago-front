@@ -1,10 +1,9 @@
 "use client";
 
 import React, {useEffect, useState} from 'react';
-import LoginPage from "../../../login/page";
-import QuizComents from "../../../../components/QuizComents";
-import QuizInfo from "../../../../components/QuizInfo";
-import ResponsiveAppBar from "@/components/ResponsiveAppBar";
+import QuizComents from "@components/QuizComents";
+import QuizInfo from "@components/QuizInfo";
+import ResponsiveAppBar from "@components/ResponsiveAppBar";
 import {useParams } from "next/navigation";
 import axios from "axios";
 import API_URL from '@root/config';
