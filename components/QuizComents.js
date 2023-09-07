@@ -28,9 +28,10 @@ const QuizComents = () => {
         document.getElementById("comment").value = ""
     }
 
-    function logComment(){
+    async function logComment(){
         if(comment !== "") {
-            console.log(comment)
+            const com= await service.logComment({content: comment, quizId: quizId, userId: 1})
+            setComments(prevState => [...prevState,com])
             cancelComment()
         }
     }

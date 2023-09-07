@@ -51,12 +51,9 @@ const RequestService = {
         }
     },
 
-    logComment: async (quizId, commentContent) => {
+    logComment: async (commentContent) => {
         try {
-            const response = await axios.post(`${url}/${quizId}/comment`,
-            {
-                content: commentContent,
-            },
+            const response = await axios.post(`${url}/comment`, commentContent,
             {
                 headers:{
                     'Authorization': 'Bearer ' + localStorage.getItem('token')
