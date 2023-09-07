@@ -4,39 +4,70 @@ import React, {useEffect, useState} from 'react';
 import LoginPage from "../../../login/page";
 import QuizComents from "../../../../components/QuizComents";
 import ResponsiveAppBar from "@/components/ResponsiveAppBar";
-import { useRouter } from 'next/router';
+import {useParams } from "next/navigation";
 import axios from "axios";
 import API_URL from '@root/config';
+import {Slide, Snackbar} from "@mui/material";
+import {Alert} from "@mui/lab";
+
 
 
 const ResultPage = () => {
     const [quizData, setQuizData] = useState(null);
 
-    const router = useRouter();
+    const token = localStorage.getItem("token");
+
+    const [open, setOpen] = useState(false)
+    const [message, setMessage] = useState('')
+
+    const params = useParams ();
+
+    // Obtén el valor del parámetro 'id' de los parámetros de búsqueda
+    const id = params.id;
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
 
     useEffect(() => {
         const fetchData = async () => {
-            const { id } = router.query; // Obtener el valor del parámetro id de la URL
-
             try {
-                const response = await axios.get(API_URL + "/quiz/" + id);
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${token}` // Token en el header
+                    },
+                    // body: {
+                    //   mail: email // Nombre de usuario en el body
+                    // }
+                };
+                const response = await axios.get(API_URL + "/quiz/" + id, config);
 
                 if (response.status === 200) {
                     setQuizData(response.data);
                 }
             } catch (error) {
-                alert(error);
+                setMessage('Hubo un error al buscar la información del quiz')
+                setOpen(true)
             }
         };
 
         // Llamar a la función de carga de datos después de que la página se haya montado
         fetchData();
-    }, [router.query]);
+    }, [id]);
 
     return (
         <div>
             <ResponsiveAppBar />
             <QuizComents />
+            <Snackbar open={open} autoHideDuration={5000} onClose={handleClose} TransitionComponent={Slide} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+                <Alert onClose={handleClose} severity="error">
+                    {message}
+                </Alert>
+            </Snackbar>
         </div>
     );
 };
