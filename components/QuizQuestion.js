@@ -4,7 +4,7 @@ import React, {useState} from 'react';
 import styles from '../styles/QuizQuestion.module.css';
 import Image from "next/image";
 
-const QuizQuestion = ({deleteFunction}) => {
+const QuizQuestion = ({deleteFunction, index}) => {
     const [multplCorrect, setMultplCorrect] = useState(false);
     const [answers, setAnswers] = useState([{ text: '', type: 'radio', isCorrect: false }]);
     const [currAnswer, setCurrAnswer] = useState("");
@@ -45,7 +45,7 @@ const QuizQuestion = ({deleteFunction}) => {
 
     function handleQuestionTextChange(event) {
         setQuestion(event.target.value)
-        event.target.style.height = '24px'
+        event.target.style.height = '44px'
         event.target.style.height = (event.target.scrollHeight + 1)+'px'
     }
 
@@ -65,6 +65,14 @@ const QuizQuestion = ({deleteFunction}) => {
             answerToUpdate.isCorrect = !answerToUpdate.isCorrect;
             setAnswers(updatedAnswers);
         }
+    }
+
+    const handleRemove = () => {
+        // deleteFunction(index)
+    }
+
+    const handleRemoveQuestion = () =>{
+        deleteFunction(index)
     }
 
     return(
@@ -92,7 +100,7 @@ const QuizQuestion = ({deleteFunction}) => {
                                         }
                                         <p className={styles.text}>{answer.text}</p>
                                     </div>
-                                    <Image src="/assets/images/DeleteQuestion.png" alt={""} width={"28"} height={"28"} onClick={() => removeAnswer(index)} />
+                                        <Image src="/assets/images/DeleteQuestion.png" alt={""} width={"28"} height={"28"} onClick={handleRemove}/>
                                 </div>)}
                             </div>
                         ))}
@@ -121,7 +129,7 @@ const QuizQuestion = ({deleteFunction}) => {
                 </div>
             </div>
             <div className={styles.deleteQuestion}>
-                <Image src="/assets/images/DeleteQuestion.png" alt={""} width={"36"} height={"36"} onClick={deleteFunction}/>
+                <Image src="/assets/images/DeleteQuestion.png" alt={""} width={"36"} height={"36"} onClick={handleRemoveQuestion} className={styles.deleteIcon}/>
             </div>
         </div>
     )
