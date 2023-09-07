@@ -3,6 +3,7 @@
 import React, {useEffect, useState} from 'react';
 import LoginPage from "../../../login/page";
 import QuizComents from "../../../../components/QuizComents";
+import QuizInfo from "../../../../components/QuizInfo";
 import ResponsiveAppBar from "@/components/ResponsiveAppBar";
 import {useParams } from "next/navigation";
 import axios from "axios";
@@ -11,6 +12,7 @@ import {Slide, Snackbar} from "@mui/material";
 import {Alert} from "@mui/lab";
 
 
+import styles from '../../../../styles/QuizComents.module.css';
 
 const ResultPage = () => {
     const [quizData, setQuizData] = useState(null);
@@ -61,8 +63,14 @@ const ResultPage = () => {
 
     return (
         <div>
-            <ResponsiveAppBar />
-            <QuizComents />
+            <ResponsiveAppBar/>
+            <br></br>
+            <div className={styles.componentBox}>
+                <QuizInfo {...quizData}/>
+
+            </div>
+            <br></br>
+            <QuizComents/>
             <Snackbar open={open} autoHideDuration={5000} onClose={handleClose} TransitionComponent={Slide} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
                 <Alert onClose={handleClose} severity="error">
                     {message}

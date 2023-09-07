@@ -8,8 +8,8 @@ import Image from "next/image";
 import Checkbox from '@mui/material/Checkbox';
 
 const QuizFilter = () => {
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
     const [minQuestions, setMinQuestions] = useState('');
     const [maxQuestions, setMaxQuestions] = useState('');
     const [minCalification, setMinCalification] = useState(null);
@@ -85,12 +85,13 @@ const QuizFilter = () => {
         isNaN(parseFloat(minCalification));
 
     const handleClearButtonClick = () => {
+        alert('asd')
         setStartDate(null);
         setEndDate(null);
         setMinQuestions('');
         setMaxQuestions('');
-        setMinCalification(null);
-        setMaxCalification(null);
+        setMinCalification('');
+        setMaxCalification('');
         setIsCheckboxChecked(false);
         setSelectedTags([]);
     };

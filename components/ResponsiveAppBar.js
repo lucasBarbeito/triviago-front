@@ -5,16 +5,14 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
+import {Button} from "@mui/material";
 
-const settings = ['Mi perfil', 'Cerrar sesión'];
 
 const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -29,22 +27,25 @@ const ResponsiveAppBar = () => {
     setAnchorElUser(null);
   };
 
+
   const handleProfileClick = () => {
     handleCloseUserMenu();
     router.push('/profile');
-  };
-
-  const handleLogoutClick = () => {
-    handleCloseUserMenu();
-    router.push('/logout');
   };
 
   const handleLogoClick = () => {
     router.push('/home');
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    localStorage.setItem('logout', 'true')
+    // Redirige al usuario al inicio de sesión con el parámetro en la URL
+    router.push('/login');
+  }
+
   return (
-    <AppBar 
+    <AppBar
     position="static" 
     sx={{ backgroundColor: '#00CC66', margin: '0px', position: 'sticky', top: 0, paddingLeft: '20px',  paddingRight: '20px' }}
     >
@@ -58,7 +59,7 @@ const ResponsiveAppBar = () => {
         <Toolbar disableGutters>
           <IconButton onClick={handleLogoClick} color="inherit">
             <Image
-              src="/logo.png"
+              src="/assets/images/logo.png"
               alt="Logo"
               width={62}
               height={62}
@@ -76,7 +77,7 @@ const ResponsiveAppBar = () => {
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Image
-              src="/usericon.png"
+              src="/assets/images/usericon.png"
               alt="usericon"
               width={51}
               height={51}
@@ -106,16 +107,24 @@ const ResponsiveAppBar = () => {
             >
                 <MenuItem>
                   <Typography textAlign="center">
-                    <Link href="/profile" style={{ color: 'black', textDecoration: 'none' }}>
+                  <Link href="/profile" style={{ color: 'black', textDecoration: 'none' }}>
                       Mi perfil
                       </Link>
                   </Typography>
                 </MenuItem>
                 <MenuItem>
                 <Typography textAlign="center">
-                  <Link href="/logout" style={{ color: 'black', textDecoration: 'none' }}>
+                  <Button onClick = {handleLogout}
+                          style={{
+                            color: 'black',
+                            textDecoration: 'none',
+                            padding :0,
+                            textTransform:'none',
+                            fontSize:'1rem'
+                          }}
+                  >
                     Cerrar Sesion
-                    </Link>
+                    </Button>
                 </Typography>
               </MenuItem>
             

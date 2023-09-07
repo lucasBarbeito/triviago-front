@@ -12,8 +12,22 @@
     padding: 17px;
     padding-bottom: 10px;
     padding-top: 10px;
-    /* font-family: Inter, sans-serif;   */
-  }
+    cursor: pointer; /* Add cursor style to indicate it's clickable */
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: none;
+    outline: none;
+}
+
+.container:hover {
+    transform: scale(1.02);
+    box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.3);
+}
+
+/*/ Add more styles for focus state to make it accessible /*/
+.container:focus {
+    outline: none;
+    box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.3);
+}
   
   .header {
     display: flex;
