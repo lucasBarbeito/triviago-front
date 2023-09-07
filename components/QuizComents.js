@@ -8,13 +8,13 @@ const QuizComents = () => {
 
     const [comment, setComment] = useState("");
     const [openComment, setOpenComment] = useState(true);
-
     const [comments, setComments] = useState([])
-    const [quizId, setQuizId] = useState(1)
     const service = useRequestService()
+    const quizId = window.location.pathname.split('/')[2]
 
     useEffect(() => {
-        service.fetchComments().then(commentsList => {
+        console.log(quizId)
+        service.fetchComments(quizId).then(commentsList => {
             setComments(commentsList)
         })
     }, [quizId]);
@@ -66,6 +66,13 @@ const QuizComents = () => {
                         <div className={styles.buttonsContainers}>
                             <button className={styles.whiteButton} onClick={cancelComment}>Cancelar</button>
                             <button className={styles.greenButton} onClick={logComment}>Comentar</button>
+                        </div>
+                        <div>
+                            {
+                                comments.map((comment)=>{
+                                    return <CommentComponent id={comment.id} content={comment.content} likes={comment.likes} userMail={'srfrwferfer'}/>
+                                })
+                            }
                         </div>
                     </div>
                     :

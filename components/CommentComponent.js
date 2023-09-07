@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import { Box, Button, Card, CardActions, CardContent, IconButton, TextField, Typography,} from '@mui/material';
+import {Box, Button, Card, CardActions, CardContent, IconButton, List, TextField, Typography,} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
@@ -35,7 +35,7 @@ const CommentComponent = ({id, content, userMail, likes}) => {
               height: '22px',
               align: 'justified',
               }}>
-              usuario1@mail.com
+                {userMail}
             </Typography>
             <Typography variant="date" color="#667085" style={{ fontSize: '14px', marginLeft: '8px' }}>
                {formattedDateTime}
@@ -59,14 +59,14 @@ const CommentComponent = ({id, content, userMail, likes}) => {
           top: '208px',
           left: '18px',
           }}>
-          (Contenido del comentario) Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            {content}
         </Typography>
         <Box display="flex" alignItems="center" marginTop={1}>
           <IconButton aria-label="Me gusta">
             <ThumbUpIcon />
           </IconButton>
           <Typography variant="body2" style={{ margin: '0 8px', color: '#667085'}}>
-            12
+              {likes}
           </Typography>
           <IconButton aria-label="No me gusta">
             <ThumbDownIcon />
@@ -101,46 +101,46 @@ const CommentComponent = ({id, content, userMail, likes}) => {
              </Box>
              <CardContent>
           <Box marginLeft={3}>
-              <div>
-             <Typography variant="username2" style={{ 
-              color: '#000000',
-              font: 'Inter',
-              fontSize: '18px',
-              fontWeight: 'bold',
-              size: '18',
-              weight: '700',
-              height: '22px',
-              align: 'justified',
-              }}>
-              usuario2@mail.com
-            </Typography>
-            <Typography variant="date2" color="#667085" style={{ fontSize: '14px', marginLeft: '8px' }}>
-               {formattedDateTime}
-            </Typography>
-          <Typography variant="body2" style={{ 
-              color: '#000000',
-              marginTop: '8px', 
-              width: '730px',
-              height: '44px',
-              top: '208px',
-              left: '18px',
-              }}>
-              Respuesta al comentario Lorem ipsum dolor sit amet...
-            </Typography>
-          <Box display="flex" alignItems="center" marginTop={1}>
-            <IconButton aria-label="Me gusta">
-              <ThumbUpIcon />
-            </IconButton>
-            <Typography variant="body2" style={{ margin: '0 8px', color: '#667085'}}>
-              -3
-            </Typography>
-            <IconButton aria-label="No me gusta">
-              <ThumbDownIcon />
-            </IconButton>
+         {/*     <div>*/}
+         {/*    <Typography variant="username2" style={{ */}
+         {/*     color: '#000000',*/}
+         {/*     font: 'Inter',*/}
+         {/*     fontSize: '18px',*/}
+         {/*     fontWeight: 'bold',*/}
+         {/*     size: '18',*/}
+         {/*     weight: '700',*/}
+         {/*     height: '22px',*/}
+         {/*     align: 'justified',*/}
+         {/*     }}>*/}
+         {/*     usuario2@mail.com*/}
+         {/*   </Typography>*/}
+         {/*   <Typography variant="date2" color="#667085" style={{ fontSize: '14px', marginLeft: '8px' }}>*/}
+         {/*      {formattedDateTime}*/}
+         {/*   </Typography>*/}
+         {/* <Typography variant="body2" style={{ */}
+         {/*     color: '#000000',*/}
+         {/*     marginTop: '8px', */}
+         {/*     width: '730px',*/}
+         {/*     height: '44px',*/}
+         {/*     top: '208px',*/}
+         {/*     left: '18px',*/}
+         {/*     }}>*/}
+         {/*     Respuesta al comentario Lorem ipsum dolor sit amet...*/}
+         {/*   </Typography>*/}
+         {/* <Box display="flex" alignItems="center" marginTop={1}>*/}
+         {/*   <IconButton aria-label="Me gusta">*/}
+         {/*     <ThumbUpIcon />*/}
+         {/*   </IconButton>*/}
+         {/*   <Typography variant="body2" style={{ margin: '0 8px', color: '#667085'}}>*/}
+         {/*     -3*/}
+         {/*   </Typography>*/}
+         {/*   <IconButton aria-label="No me gusta">*/}
+         {/*     <ThumbDownIcon />*/}
+         {/*   </IconButton>*/}
+         {/* </Box>*/}
+         {/*</div>*/}
           </Box>
-         </div>
-        </Box>
-       </CardContent>
+             </CardContent>
     </Card>
   )
 };
