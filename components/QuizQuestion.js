@@ -9,6 +9,7 @@ const QuizQuestion = ({deleteFunction}) => {
     const [answers, setAnswers] = useState([{ text: '', type: 'radio', isCorrect: false }]);
     const [currAnswer, setCurrAnswer] = useState("");
     const [isCorrectCurr, setIsCorrectCurr] = useState(false)
+    const [question, setQuestion] = useState("")
 
     function changeMultplCorrect(){
         setMultplCorrect(!multplCorrect)
@@ -42,6 +43,12 @@ const QuizQuestion = ({deleteFunction}) => {
         event.target.style.height = (event.target.scrollHeight + 1)+'px'
     }
 
+    function handleQuestionTextChange(event) {
+        setQuestion(event.target.value)
+        event.target.style.height = '24px'
+        event.target.style.height = (event.target.scrollHeight + 1)+'px'
+    }
+
     function correctHandler (){
         setIsCorrectCurr(!isCorrectCurr)
     }
@@ -65,7 +72,7 @@ const QuizQuestion = ({deleteFunction}) => {
             <div className={styles.questionBox}>
                 <div className={styles.interiorBox}>
                     <p className={styles.title}>Pregunta</p>
-                    <input className={styles.questionInput} placeholder={"Pregunta..."}></input>
+                    <textarea className={styles.questionInput} placeholder={"Pregunta..."} onChange={handleQuestionTextChange} value={question}></textarea>
                     <div className={styles.columnAnswer}>
                         <p className={styles.titleAnsw}>Respuestas</p>
                         <div className={styles.interiorColumn}>
