@@ -100,7 +100,7 @@ const QuizQuestion = ({deleteFunction, index}) => {
                                         }
                                         <p className={styles.text}>{answer.text}</p>
                                     </div>
-                                        <Image src="/assets/images/DeleteQuestion.png" alt={""} width={"28"} height={"28"} onClick={handleRemove}/>
+                                        <Image src="/assets/images/DeleteQuestion.png" alt={""} width={"28"} height={"28"} onClick={() => removeAnswer(index)}/>
                                 </div>)}
                             </div>
                         ))}
