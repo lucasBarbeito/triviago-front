@@ -66,7 +66,6 @@ const ResponsiveAppBar = () => {
               top={9}
               left={10}
               border={2}
-              onClick={handleLogoClick}
               sx={{ cursor: 'pointer', mr: 2, display: { xs: 'none', md: 'flex' }, border: 1, opacity: 1 }}
             />
           </IconButton>
@@ -84,7 +83,6 @@ const ResponsiveAppBar = () => {
               top={12}
               left={1374}
               border={2}
-              onClick={handleOpenUserMenu}
               sx={{ cursor: 'pointer', mr: 2, display: { xs: 'none', md: 'flex' }, border: 1, opacity: 1 }}
             />
               </IconButton>

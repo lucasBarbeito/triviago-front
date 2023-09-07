@@ -42,7 +42,8 @@ const RequestService = {
                 headers: {
                     'Content-type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem("token")}`
-                }
+                },
+                data: JSON.stringify(quizFilter)
             })
             if (response.status === 200) {
                 return response.data;
