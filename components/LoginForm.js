@@ -1,29 +1,28 @@
-
 'use client'
 
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import styles from '../styles/LoginForm.module.css';
-import {Slide, Snackbar} from "@mui/material";
-import {Alert} from "@mui/lab";
 import {useRequestService} from "@/service/request.service";
 import {useRouter} from "next/navigation";
-
 
 
 const LoginForm = () => {
 
     const [password, setPassword] = useState("");
-    const [email, setEmail]  = useState("");
+    const [email, setEmail] = useState("");
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState("ERROR");
-    const router = useRouter()
+    const router = useRouter();
+
 
     function handlePassword(event){
         setPassword(event.target.value)
     }
+
     function handleEmail(event){
         setEmail(event.target.value)
     }
+
 
     const logInState = (event) => {
         event.preventDefault()
@@ -49,12 +48,7 @@ const LoginForm = () => {
                 })
 
     }
-    const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        setOpen(false);
-    };
+
 
     return (
         <form className={styles['form-container']}>
@@ -72,11 +66,8 @@ const LoginForm = () => {
             <p className={styles.text}>¿No tienes una cuenta? <a href="/signin" className={styles.link}>Regístrate</a></p>
             <p className={styles.text}><a href="#" className={styles.link}>¿Olvidaste tu contraseña?</a></p>
 
-            <Snackbar open={open} autoHideDuration={5000} onClose={handleClose} TransitionComponent={Slide} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
-                <Alert onClose={handleClose} severity="error">
-                    {message}
-                </Alert>
-            </Snackbar>
+
+
         </form>
     );
 };
