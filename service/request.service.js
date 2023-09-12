@@ -16,12 +16,13 @@ const RequestService = {
                 }
             })
             if (response.status === 200) {
+                const quizData = response.data;
+                console.log("Quiz encontrado:", quizData);
                 return response.data;
             }
         } catch (error) {
             console.log("error", error)
         }
-
     },
 
 
