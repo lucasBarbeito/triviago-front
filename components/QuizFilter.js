@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from '../styles/QuizFilter.module.css';
 import Form from 'react-bootstrap/Form';
 import DatePicker from 'react-datepicker';
@@ -6,15 +6,20 @@ import 'react-datepicker/dist/react-datepicker.css';
 import MultipleSelectCheckmarks from "@/components/MultipleSelectCheckmarks";
 import Image from "next/image";
 import Checkbox from '@mui/material/Checkbox';
+import {Slide, Snackbar} from "@mui/material";
+import {Alert} from "@mui/lab";
 
 const QuizFilter = () => {
+    const [quizTitle, setQuizTitle] = useState('');
     const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
+    const [endDate, setEndDate] = useState();
     const [minQuestions, setMinQuestions] = useState('');
     const [maxQuestions, setMaxQuestions] = useState('');
     const [minCalification, setMinCalification] = useState('');
     const [maxCalification, setMaxCalification] = useState('');
     const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
+    const [message, setMessage] = useState("ERROR");
+    const [open, setOpen] = useState(false);
 
     const handleStartDateChange = (date) => {
         setStartDate(date);
@@ -93,12 +98,43 @@ const QuizFilter = () => {
         setMaxCalification('');
         setIsCheckboxChecked(false);
         setSelectedTags([]);
+        document.getElementById("titleFilter").value = ''
     };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpen(false);
+    };
+
+    const currentDate = new Date()
+
+        function handleSearch(){
+        if(!(isCalificationValid) || !(isQuestionValid) || !(isCreationDateValid)){
+            setOpen(true)
+            if(!isCreationDateValid){
+                setMessage("La fecha desde debe ser anterior a la fecha hasta")
+                return
+            }
+            if(!isQuestionValid){
+                setMessage("Minimo debe ser mayor o igual al maximo")
+                return
+            }
+            if(!isCalificationValid){
+                setMessage("Rango de calificación inválido")
+                return
+            }
+        }
+    }
+    const [from, setFrom] = useState("")
+    const [to, setTo] = useState("")
+
 
     return (
         <div className={styles.quizFilterContainer}>
             <p className={styles.quizFilterTitle}>Título</p>
-            <Form.Control type="search" className={styles.quizFilterSearchInput} />
+            <Form.Control id={"titleFilter"} type="search" className={styles.quizFilterSearchInput}/>
             <p className={styles.quizFilterTitle}>Etiquetas</p>
             <div>
                 <MultipleSelectCheckmarks
@@ -112,27 +148,27 @@ const QuizFilter = () => {
             <div className={styles.quizFilterInputPlaceholder}>
                 <div>
                     <DatePicker
+                        id = "fromDate"
                         selected={startDate}
                         onChange={handleStartDateChange}
                         placeholderText="Desde"
                         className={styles.quizFilterDoubleInputFst}
+                        maxDate={endDate ?? currentDate}
                     />
                 </div>
                 <div className={styles.line}></div>
                 <div>
                     <DatePicker
+                        id = "toDate"
                         selected={endDate}
                         onChange={handleEndDateChange}
                         placeholderText="Hasta"
                         className={styles.quizFilterDoubleInputSnd}
+                        maxDate={currentDate}
+                        minDate={startDate}
                     />
                 </div>
             </div>
-            {!isCreationDateValid && (
-                <p className={styles.quizFilterTitle} style={{ color: 'red' }}>
-                    La "fecha desde" debe ser anterior a la "fecha hasta".
-                </p>
-            )}
             <p className={styles.quizFilterTitle}>Preguntas</p>
             <div className={styles.quizFilterInputPlaceholder}>
                 <div>
@@ -155,11 +191,6 @@ const QuizFilter = () => {
                     />
                 </div>
             </div>
-            {(!isQuestionValid) && (
-                <p className={styles.quizFilterTitle} style={{ color: 'red' }}>
-                    Mínimo debe ser menor o igual al máximo.
-                </p>
-            )}
             <p className={styles.quizFilterTitle}>Calificación</p>
             <div className={styles.quizFilterInputPlaceholder}>
                 <div>
@@ -182,11 +213,6 @@ const QuizFilter = () => {
                     />
                 </div>
             </div>
-            {!isCalificationValid && (
-                <p className={styles.quizFilterTitle} style={{ color: 'red' }}>
-                    Rango de calificación inválido.
-                </p>
-            )}
             <div className={styles.seguidores}>
                 <Checkbox
                     checked={isCheckboxChecked}
@@ -198,8 +224,13 @@ const QuizFilter = () => {
                 <button className={styles.clearButton} onClick={handleClearButtonClick}>
                     Limpiar
                 </button>
-                <button className={styles.searchButton}>Buscar</button>
+                <button className={styles.searchButton} onClick={handleSearch}>Buscar</button>
             </div>
+            <Snackbar open={open} autoHideDuration={5000} onClose={handleClose} TransitionComponent={Slide} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+                <Alert onClose={handleClose} severity="error">
+                    {message}
+                </Alert>
+            </Snackbar>
         </div>
     );
 };

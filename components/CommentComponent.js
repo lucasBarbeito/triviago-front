@@ -1,15 +1,34 @@
 "use client";
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import axios from 'axios';
 import { Box, Button, Card, CardActions, CardContent, IconButton, TextField, Typography,} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import { error } from 'console';
 
 const currentDate = new Date();
 const formattedDateTime = currentDate.toLocaleString(); //hora actual, cambiar a la hora que realizo el comentario
 
 const CommentComponent = () => {
+const [response, setResponse] = useState('');
+
+const handleResponse = async () => {
+  try {
+    const response = await axios.post('/comment',{
+      authorEmail: 'usuario1@mail.com',
+      content: response,
+      creationDateTime: new Date(),
+      likes: 0,
+  });
+
+  setResponse('');
+  }catch (error){
+    console.error("Hubo un error en la creación del comentario, por favor intenta más tarde", error);
+  }
+}
+
   return (
     <Card variant="outlined" style={{
       border: '1px',
@@ -87,6 +106,8 @@ const CommentComponent = () => {
           maxRows={7}
           fullWidth
           background= "#FFFFFF"
+          value={response}
+          onChange={(e) => setResponse(e.target.value)}
         />
       </CardActions>
           <Box display="flex" justifyContent="flex-end">
@@ -94,7 +115,9 @@ const CommentComponent = () => {
             <Button variant="outlined" sx={{ width: '96px', height: '32px', marginRight: '8px' }}>
               Cancelar
             </Button>
-            <Button variant="contained" sx={{ width: '98px', height: '32px', background: '#00CC66', marginRight: '8px' }}>
+            <Button variant="contained" sx={{ width: '98px', height: '32px', background: '#00CC66', marginRight: '8px' }}
+            onClick={handleResponse}
+            >
               Responder
             </Button>
             </Box>
