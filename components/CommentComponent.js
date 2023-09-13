@@ -6,13 +6,18 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
-import { error } from 'console';
 
 const currentDate = new Date();
 const formattedDateTime = currentDate.toLocaleString(); //hora actual, cambiar a la hora que realizo el comentario
 
 const CommentComponent = () => {
 const [response, setResponse] = useState('');
+const [formattedDateTime, setFormattedDateTime] = useState('');
+
+useEffect(() => {
+  const currentDate = new Date();
+  setFormattedDateTime(currentDate.toLocaleString());
+}, []);
 
 const handleResponse = async () => {
   try {
