@@ -1,6 +1,11 @@
+"use client"
+
 import ResponsiveAppBar from "@/components/ResponsiveAppBar";
-import QuizCreatorInfo from "@/components/QuizCreatorInfo";
 import React, {useState} from "react";
+import QuizQuestion from "@/components/QuizQuestion";
+import styles from '../../styles/QuizCreatorPage.module.css';
+import QuizCreatorInfo from "@/components/QuizCreatorInfo";
+import Image from "next/image";
 import axios from "axios";
 import API_URL from "@/config";
 import { useRouter } from "next/navigation";
@@ -23,6 +28,30 @@ const CreationPage = () => {
 
         setOpen(false);
     };
+    const [questions, setQuestions] = useState([]);
+    const [counter, setCounter] = useState(0)
+
+    function addQuestion(question) {
+        const updatedArray = [...questions,{id:counter, question:question}]
+        setCounter(counter+1)
+        setQuestions(updatedArray)
+    }
+
+    function removeQuestion(pos) {
+        const updatedArray = questions.filter((question)=> {
+            return question.id !== pos;
+        })
+        setQuestions(updatedArray);
+    }
+
+    const mappedQuestions = questions.map((question, index) =>
+        {return (
+            <div key={question.id} className={styles.answerField}>
+                          <QuizQuestion deleteFunction={removeQuestion} index={question.id}/>
+            </div>
+        )}
+
+    )
 
     const createQuiz = async () => {
         try {
@@ -53,7 +82,17 @@ const CreationPage = () => {
         <div>
             <ResponsiveAppBar/>
             <br/>
-            <QuizCreatorInfo/>
+            <div className={styles.quizQuestionContainer}>
+                <QuizCreatorInfo/>
+                {questions.length !== 0 ?
+                    mappedQuestions
+                    : null}
+                <div className={styles.addAnswerContainer} onClick={addQuestion}>
+                    <Image src="/assets/images/addQuestionLogo.png" alt={""} width={"24"} height={"24"}/>
+                    <p className={styles.addAnswerText}>Agregar pregunta</p>
+                </div>
+                <button className={styles.buttonCreate}>Crear quiz</button>
+            </div>
             <Snackbar open={open} autoHideDuration={5000} onClose={handleClose} TransitionComponent={Slide} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
                 <Alert onClose={handleClose} severity="error">
                     {message}
