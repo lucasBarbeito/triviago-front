@@ -10,11 +10,13 @@ const QuizComents = () => {
     const [openComment, setOpenComment] = useState(true);
     const [comments, setComments] = useState([])
     const service = useRequestService()
-    const quizId = window.location.pathname.split('/')[2]
+    // const quizId = window.location.pathname.split('/')[2]
+    const [quizId, setQuizId] = useState('0')
 
     useEffect(() => {
-        console.log(quizId)
-        service.fetchComments(quizId).then(commentsList => {
+        const id = window.location.pathname.split('/')[2]
+        setQuizId(id)
+        service.fetchComments(id).then(commentsList => {
             setComments(commentsList)
         })
     }, [quizId]);
@@ -68,10 +70,10 @@ const QuizComents = () => {
                             <button className={styles.whiteButton} onClick={cancelComment}>Cancelar</button>
                             <button className={styles.greenButton} onClick={logComment}>Comentar</button>
                         </div>
-                        <div>
+                        <div >
                             {
-                                comments.map((comment)=>{
-                                    return <CommentComponent id={comment.id} content={comment.content} likes={comment.likes} userMail={'srfrwferfer'}/>
+                                comments && comments.map((comment)=>{
+                                    return <CommentComponent id={comment.id} content={comment.content} likes={comment.likes} userMail={'mail@mail.com'}/>
                                 })
                             }
                         </div>

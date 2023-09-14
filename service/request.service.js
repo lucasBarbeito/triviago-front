@@ -52,7 +52,6 @@ const RequestService = {
     },
 
     logComment: async (commentContent) => {
-        try {
             const response = await axios.post(`${url}/comment`, commentContent,
             {
                 headers:{
@@ -63,10 +62,44 @@ const RequestService = {
             if (response.status === 200) {
                 return response.data
             }
-        } catch (error) {
-            console.error(error);
-        }
+    },
+
+    likeComment: async (commentId) => {
+
+            const response = await axios.post(
+                `${url}/comment/${commentId}/like`,
+                {},
+                {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                }
+            );
+            if (response.status === 200) {
+                return response.data;
+            }
+
+    },
+
+    dislikeComment: async (commentId) => {
+            const response = await axios.post(
+                `${url}/comment/${commentId}/dislike`,
+                {},
+                {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                }
+            );
+            if (response.status === 200) {
+                return response.data;
+            }
     }
+
+
+
+
+
 
 }
 
