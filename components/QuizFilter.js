@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useMemo, useState} from 'react';
 import styles from '../styles/QuizFilter.module.css';
 import Form from 'react-bootstrap/Form';
 import DatePicker from 'react-datepicker';
@@ -9,68 +9,11 @@ import Checkbox from '@mui/material/Checkbox';
 import {useRequestService} from "@/service/request.service";
 
 const QuizFilter = () => {
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
-    const [minQuestions, setMinQuestions] = useState('');
-    const [maxQuestions, setMaxQuestions] = useState('');
-    const [minCalification, setMinCalification] = useState('');
-    const [maxCalification, setMaxCalification] = useState('');
+
     const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
     const [buttonDisabled, setButtonDisabled] = useState(false);
     const [quizzes, setQuizzes] = useState([]);
     const requestService = useRequestService()
-
-    const handleStartDateChange = (date) => {
-        setStartDate(date);
-    };
-
-    const handleEndDateChange = (date) => {
-        setEndDate(date);
-    };
-
-    const [selectedTags, setSelectedTags] = useState([]);
-
-    const handleTagChange = (event) => {
-        setSelectedTags(event.target.value);
-    };
-
-    const handleMinCalificationChange = (event) => {
-        const inputValue = event.target.value;
-        if (
-            (!isNaN(parseFloat(inputValue)) && inputValue >= 0 && inputValue <= 5) ||
-            inputValue === ''
-        ) {
-            setMinCalification(inputValue);
-        }
-    };
-
-    const handleMaxCalificationChange = (event) => {
-        const inputValue = event.target.value;
-        if (
-            (!isNaN(parseFloat(inputValue)) && inputValue >= 0 && inputValue <= 5) ||
-            inputValue === ''
-        ) {
-            setMaxCalification(inputValue);
-        }
-    };
-
-    const handleMinQuestionsChange = (event) => {
-        const inputValue = event.target.value;
-        if (!isNaN(parseInt(inputValue)) || inputValue === '') {
-            setMinQuestions(inputValue);
-        }
-    };
-
-    const handleMaxQuestionsChange = (event) => {
-        const inputValue = event.target.value;
-        if (!isNaN(parseInt(inputValue)) || inputValue === '') {
-            setMaxQuestions(inputValue);
-        }
-    };
-
-    const handleCheckboxChange = (event) => {
-        setIsCheckboxChecked(event.target.checked);
-    };
 
     const [quizFilter, setQuizFilter] = useState({
         title: '',
@@ -85,15 +28,95 @@ const QuizFilter = () => {
         maxRating: null,
     });
 
+    const handleTitleChange = (event) => {
+        setQuizFilter({
+            ...quizFilter,
+            title: event.target.value
+        });
+    }
+    const handleStartDateChange = (date) => {
+        setQuizFilter({
+            ...quizFilter,
+            dateFrom: date
+        });
+    };
+
+    const handleEndDateChange = (date) => {
+        setQuizFilter({
+            ...quizFilter,
+            dateTo: date
+        });
+    };
+
+    const [selectedTags, setSelectedTags] = useState([]);
+
+    const handleTagChange = (event) => {
+        setQuizFilter({
+            ...quizFilter,
+            labels: event.target.value
+        });
+    };
+
+    const handleMinCalificationChange = (event) => {
+        const inputValue = event.target.value;
+        if (
+            (!isNaN(parseFloat(inputValue)) && inputValue >= 0 && inputValue <= 5) ||
+            inputValue === ''
+        ) {
+            setQuizFilter({
+                ...quizFilter,
+                minRating: inputValue
+            });
+        }
+    };
+
+    const handleMaxCalificationChange = (event) => {
+        const inputValue = event.target.value;
+        if (
+            (!isNaN(parseFloat(inputValue)) && inputValue >= 0 && inputValue <= 5) ||
+            inputValue === ''
+        ) {
+            setQuizFilter({
+                ...quizFilter,
+                maxRating: inputValue
+            });
+        }
+    };
+
+    const handleMinQuestionsChange = (event) => {
+        const inputValue = event.target.value;
+        if (!isNaN(parseInt(inputValue)) || inputValue === '') {
+            setQuizFilter({
+                ...quizFilter,
+                minQuestion: inputValue
+            });
+        }
+    };
+
+    const handleMaxQuestionsChange = (event) => {
+        const inputValue = event.target.value;
+        if (!isNaN(parseInt(inputValue)) || inputValue === '') {
+            setQuizFilter({
+                ...quizFilter,
+                maxQuestion: inputValue
+            });
+        }
+    };
+
+    const handleCheckboxChange = (event) => {
+        setIsCheckboxChecked(event.target.checked);
+    };
+
     function handleSearch() {
         setButtonDisabled(true);
 
         requestService.findPublicQuiz(quizFilter)
             .then((data) => {
                 setQuizzes(data);
+                console.log("Quizzes obtenidos del backend:", data);
             })
             .catch((error) => {
-                throw new Error("Hubo un error en la búsqueda de quizzes, por favor intenta más tarde")
+                throw new Error("Hubo un error en la búsqueda de quizzes, por favor intenta más tarde");
             })
             .finally(() => {
                 setButtonDisabled(false);
@@ -101,43 +124,56 @@ const QuizFilter = () => {
     }
 
     const handleClearButtonClick = () => {
-        setStartDate(null);
-        setEndDate(null);
-        setMinQuestions('');
-        setMaxQuestions('');
-        setMinCalification('');
-        setMaxCalification('');
+        setQuizFilter({
+            title: '',
+            labels: [],
+            dateFrom: null,
+            dateTo: null,
+            creationDate: null,
+            minQuestion: null,
+            maxQuestion: null,
+            rating: null,
+            minRating: null,
+            maxRating: null,
+        })
         setIsCheckboxChecked(false);
         setSelectedTags([]);
     };
 
-    const isCreationDateValid = startDate === null || endDate === null || startDate <= endDate;
+    const isCreationDateValid = useMemo(() => {
+        return quizFilter.dateTo === null || quizFilter.dateFrom <= quizFilter.dateTo
+    }, [quizFilter.dateFrom, quizFilter.dateTo]); // useMemo hace el return cuando los valores de deps cambian
+
 
     const isQuestionValid =
-        (minQuestions === '' && maxQuestions === '') ||
-        (minQuestions === '' && !isNaN(parseInt(maxQuestions))) ||
-        (maxQuestions === '' && !isNaN(parseInt(minQuestions))) ||
-        (parseInt(minQuestions) <= parseInt(maxQuestions) || isNaN(parseInt(maxQuestions)));
+        (quizFilter.minQuestion === '' && quizFilter.maxQuestion === '') ||
+        (quizFilter.minQuestion === '' && !isNaN(parseInt(quizFilter.maxQuestion))) ||
+        (quizFilter.maxQuestion === '' && !isNaN(parseInt(quizFilter.minQuestion))) ||
+        (parseInt(quizFilter.minQuestion) <= parseInt(quizFilter.maxQuestion) || isNaN(parseInt(quizFilter.maxQuestion)));
 
     const isCalificationValid =
-        (minCalification === '' && maxCalification === '') ||
-        (minCalification === '' && !isNaN(parseFloat(maxCalification)) && maxCalification <= 5) ||
-        (maxCalification === '' && !isNaN(parseFloat(minCalification)) && minCalification >= 0) ||
-        (parseFloat(minCalification) <= parseFloat(maxCalification)) ||
-        isNaN(parseFloat(maxCalification)) ||
-        isNaN(parseFloat(minCalification));
+        (quizFilter.minRating === '' && quizFilter.maxRating === '') ||
+        (quizFilter.minRating === '' && !isNaN(parseFloat(quizFilter.maxRating)) && quizFilter.maxRating <= 5) ||
+        (quizFilter.maxRating === '' && !isNaN(parseFloat(quizFilter.minRating)) && quizFilter.minRating >= 0) ||
+        (parseFloat(quizFilter.minRating) <= parseFloat(quizFilter.maxRating)) ||
+        isNaN(parseFloat(quizFilter.maxRating)) ||
+        isNaN(parseFloat(quizFilter.minRating));
 
 
     return (
         <div className={styles.quizFilterContainer}>
             <p className={styles.quizFilterTitle}>Título</p>
-            <Form.Control type="search" className={styles.quizFilterSearchInput} />
+            <Form.Control type="search"
+                          onChange={handleTitleChange}
+                          className={styles.quizFilterSearchInput}
+                          value={quizFilter.title}
+            />
             <p className={styles.quizFilterTitle}>Etiquetas</p>
             <div>
                 <MultipleSelectCheckmarks
                     tag={"Etiquetas"}
                     options={["Etiqueta1", "Etiqueta2"]}
-                    values={selectedTags}
+                    values={quizFilter.labels}
                     onChange={handleTagChange}
                 />
             </div>
@@ -145,7 +181,7 @@ const QuizFilter = () => {
             <div className={styles.quizFilterInputPlaceholder}>
                 <div>
                     <DatePicker
-                        selected={startDate}
+                        selected={quizFilter.dateFrom}
                         onChange={handleStartDateChange}
                         placeholderText="Desde"
                         className={styles.quizFilterDoubleInputFst}
@@ -154,7 +190,7 @@ const QuizFilter = () => {
                 <div className={styles.line}></div>
                 <div>
                     <DatePicker
-                        selected={endDate}
+                        selected={quizFilter.dateTo}
                         onChange={handleEndDateChange}
                         placeholderText="Hasta"
                         className={styles.quizFilterDoubleInputSnd}
@@ -171,7 +207,7 @@ const QuizFilter = () => {
                 <div>
                     <input
                         type="text"
-                        value={minQuestions}
+                        value={quizFilter.minQuestion}
                         onChange={handleMinQuestionsChange}
                         placeholder="Mínimo"
                         className={styles.quizFilterDoubleInputFst}
@@ -181,7 +217,7 @@ const QuizFilter = () => {
                 <div>
                     <input
                         type="text"
-                        value={maxQuestions}
+                        value={quizFilter.maxQuestion}
                         onChange={handleMaxQuestionsChange}
                         placeholder="Máximo"
                         className={styles.quizFilterDoubleInputSnd}
@@ -198,7 +234,7 @@ const QuizFilter = () => {
                 <div>
                     <input
                         type="number"
-                        value={minCalification}
+                        value={quizFilter.minRating}
                         onChange={handleMinCalificationChange}
                         placeholder="Mínimo"
                         className={styles.quizFilterDoubleInputFst}
@@ -208,7 +244,7 @@ const QuizFilter = () => {
                 <div>
                     <input
                         type="number"
-                        value={maxCalification}
+                        value={quizFilter.maxRating}
                         onChange={handleMaxCalificationChange}
                         placeholder="Máximo"
                         className={styles.quizFilterDoubleInputSnd}
