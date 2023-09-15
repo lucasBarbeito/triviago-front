@@ -66,7 +66,26 @@ const RequestService = {
         } catch (error) {
             console.error(error);
         }
+    },
+
+    deleteComment: async (id) => {
+        try {
+            const response = await axios.delete(`${url}/comment/${id}`,
+                {
+                    headers:{
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }}
+            );
+
+            if (response.status === 200) {
+                return response.data
+            }
+        } catch (error) {
+            console.error(error);
+        }
     }
+
+
 
 }
 

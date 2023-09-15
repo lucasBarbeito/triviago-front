@@ -3,6 +3,7 @@ import {useEffect, useState} from 'react';
 import styles from '../styles/QuizComents.module.css';
 import {useRequestService} from "@/service/request.service";
 import CommentComponent from "@/components/CommentComponent";
+import commentComponent from "@/components/CommentComponent";
 
 const QuizComents = () => {
 
@@ -36,7 +37,15 @@ const QuizComents = () => {
         }
     }
 
-
+    function handleDeleteComment(index) {
+        const selectedComment = comments[index]
+        if(selectedComment) {
+            service.deleteComment(selectedComment.id).then(() => {
+                const updatedList = [...comments.slice(0, index), ...comments.slice(index + 1)];
+                setComments(updatedList);
+            })
+        }
+    }
 
     function handleCommentBoxOpen(){
         console.log(openComment)
@@ -70,8 +79,8 @@ const QuizComents = () => {
                         </div>
                         <div>
                             {
-                                comments.map((comment)=>{
-                                    return <CommentComponent id={comment.id} content={comment.content} likes={comment.likes} userMail={'srfrwferfer'}/>
+                                comments.map((comment, index)=>{
+                                    return <div onClick={() => handleDeleteComment(index)}><CommentComponent id={comment.id} content={comment.content} likes={comment.likes} userMail={'srfrwferfer'}/></div>
                                 })
                             }
                         </div>

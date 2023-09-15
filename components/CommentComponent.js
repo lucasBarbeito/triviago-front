@@ -5,11 +5,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
+import {useRequestService} from "@/service/request.service";
 
 const currentDate = new Date();
 const formattedDateTime = currentDate.toLocaleString(); //hora actual, cambiar a la hora que realizo el comentario
 
 const CommentComponent = ({id, content, userMail, likes}) => {
+
   return (
     <Card variant="outlined" style={{
       border: '1px',
