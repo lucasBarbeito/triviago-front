@@ -1,12 +1,14 @@
 import React, {useMemo, useState} from 'react';
 import styles from '../styles/QuizFilter.module.css';
 import Form from 'react-bootstrap/Form';
-import DatePicker from 'react-datepicker';
+//import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import MultipleSelectCheckmarks from "@/components/MultipleSelectCheckmarks";
 import Image from "next/image";
 import Checkbox from '@mui/material/Checkbox';
 import {useRequestService} from "@/service/request.service";
+//import { format } from "date-fns";
+import {DatePicker} from "@mui/lab";
 
 const QuizFilter = () => {
 
