@@ -3,6 +3,7 @@ import {useEffect, useState} from 'react';
 import styles from '../styles/QuizComents.module.css';
 import {useRequestService} from "@/service/request.service";
 import CommentComponent from "@/components/CommentComponent";
+const jwt = require('jsonwebtoken');
 
 const QuizComents = () => {
 
@@ -10,7 +11,6 @@ const QuizComents = () => {
     const [openComment, setOpenComment] = useState(true);
     const [comments, setComments] = useState([])
     const service = useRequestService()
-    // const quizId = window.location.pathname.split('/')[2]
     const [quizId, setQuizId] = useState('0')
 
     useEffect(() => {
@@ -30,13 +30,22 @@ const QuizComents = () => {
         document.getElementById("comment").value = ""
     }
 
-    async function logComment(){
-        if(comment !== "") {
-            const com= await service.logComment({content: comment, quizId: quizId, userId: 1})
-            setComments(prevState => [...prevState,com])
-            cancelComment()
+    async function logComment() {
+        if (comment !== "") {
+            const data = jwt.decode(localStorage.getItem('token'))
+
+            const com = await service.logComment({ content: comment, quizId: quizId, userId: data.id });
+            setComments(prevState => {
+                if (Array.isArray(prevState)) {
+                    return [...prevState, com];
+                } else {
+                    return [com];
+                }
+            });
+            cancelComment();
         }
     }
+
 
 
 
@@ -73,7 +82,7 @@ const QuizComents = () => {
                         <div >
                             {
                                 comments && comments.map((comment)=>{
-                                    return <CommentComponent id={comment.id} content={comment.content} likes={comment.likes} userMail={'mail@mail.com'}/>
+                                    return <CommentComponent id={comment.id} content={comment.content} likes={comment.likes} authorEmail={comment.authorEmail}/>
                                 })
                             }
                         </div>

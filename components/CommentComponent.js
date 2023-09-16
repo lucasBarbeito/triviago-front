@@ -10,7 +10,7 @@ import {useRequestService} from "@/service/request.service";
 const currentDate = new Date();
 const formattedDateTime = currentDate.toLocaleString(); //hora actual, cambiar a la hora que realizo el comentario
 
-const CommentComponent = ({ id, content, userMail, likes}) => {
+const CommentComponent = ({ id, content, authorEmail, likes}) => {
 
     const service = useRequestService()
     const [likeCount, setLikeCount] = useState(likes); // Estado para realizar un seguimiento de los likes
@@ -59,7 +59,7 @@ const CommentComponent = ({ id, content, userMail, likes}) => {
                   height: '22px',
                   align: 'justified',
                   }}>
-                    {userMail}
+                    {authorEmail}
                 </Typography>
                 <Typography variant="date" color="#667085" style={{ fontSize: '14px', marginLeft: '8px' }}>
                    {formattedDateTime}
