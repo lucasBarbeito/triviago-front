@@ -73,7 +73,7 @@ const QuizFilter = () => {
         setIsCheckboxChecked(event.target.checked);
     };
 
-    const isCreationDateValid = startDate === null || endDate === null || startDate <= endDate;
+    const isCreationDateValid = (startDate && endDate) ? startDate <= endDate : true;
 
     const isQuestionValid =
         (minQuestions === '' && maxQuestions === '') ||
