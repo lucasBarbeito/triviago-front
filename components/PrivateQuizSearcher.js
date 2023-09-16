@@ -15,8 +15,8 @@ const PrivateQuizSearcher = () => {
                 <Image
                     src="/assets/images/Search.png"
                     className={styles.privateQuizSearcherSearchButton}
-                    width={37}
-                    height={37}
+                    width={33}
+                    height={33}
                 />
             </div>
         </div>
