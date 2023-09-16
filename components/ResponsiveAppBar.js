@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import {Button} from "@mui/material";
+import Cookies from "js-cookie";
 
 
 const ResponsiveAppBar = () => {
@@ -39,8 +40,8 @@ const ResponsiveAppBar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('token')
-    localStorage.setItem('logout', 'true')
-    // Redirige al usuario al inicio de sesión con el parámetro en la URL
+    localStorage.setItem('logout', 'true');
+    Cookies.remove("jwt")
     router.push('/login');
   }
 
