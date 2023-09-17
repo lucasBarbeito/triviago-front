@@ -73,7 +73,7 @@ const QuizComents = () => {
                 </div>
                 {openComment ?
                     <div className={styles.comentBox} id="commentBox">
-                        <p className={styles.numberTextComents}>8 Comentarios</p>
+                        <p className={styles.numberTextComents}>{comments.length} Comentarios</p>
                         <input type="text" id="comment" name="comment" placeholder="Agrega un comentario..." className={styles.inputComment} onChange={handleComment}/>
                         <div className={styles.insertCommentLine}/>
                         <div className={styles.buttonsContainers}>
