@@ -140,8 +140,6 @@ const QuizFilter = () => {
             aux.dateTo = aux.dateTo.toISOString().split('T')[0];
         }
 
-        // Resto del código para la búsqueda...
-
         requestService
             .findPublicQuiz(aux)
             .then((data) => {
@@ -149,8 +147,7 @@ const QuizFilter = () => {
                 console.log('Quizzes obtenidos del backend:', data);
             })
             .catch((error) => {
-                // throw new Error("Hubo un error en la búsqueda de quizzes, por favor intenta más tarde");
-                console.log(error);
+                throw new Error("Hubo un error en la búsqueda de quizzes, por favor intenta más tarde");
             })
             .finally(() => {
                 setButtonDisabled(false);
@@ -175,12 +172,17 @@ const QuizFilter = () => {
     };
 
     const isCreationDateValid = useMemo(() => {
+        if (quizFilter.dateFrom === null || quizFilter.dateTo === null) {
+            return true;
+        }
+
         return (
             isDate(quizFilter.dateFrom) &&
             isDate(quizFilter.dateTo) &&
             isBefore(quizFilter.dateFrom, quizFilter.dateTo)
         );
     }, [quizFilter.dateFrom, quizFilter.dateTo]);
+
 
     const isQuestionValid =
         (quizFilter.minQuestion === '' && quizFilter.maxQuestion === '') ||
