@@ -1,5 +1,6 @@
 import axios from "axios";
 import {error} from "next/dist/build/output/log";
+import API_URL from "@/config";
 
 const url = "http://localhost:8080"
 
@@ -16,6 +17,23 @@ const RequestService = {
         } else {
             throw new error(response.data.error)
         }
+    },
+
+    createQuiz: async (quizData) => {
+
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}` // Token en el header
+                },
+
+            };
+            const response = await axios.post(API_URL + "/quiz", quizData, config);
+
+            if (response.status === 200) {
+                // setId(response.data.id);
+                // router.push(`/${id}/details`)
+            }
+
     },
 
     login: async (loginData) => {

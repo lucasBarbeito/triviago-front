@@ -7,7 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import {OutlinedInput, Switch} from "@mui/material";
 
-const QuizCreatorInfo = () => {
+const QuizCreatorInfo = ({ quizData, setQuizData }) => {
 
     const tags = [
         'Etiqueta#1',
@@ -22,25 +22,34 @@ const QuizCreatorInfo = () => {
         'Etiqueta#10',
     ];
 
-    const [privacy, setPrivacy] = useState(false);
-    const [title, setTitle] = useState("");
-    const [description, setDescription]  = useState("");
-    const [tagName, setTagName] = useState([]);
 
     function changePrivacy(event) {
-        setPrivacy(!privacy);
+        setQuizData((prevData) => ({
+            ...prevData,
+            isPrivate: !quizData.isPrivate,
+        }));
     }
     function handleTitle(event){
-        setTitle(event.target.value)
+        setQuizData((prevData) => ({
+            ...prevData,
+            title: event.target.value,
+        }));
     }
     function handleDescription(event){
-        setDescription(event.target.value)
+        setQuizData((prevData) => ({
+            ...prevData,
+            description: event.target.value,
+        }));
         event.target.style.height = '22px'
         event.target.style.height = (event.target.scrollHeight + 1)+'px'
     }
     const handleTag = (event) => {
         const { target: { value },} = event;
-        setTagName(typeof value === 'string' ? value.split(',') : value,);
+        const newLabels = typeof value === 'string' ? value.split(',') : value;
+        setQuizData((prevData) => ({
+            ...prevData,
+            labels: newLabels,
+        }));
     };
 
     return(
@@ -60,7 +69,7 @@ const QuizCreatorInfo = () => {
                         id="tags"
                         multiple
                         className ={styles.inputTag}
-                        value={tagName}
+                        value={quizData.labels}
                         onChange={handleTag}
                         variant="standard"
                     >
@@ -82,7 +91,7 @@ const QuizCreatorInfo = () => {
                     <label htmlFor="title" className={styles.labelTitle}>Visibilidad</label>
                     <div className={styles.privateContainer}>
                         <p className={styles.text}>Privado</p>
-                        {privacy ? <Image src="/assets/images/activeSwitch.png" alt={""} width={"34"} height={"18"} onClick={changePrivacy}/>
+                        {quizData.isPrivate ? <Image src="/assets/images/activeSwitch.png" alt={""} width={"34"} height={"18"} onClick={changePrivacy}/>
                                 : <Image src="/assets/images/notActiveSwitch.png" alt={""} width={"34"} height={"18"} onClick={changePrivacy}/>}
                     </div>
                 </div>

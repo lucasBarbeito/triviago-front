@@ -11,6 +11,7 @@ import API_URL from "@/config";
 import { useRouter } from "next/navigation";
 import {Slide, Snackbar} from "@mui/material";
 import {Alert} from "@mui/lab";
+import {useRequestService} from "@/service/request.service";
 
 
 const CreationPage = () => {
@@ -20,6 +21,21 @@ const CreationPage = () => {
 
     const [open, setOpen] = useState(false)
     const [message, setMessage] = useState('')
+
+    const [quizData, setQuizData] = useState({
+        "title": "",
+        "description": "",
+        "userId": "1",
+        "isPrivate": false,
+        "labels": [],
+        "questions": []
+    });
+
+    const service = useRequestService()
+
+    const createQuiz = () => service.createQuiz(quizData).then(()=>{setId(response.data.id);}).catch(()=>{setMessage('Hubo un error al buscar la información del quiz')
+        setOpen(true)})
+
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -53,37 +69,13 @@ const CreationPage = () => {
 
     )
 
-    const createQuiz = async () => {
-        try {
-            const config = {
-                headers: {
-                    Authorization: `Bearer ${token}` // Token en el header
-                },
-                body: {
-                    "title": "'Quiz 1'",
-                    "description": "primer ejemplo de quiz",
-                    "userId": "1",
-                    "isPrivate": false,
-                    "labels": [],
-                    "questions": []
-                }
-            };
-            const response = await axios.get(API_URL + "/quiz", config);
 
-            if (response.status === 200) {
-                setId(response.data.id);
-                router.push(`/${id}/details`)            }
-        } catch (error) {
-            setMessage('Hubo un error al buscar la información del quiz')
-            setOpen(true)
-        }
-    };
     return (
         <div>
             <ResponsiveAppBar/>
             <br/>
             <div className={styles.quizQuestionContainer}>
-                <QuizCreatorInfo/>
+                <QuizCreatorInfo quizData={quizData} setQuizData={setQuizData}/>
                 {questions.length !== 0 ?
                     mappedQuestions
                     : null}
@@ -91,7 +83,7 @@ const CreationPage = () => {
                     <Image src="/assets/images/addQuestionLogo.png" alt={""} width={"24"} height={"24"}/>
                     <p className={styles.addAnswerText}>Agregar pregunta</p>
                 </div>
-                <button className={styles.buttonCreate}>Crear quiz</button>
+                <button className={styles.buttonCreate} onClick={createQuiz}>Crear quiz</button>
             </div>
             <Snackbar open={open} autoHideDuration={5000} onClose={handleClose} TransitionComponent={Slide} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
                 <Alert onClose={handleClose} severity="error">
