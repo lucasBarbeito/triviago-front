@@ -3,6 +3,7 @@ import {useEffect, useState} from 'react';
 import styles from '../styles/QuizComents.module.css';
 import {useRequestService} from "@/service/request.service";
 import CommentComponent from "@/components/CommentComponent";
+import Cookies from "js-cookie";
 const jwt = require('jsonwebtoken');
 
 const QuizComents = () => {
@@ -32,7 +33,7 @@ const QuizComents = () => {
 
     async function logComment() {
         if (comment !== "") {
-            const data = jwt.decode(localStorage.getItem('token'))
+            const data = jwt.decode( Cookies.get('jwt'))
 
             const com = await service.logComment({ content: comment, quizId: quizId, userId: data.id });
             setComments(prevState => {
@@ -82,7 +83,7 @@ const QuizComents = () => {
                         <div >
                             {
                                 comments && comments.map((comment)=>{
-                                    return <CommentComponent id={comment.id} content={comment.content} likes={comment.likes} authorEmail={comment.authorEmail}/>
+                                    return <CommentComponent id={comment.id} content={comment.content} likes={comment.likes} authorEmail={comment.author.email}/>
                                 })
                             }
                         </div>

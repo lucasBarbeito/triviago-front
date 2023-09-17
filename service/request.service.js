@@ -43,9 +43,10 @@ const RequestService = {
             const response = await axios.get(`${url}/quiz/${quizId}/comment`,
             {
                 headers:{
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    'Authorization': 'Bearer ' + Cookies.get('jwt')
                 }
             });
+
             if (response.status === 200) {
                 return response.data        // devuelve la lista de comentarios
             }
@@ -58,7 +59,7 @@ const RequestService = {
             const response = await axios.post(`${url}/comment`, commentContent,
             {
                 headers:{
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    'Authorization': 'Bearer ' +  Cookies.get('jwt')
                 }}
             );
 
@@ -74,7 +75,7 @@ const RequestService = {
                 {},
                 {
                     headers: {
-                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                        'Authorization': 'Bearer ' +  Cookies.get('jwt')
                     }
                 }
             );
@@ -90,7 +91,7 @@ const RequestService = {
                 {},
                 {
                     headers: {
-                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                        'Authorization': 'Bearer ' + Cookies.get('jwt')
                     }
                 }
             );
