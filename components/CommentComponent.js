@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, Card, CardActions, CardContent, IconButton, TextField, Typography } from '@mui/material';
+import { Box, Button, Card, CardActions, CardContent, IconButton, TextField, Typography, Snackbar } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
-import Snackbar from '@mui/material/Snackbar';
 import axios from 'axios';
 
 const CommentComponent = () => {
-  const [formattedDateTime, setFormattedDateTime] = useState("");
   const [newComment, setNewComment] = useState("");
-  const [isButtonDisabled, setIsButtonDisabled] =snackuseState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [comments, setComments] = useState([]);
+  const [formattedDateTime, setFormattedDateTime] = useState("");
+  const url = "http://localhost:8080";
 
   useEffect(() => {
     const currentDate = new Date();
@@ -23,30 +24,37 @@ const CommentComponent = () => {
     setNewComment(event.target.value);
   };
 
-  const handleCommentSubmit = () => {
-    setIsButtonDisabled(true);
-    axios
-      .post('/comment', { content: newComment })
-      .then((response) => {
-        if (response.status === 200) {
-          setNewComment("");
-          setIsButtonDisabled(false);
-        } else {
-          setSnackbarMessage("Hubo un error en la creación del comentario, por favor intenta más tarde.");
-          setSnackbarOpen(true);
-          setIsButtonDisabled(false);
-        }
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-        setSnackbarMessage("Hubo un error en la creación del comentario, por favor intenta más tarde.");
-        setSnackbarOpen(true);
-        setIsButtonDisabled(false);
-      });
-  };
-
   const handleSnackbarClose = () => {
     setSnackbarOpen(false);
+  };
+
+  const handleCommentSubmit = async () => {
+    setIsButtonDisabled(true);
+
+    const currentDate = new Date();
+    const formattedDateTime = currentDate.toLocaleString();
+    const newCommentData = {
+      content: newComment,
+      date: formattedDateTime,
+    };
+
+    try {
+      const response = await axios.post(`${url}/comment`, { content: newComment });
+      if (response.status === 200) {
+        setNewComment("");
+        setIsButtonDisabled(false);
+        setComments([...comments, newCommentData]);
+      } else {
+        setIsButtonDisabled(false);
+        setSnackbarMessage("Hubo un error en la creación del comentario, por favor intenta más tarde.");
+        setSnackbarOpen(true);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setIsButtonDisabled(false);
+      setSnackbarMessage("Hubo un error en la creación del comentario, por favor intenta más tarde.");
+      setSnackbarOpen(true);
+    }
   };
 
   return (
@@ -98,7 +106,7 @@ const CommentComponent = () => {
           top: '208px',
           left: '18px',
           }}>
-          (Contenido del comentario) Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </Typography>
         <Box display="flex" alignItems="center" marginTop={1}>
           <IconButton aria-label="Me gusta">
@@ -118,68 +126,82 @@ const CommentComponent = () => {
          alignItems: 'center',
          height: 'auto'
          }}>
-       <TextField 
-          variant="standard" 
-          id="standard-multiline-flexible"
-          label="Agrega un comentario..."
-          multiline
-          maxRows={7}
-          fullWidth
-          background= "#FFFFFF"
-        />
-      </CardActions>
-          <Box display="flex" justifyContent="flex-end">
-            <Box sx={{marginTop: '8px'}}>
+         <TextField 
+            variant="standard" 
+            id="standard-multiline-flexible"
+            label="Agrega un comentario..."
+            multiline
+            maxRows={7}
+            fullWidth
+            background= "#FFFFFF"
+            value={newComment}
+            onChange={handleCommentChange}
+          />
+        </CardActions>
+        <Box display="flex" justifyContent="flex-end">
+          <Box sx={{marginTop: '8px'}}>
             <Button variant="outlined" sx={{ width: '96px', height: '32px', marginRight: '8px' }}>
               Cancelar
             </Button>
-            <Button variant="contained" sx={{ width: '98px', height: '32px', background: '#00CC66', marginRight: '8px' }}>
-              Responder
-            </Button>
-            </Box>
-             </Box>
-             <CardContent>
-          <Box marginLeft={3}>
-              <div>
-             <Typography variant="username2" style={{ 
-              color: '#000000',
-              font: 'Inter',
-              fontSize: '18px',
-              fontWeight: 'bold',
-              size: '18',
-              weight: '700',
-              height: '22px',
-              align: 'justified',
-              }}>
-              usuario2@mail.com
-            </Typography>
-            <Typography variant="date2" color="#667085" style={{ fontSize: '14px', marginLeft: '8px' }}>
-               {formattedDateTime}
-            </Typography>
-          <Typography variant="body2" style={{ 
-              color: '#000000',
-              marginTop: '8px', 
-              width: '730px',
-              height: '44px',
-              top: '208px',
-              left: '18px',
-              }}>
-              Respuesta al comentario Lorem ipsum dolor sit amet...
-            </Typography>
-          <Box display="flex" alignItems="center" marginTop={1}>
-            <IconButton aria-label="Me gusta">
-              <ThumbUpIcon />
-            </IconButton>
-            <Typography variant="body2" style={{ margin: '0 8px', color: '#667085'}}>
-              -3
-            </Typography>
-            <IconButton aria-label="No me gusta">
-              <ThumbDownIcon />
-            </IconButton>
+            <Button
+            variant="contained"
+            sx={{ width: '98px', height: '32px', background: '#00CC66', marginRight: '8px' }}
+            onClick={handleCommentSubmit}
+            disabled={isButtonDisabled}
+          >
+            Comentar
+          </Button>
           </Box>
-         </div>
         </Box>
-       </CardContent>
+        <CardContent>
+          {comments.map((comment, index) => (
+            <Box key={index} marginLeft={3}>
+              <Typography variant="username2" style={{ 
+                color: '#000000',
+                font: 'Inter',
+                fontSize: '18px',
+                fontWeight: 'bold',
+                size: '18',
+                weight: '700',
+                height: '22px',
+                align: 'justified',
+                }}>
+                usuario{index + 1}@mail.com
+              </Typography>
+              <Typography variant="date2" color="#667085" style={{ fontSize: '14px', marginLeft: '8px' }}>
+                 {comment.date}
+              </Typography>
+              <Typography variant="body2" style={{ 
+                color: '#000000',
+                marginTop: '8px', 
+                width: '730px',
+                height: '44px',
+                top: '208px',
+                left: '18px',
+                }}>
+                {comment.content}
+              </Typography>
+              <Box display="flex" alignItems="center" marginTop={1}>
+                <IconButton aria-label="Me gusta">
+                  <ThumbUpIcon />
+                </IconButton>
+                <Typography variant="body2" style={{ margin: '0 8px', color: '#667085'}}>
+                  0
+                </Typography>
+                <IconButton aria-label="No me gusta">
+                  <ThumbDownIcon />
+                </IconButton>
+              </Box>
+            </Box>
+          ))}
+      </CardContent>
+      <Snackbar
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+        message={snackbarMessage}
+      />
     </Card>
   )
 };
