@@ -36,7 +36,73 @@ const RequestService = {
             throw new error(response.data.error)
         }
 
+    },
+
+    fetchComments : async (quizId) => {
+        try {
+            const response = await axios.get(`${url}/quiz/${quizId}/comment`,
+            {
+                headers:{
+                    'Authorization': 'Bearer ' + Cookies.get('jwt')
+                }
+            });
+
+            if (response.status === 200) {
+                return response.data        // devuelve la lista de comentarios
+            }
+        } catch (error) {
+            console.error('Error al obtener los comentarios:', error);
+        }
+    },
+
+    logComment: async (commentContent) => {
+            const response = await axios.post(`${url}/comment`, commentContent,
+            {
+                headers:{
+                    'Authorization': 'Bearer ' +  Cookies.get('jwt')
+                }}
+            );
+
+            if (response.status === 200) {
+                return response.data
+            }
+    },
+
+    likeComment: async (commentId) => {
+
+            const response = await axios.post(
+                `${url}/comment/${commentId}/like`,
+                {},
+                {
+                    headers: {
+                        'Authorization': 'Bearer ' +  Cookies.get('jwt')
+                    }
+                }
+            );
+            if (response.status === 200) {
+                return response.data;
+            }
+
+    },
+
+    dislikeComment: async (commentId) => {
+            const response = await axios.post(
+                `${url}/comment/${commentId}/dislike`,
+                {},
+                {
+                    headers: {
+                        'Authorization': 'Bearer ' + Cookies.get('jwt')
+                    }
+                }
+            );
+            if (response.status === 200) {
+                return response.data;
+            }
     }
+
+
+
+
 
 
 }
