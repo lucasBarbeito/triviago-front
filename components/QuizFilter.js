@@ -1,27 +1,25 @@
-import React, {useMemo, useState} from 'react';
+import React, { useMemo, useState } from 'react';
 import styles from '../styles/QuizFilter.module.css';
 import Form from 'react-bootstrap/Form';
-//import DatePicker from 'react-datepicker';
+import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import MultipleSelectCheckmarks from "@/components/MultipleSelectCheckmarks";
-import Image from "next/image";
+import MultipleSelectCheckmarks from '@/components/MultipleSelectCheckmarks';
+import Image from 'next/image';
 import Checkbox from '@mui/material/Checkbox';
-import {useRequestService} from "@/service/request.service";
-//import { format } from "date-fns";
-import {DatePicker} from "@mui/lab";
+import { useRequestService } from '@/service/request.service';
+import { parseISO, isDate, isBefore } from 'date-fns'; // Importa isDate y isBefore para verificar fechas
 
 const QuizFilter = () => {
-
     const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
     const [buttonDisabled, setButtonDisabled] = useState(false);
     const [quizzes, setQuizzes] = useState([]);
-    const requestService = useRequestService()
+    const requestService = useRequestService();
 
     const [quizFilter, setQuizFilter] = useState({
         title: '',
         labels: [],
-        dateFrom: null,
-        dateTo: null,
+        dateFrom: null, // Inicializa con null en lugar de una cadena vacía
+        dateTo: null, // Inicializa con null en lugar de una cadena vacía
         creationDate: null,
         minQuestion: null,
         maxQuestion: null,
@@ -33,20 +31,21 @@ const QuizFilter = () => {
     const handleTitleChange = (event) => {
         setQuizFilter({
             ...quizFilter,
-            title: event.target.value
+            title: event.target.value,
         });
-    }
+    };
+
     const handleStartDateChange = (date) => {
         setQuizFilter({
             ...quizFilter,
-            dateFrom: date
+            dateFrom: date,
         });
     };
 
     const handleEndDateChange = (date) => {
         setQuizFilter({
             ...quizFilter,
-            dateTo: date
+            dateTo: date,
         });
     };
 
@@ -55,19 +54,21 @@ const QuizFilter = () => {
     const handleTagChange = (event) => {
         setQuizFilter({
             ...quizFilter,
-            labels: event.target.value
+            labels: event.target.value,
         });
     };
 
     const handleMinCalificationChange = (event) => {
         const inputValue = event.target.value;
         if (
-            (!isNaN(parseFloat(inputValue)) && inputValue >= 0 && inputValue <= 5) ||
+            (!isNaN(parseFloat(inputValue)) &&
+                inputValue >= 0 &&
+                inputValue <= 5) ||
             inputValue === ''
         ) {
             setQuizFilter({
                 ...quizFilter,
-                minRating: inputValue
+                minRating: inputValue,
             });
         }
     };
@@ -75,12 +76,14 @@ const QuizFilter = () => {
     const handleMaxCalificationChange = (event) => {
         const inputValue = event.target.value;
         if (
-            (!isNaN(parseFloat(inputValue)) && inputValue >= 0 && inputValue <= 5) ||
+            (!isNaN(parseFloat(inputValue)) &&
+                inputValue >= 0 &&
+                inputValue <= 5) ||
             inputValue === ''
         ) {
             setQuizFilter({
                 ...quizFilter,
-                maxRating: inputValue
+                maxRating: inputValue,
             });
         }
     };
@@ -90,7 +93,7 @@ const QuizFilter = () => {
         if (!isNaN(parseInt(inputValue)) || inputValue === '') {
             setQuizFilter({
                 ...quizFilter,
-                minQuestion: inputValue
+                minQuestion: inputValue,
             });
         }
     };
@@ -100,7 +103,7 @@ const QuizFilter = () => {
         if (!isNaN(parseInt(inputValue)) || inputValue === '') {
             setQuizFilter({
                 ...quizFilter,
-                maxQuestion: inputValue
+                maxQuestion: inputValue,
             });
         }
     };
@@ -111,14 +114,43 @@ const QuizFilter = () => {
 
     function handleSearch() {
         setButtonDisabled(true);
+        const aux = { ...quizFilter };
 
-        requestService.findPublicQuiz(quizFilter)
+        // Verifica si dateFrom es una fecha válida antes de convertirla
+        if (isDate(aux.dateFrom)) {
+            aux.dateFrom = aux.dateFrom.toISOString().split('T')[0];
+        } else {
+            aux.dateFrom = null;
+        }
+
+        // Verifica si dateTo es una fecha válida antes de convertirla
+        if (isDate(aux.dateTo)) {
+            aux.dateTo = aux.dateTo.toISOString().split('T')[0];
+        } else {
+            aux.dateTo = null;
+        }
+
+        // Verifica si dateFrom y dateTo son fechas válidas antes de convertirlas
+        if (
+            isDate(aux.dateFrom) &&
+            isDate(aux.dateTo) &&
+            isBefore(aux.dateFrom, aux.dateTo)
+        ) {
+            aux.dateFrom = aux.dateFrom.toISOString().split('T')[0];
+            aux.dateTo = aux.dateTo.toISOString().split('T')[0];
+        }
+
+        // Resto del código para la búsqueda...
+
+        requestService
+            .findPublicQuiz(aux)
             .then((data) => {
                 setQuizzes(data);
-                console.log("Quizzes obtenidos del backend:", data);
+                console.log('Quizzes obtenidos del backend:', data);
             })
             .catch((error) => {
-                throw new Error("Hubo un error en la búsqueda de quizzes, por favor intenta más tarde");
+                // throw new Error("Hubo un error en la búsqueda de quizzes, por favor intenta más tarde");
+                console.log(error);
             })
             .finally(() => {
                 setButtonDisabled(false);
@@ -132,49 +164,60 @@ const QuizFilter = () => {
             dateFrom: null,
             dateTo: null,
             creationDate: null,
-            minQuestion: null,
-            maxQuestion: null,
+            minQuestion: '',
+            maxQuestion: '',
             rating: null,
             minRating: null,
             maxRating: null,
-        })
+        });
         setIsCheckboxChecked(false);
         setSelectedTags([]);
     };
 
     const isCreationDateValid = useMemo(() => {
-        return quizFilter.dateTo === null || quizFilter.dateFrom <= quizFilter.dateTo
-    }, [quizFilter.dateFrom, quizFilter.dateTo]); // useMemo hace el return cuando los valores de deps cambian
-
+        return (
+            isDate(quizFilter.dateFrom) &&
+            isDate(quizFilter.dateTo) &&
+            isBefore(quizFilter.dateFrom, quizFilter.dateTo)
+        );
+    }, [quizFilter.dateFrom, quizFilter.dateTo]);
 
     const isQuestionValid =
         (quizFilter.minQuestion === '' && quizFilter.maxQuestion === '') ||
-        (quizFilter.minQuestion === '' && !isNaN(parseInt(quizFilter.maxQuestion))) ||
-        (quizFilter.maxQuestion === '' && !isNaN(parseInt(quizFilter.minQuestion))) ||
-        (parseInt(quizFilter.minQuestion) <= parseInt(quizFilter.maxQuestion) || isNaN(parseInt(quizFilter.maxQuestion)));
+        (quizFilter.minQuestion === '' &&
+            !isNaN(parseInt(quizFilter.maxQuestion))) ||
+        (quizFilter.maxQuestion === '' &&
+            !isNaN(parseInt(quizFilter.minQuestion))) ||
+        (parseInt(quizFilter.minQuestion) <=
+            parseInt(quizFilter.maxQuestion) ||
+            isNaN(parseInt(quizFilter.maxQuestion)));
 
     const isCalificationValid =
         (quizFilter.minRating === '' && quizFilter.maxRating === '') ||
-        (quizFilter.minRating === '' && !isNaN(parseFloat(quizFilter.maxRating)) && quizFilter.maxRating <= 5) ||
-        (quizFilter.maxRating === '' && !isNaN(parseFloat(quizFilter.minRating)) && quizFilter.minRating >= 0) ||
+        (quizFilter.minRating === '' &&
+            !isNaN(parseFloat(quizFilter.maxRating)) &&
+            quizFilter.maxRating <= 5) ||
+        (quizFilter.maxRating === '' &&
+            !isNaN(parseFloat(quizFilter.minRating)) &&
+            quizFilter.minRating >= 0) ||
         (parseFloat(quizFilter.minRating) <= parseFloat(quizFilter.maxRating)) ||
         isNaN(parseFloat(quizFilter.maxRating)) ||
         isNaN(parseFloat(quizFilter.minRating));
 
-
     return (
         <div className={styles.quizFilterContainer}>
             <p className={styles.quizFilterTitle}>Título</p>
-            <Form.Control type="search"
-                          onChange={handleTitleChange}
-                          className={styles.quizFilterSearchInput}
-                          value={quizFilter.title}
+            <Form.Control
+                type="search"
+                onChange={handleTitleChange}
+                className={styles.quizFilterSearchInput}
+                value={quizFilter.title}
             />
             <p className={styles.quizFilterTitle}>Etiquetas</p>
             <div>
                 <MultipleSelectCheckmarks
-                    tag={"Etiquetas"}
-                    options={["Etiqueta1", "Etiqueta2"]}
+                    tag={'Etiquetas'}
+                    options={['Etiqueta1', 'Etiqueta2']}
                     values={quizFilter.labels}
                     onChange={handleTagChange}
                 />
@@ -269,7 +312,13 @@ const QuizFilter = () => {
                 <button className={styles.clearButton} onClick={handleClearButtonClick}>
                     Limpiar
                 </button>
-                <button onClick={handleSearch} disabled={buttonDisabled} className={styles.searchButton}>Buscar</button>
+                <button
+                    onClick={handleSearch}
+                    disabled={buttonDisabled}
+                    className={styles.searchButton}
+                >
+                    Buscar
+                </button>
             </div>
         </div>
     );

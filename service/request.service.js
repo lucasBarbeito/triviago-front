@@ -46,7 +46,7 @@ const RequestService = {
                 params: quizFilter,
             })
             if (response.status === 200) {
-                return response.data;
+                return response.data.content;
             }
         } catch (error) {
             console.log("error", error)
