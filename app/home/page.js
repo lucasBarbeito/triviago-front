@@ -13,6 +13,7 @@ import axios from "axios";
 const HomeScreen = () => {
     const [fetchingQuizzes, setFetchingQuizzes] = useState(true);
     const [currentPage, setCurrentPage] = useState({content: [], totalPages: 0, pageable: {pageNumber: 0}});
+    const router = useRouter()
 
     const fetchQuizzes = (pageNumber) => {
         setFetchingQuizzes(true);
@@ -53,12 +54,12 @@ const HomeScreen = () => {
         <div className={styles.wrapper}>
             <ResponsiveAppBar/>
             <div className={styles.content}>
-                <button className={styles.button} onClick={()=>{alert('Add a new Quiz')}}>+</button>
+                <button className={styles.button} onClick={()=>{router.push("/quizcreation")}}>+</button>
                 <div className={styles.columns}>
                     <div className={styles.left}>
                         <PrivateQuizSearcher/>
                         <br/>
-                        <QuizFilter/>
+                        <QuizFilter setFilteredQuizzes={setCurrentPage} setFetchingQuizzes={setFetchingQuizzes}/>
                     </div>
                     <div className={styles.center}>
                         {

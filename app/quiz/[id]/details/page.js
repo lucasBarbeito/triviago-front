@@ -37,7 +37,6 @@ const ResultPage = () => {
 
     return (
         <div>
-            {console.log(quiz)}
             <ResponsiveAppBar/>
             <br></br>
             <div className={styles.componentBox}>

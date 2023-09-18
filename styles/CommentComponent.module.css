@@ -1,0 +1,167 @@
+.text {
+    color: #000;
+    text-align: justify;
+    font-family: Inter, sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    flex-shrink: 0;
+    overflow-y: hidden;
+    resize: none;
+    width: 100%;
+    border: none;
+
+}
+
+.text:focus {
+    outline: none;
+}
+
+.componentBox {
+    border: 1px;
+    /*borderColor: #667085;*/
+    color: #FFFFFF;
+    width: 769px;
+    margin: 0 auto;
+    top: 446px;
+    left: 336px;
+    min-height: 44px;
+}
+
+.userNameText{
+    color: #000000;
+    font-family: Inter, sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    /*size: 18px;*/
+    /*weight: 700;*/
+    height: 22px;
+    text-align: justify;
+}
+
+.dateText{
+    margin-left: 8px;
+    font-family: Inter, sans-serif;
+    color: #667085;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+
+.likeCount {
+    display: flex;
+    align-items: center; /* Center text vertically */
+    color: #667085;
+    text-align: justify;
+    font-family: Inter, sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.likesContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center; /* Center items vertically */
+    gap: 5px;
+    flex-wrap: nowrap; /* Prevent wrapping */
+    overflow: hidden; /* Hide overflowing text */
+    max-width: 100%; /* Ensure it doesn't go beyond the container */
+}
+
+/* Adjust the width of the like count container based on content */
+.likesContainer.expanded {
+    flex: 1;
+}
+
+.cancelButton{
+    width: 96px;
+    height: 32px;
+    flex-shrink: 0;
+    color: #000;
+    text-align: center;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    background-color: #FFFFFF;
+    border: none;
+    cursor: pointer;
+}
+
+.answerButton{
+    width: 96px;
+    height: 32px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    background: #0C6;
+    color: #FFF;
+    text-align: center;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    border: none;
+    cursor: pointer;
+
+}
+
+.buttonsContainers{
+    gap: 13px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding: 0px 21px 0px 21px;
+    margin-top: 14px;
+}
+
+.inputComment{
+    color: #667085;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    background-color: #FFFFFF;
+    border: #FFFFFF;
+    display: flex;
+    width: 100%;
+    height: 22px;
+    flex-direction: column;
+    justify-content: center;
+    flex-shrink: 0;
+    padding: 0px 20px 0px 20px;
+    overflow-y: hidden;
+    resize: none;
+}
+
+.inputComment:focus {
+    outline: none;
+}
+
+
+.line{
+    height: 1px;
+    background: #667085;
+    display: flex;
+    flex-direction: inherit;
+    justify-content: inherit;
+    flex-shrink: 0;
+    padding: 0px 20px 0px 20px;
+    width: 730.051px;
+    margin-left: 20px;
+    margin-right: 20px;
+    border-bottom: 1px solid #667085;
+    margin-top: 5px;
+
+}
+
+.commentBox{
+    display: flex;
+    flex-direction: column;
+}
