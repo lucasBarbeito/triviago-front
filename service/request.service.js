@@ -52,25 +52,6 @@ const RequestService = {
 
     },
 
-    getQuizData: async () => {
-        const config = {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}` // Token en el header
-            },
-        };
-        try {
-            const response = await axios.get(API_URL + "/quiz/" + id, config);
-            if (response.status === 200) {
-                return response
-            } else {
-                throw new error("Hubo un error al buscar la información del quiz")
-            }        }
-        catch (error) {
-            throw error;
-        }
-    }
-
-
 
 }
 
