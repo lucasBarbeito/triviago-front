@@ -36,7 +36,7 @@ const ResultPage = () => {
         setOpen(false);
     };
 
-    useEffect(() => {
+    useEffect( () => {
         const fetchData = async () => {
             try {
                 const config = {
@@ -49,7 +49,7 @@ const ResultPage = () => {
                 if (response.status === 200) {
                     const data = response.data;
                     // Copiar todos los datos excepto 'author' en newData
-                    const newData = { ...data };
+                    const newData = {...data};
                     delete newData.author; // Eliminar la propiedad 'author' de newData
                     setQuizData(newData);
                     newData.authorEmail = data.author.email;
@@ -60,12 +60,9 @@ const ResultPage = () => {
             }
         };
 
-        // service.getQuizData()
-        //     .then(()=>{
-        //         setQuizData(response.data);
-        //     })
         // Llamar a la función de carga de datos después de que la página se haya montado
         fetchData();
+        console.log(quizData)
     }, [id]);
 
     return (

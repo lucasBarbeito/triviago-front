@@ -18,16 +18,17 @@ const QuizInfo = (props) => {
         const date = new Date(year, month - 1, day);
 
         // Get the name of the month
-        const monthName = date.toLocaleString('en-US', { month: 'long' });
+        const monthName = date.toLocaleString('es', { month: 'long' });
 
         // Format the day with leading zero if it's less than 10
         const formattedDay = day < 10 ? `0${day}` : day;
 
         // Get the year
         const yearNumber = date.getFullYear();
+        console.log(props)
 
         // Build the formatted date string
-        return `${formattedDay} of ${monthName} ${yearNumber}`;
+        return `${formattedDay} de ${monthName} de ${yearNumber}`;
     }
 
   return (
@@ -60,7 +61,7 @@ const QuizInfo = (props) => {
             </div>
             <div className={styles.divisor}/>        
             <div className={styles.rating}>
-                <RatingSection ratings={rating} questions={questions? questions.length : 0} startButton={true}/>
+                <RatingSection ratings={rating? rating : 0} questions={questions? questions.length : 0} startButton={true}/>
             </div>
         </Stack>
     </div>
