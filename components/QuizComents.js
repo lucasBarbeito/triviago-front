@@ -4,6 +4,7 @@ import styles from '../styles/QuizComents.module.css';
 import {useRequestService} from "@/service/request.service";
 import CommentComponent from "@/components/CommentComponent";
 import Cookies from "js-cookie";
+
 const jwt = require('jsonwebtoken');
 
 const QuizComents = () => {
@@ -22,20 +23,22 @@ const QuizComents = () => {
         })
     }, [quizId]);
 
-    function handleComment(event){
+    function handleComment(event) {
         setComment(event.target.value)
+        event.target.style.height = '22px'
+        event.target.style.height = (event.target.scrollHeight + 1)+'px'
     }
 
-    function cancelComment(){
+    function cancelComment() {
         setComment("")
         document.getElementById("comment").value = ""
     }
 
     async function logComment() {
         if (comment !== "") {
-            const data = jwt.decode( Cookies.get('jwt'))
+            const data = jwt.decode(Cookies.get('jwt'))
 
-            const com = await service.logComment({ content: comment, quizId: quizId, userId: data.id });
+            const com = await service.logComment({content: comment, quizId: quizId, userId: data.id});
             setComments(prevState => {
                 if (Array.isArray(prevState)) {
                     return [...prevState, com];
@@ -47,15 +50,23 @@ const QuizComents = () => {
         }
     }
 
+    function handleDeleteComment(index) {
+        const selectedComment = comments[index]
+        if (selectedComment) {
+            service.deleteComment(selectedComment.id).then(() => {
+                const updatedList = [...comments.slice(0, index), ...comments.slice(index + 1)];
+                setComments(updatedList);
+            })
+        }
+    }
 
 
-
-    function handleCommentBoxOpen(){
+    function handleCommentBoxOpen() {
         console.log(openComment)
         setOpenComment(true)
     }
 
-    function handleCommentBoxClose(){
+    function handleCommentBoxClose() {
         console.log(openComment)
         setOpenComment(false)
     }
@@ -64,8 +75,12 @@ const QuizComents = () => {
         <div className={styles.backgroundBox}>
             <div className={styles.componentBox}>
                 <div className={styles.dividerBox}>
-                    <button className={openComment ? styles.titleSelectedText : styles.titleNotSelected} onClick={handleCommentBoxOpen}>Comentarios</button>
-                    <button className={openComment ? styles.titleNotSelected : styles.titleSelectedText} onClick={handleCommentBoxClose}>Clasificación</button>
+                    <button className={openComment ? styles.titleSelectedText : styles.titleNotSelected}
+                            onClick={handleCommentBoxOpen}>Comentarios
+                    </button>
+                    <button className={openComment ? styles.titleNotSelected : styles.titleSelectedText}
+                            onClick={handleCommentBoxClose}>Clasificación
+                    </button>
                 </div>
                 <div className={styles.lineBox}>
                     <div className={openComment ? styles.dividerSelectedLine : styles.dividerNotSelectedLine}/>
@@ -74,16 +89,18 @@ const QuizComents = () => {
                 {openComment ?
                     <div className={styles.comentBox} id="commentBox">
                         <p className={styles.numberTextComents}>{comments.length} Comentarios</p>
-                        <input type="text" id="comment" name="comment" placeholder="Agrega un comentario..." className={styles.inputComment} onChange={handleComment}/>
+                        <textarea type="text" id="comment" name="comment" placeholder="Agrega un comentario..."
+                               className={styles.inputComment} onChange={handleComment}/>
                         <div className={styles.insertCommentLine}/>
                         <div className={styles.buttonsContainers}>
                             <button className={styles.whiteButton} onClick={cancelComment}>Cancelar</button>
                             <button className={styles.greenButton} onClick={logComment}>Comentar</button>
                         </div>
-                        <div >
+                        <div>
                             {
-                                comments && comments.map((comment)=>{
-                                    return <CommentComponent id={comment.id} content={comment.content} likes={comment.likes} authorEmail={comment.author.email}/>
+                                comments && comments.map((comment, index) => {
+                                    return <CommentComponent handleDeleteComment={() => handleDeleteComment(index)} id={comment.id} content={comment.content} likes={comment.likes}
+                                                             authorEmail={comment.author?.email}/>
                                 })
                             }
                         </div>
