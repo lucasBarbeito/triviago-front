@@ -33,8 +33,15 @@ const CreationPage = () => {
 
     const service = useRequestService()
 
-    const createQuiz = () => service.createQuiz(quizData).then(()=>{setId(response.data.id);}).catch(()=>{setMessage('Hubo un error al buscar la información del quiz')
-        setOpen(true)})
+    const createQuiz = () => service.createQuiz(quizData)
+        .then(()=>{
+            setId(response.data.id);
+            router.push(`/${id}/details`);
+        })
+        .catch(()=>{
+            setMessage('Hubo un error al buscar la información del quiz')
+            setOpen(true)
+        })
 
 
     const handleClose = (event, reason) => {
