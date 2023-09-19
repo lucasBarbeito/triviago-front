@@ -6,21 +6,25 @@ import Image from 'next/image';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import {OutlinedInput, Switch} from "@mui/material";
+import {useRequestService} from "@/service/request.service";
 
-const QuizCreatorInfo = ({ quizData, setQuizData }) => {
+const QuizCreatorInfo = ({ quizData, setQuizData, setMessage, setOpen }) => {
 
-    const tags = [
-        'Etiqueta#1',
-        'Etiqueta#2',
-        'Etiqueta#3',
-        'Etiqueta#4',
-        'Etiqueta#5',
-        'Etiqueta#6',
-        'Etiqueta#7',
-        'Etiqueta#8',
-        'Etiqueta#9',
-        'Etiqueta#10',
-    ];
+    const service = useRequestService();
+    const [tags, setTags] = useState([]);
+
+    useEffect(() => {
+        service.getLabels()
+            .then((response) => {
+                setTags(response.data);
+            })
+            .catch((error) => {
+                setMessage('Hubo un error al obtener las etiquetas');
+                setOpen(true);
+                console.log(error)
+            });
+
+    }, []);
 
 
     function changePrivacy(event) {
@@ -74,8 +78,8 @@ const QuizCreatorInfo = ({ quizData, setQuizData }) => {
                         variant="standard"
                     >
                         {tags.map((tag) => (
-                            <MenuItem key={tag} value={String(tag)}>
-                                {tag}
+                            <MenuItem key={tag.value} value={String(tag.value)}>
+                                {tag.value}
                             </MenuItem>
                         ))}
                     </Select>
@@ -96,6 +100,7 @@ const QuizCreatorInfo = ({ quizData, setQuizData }) => {
                     </div>
                 </div>
             </div>
+
         </div>
     )
 }

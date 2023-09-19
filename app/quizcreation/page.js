@@ -15,7 +15,7 @@ import {useRequestService} from "@/service/request.service";
 
 
 const CreationPage = () => {
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
     const router = useRouter();
     const [id, setId] = useState();
 
@@ -33,8 +33,16 @@ const CreationPage = () => {
 
     const service = useRequestService()
 
-    const createQuiz = () => service.createQuiz(quizData).then(()=>{setId(response.data.id);}).catch(()=>{setMessage('Hubo un error al buscar la información del quiz')
-        setOpen(true)})
+    const createQuiz = () => {console.log('aaa'); service.createQuiz(quizData)
+        .then((response)=>{
+            setId(response.data.id);
+            router.push(`/quiz/${response.data.id}/details`)
+        })
+        .catch((error)=>{
+            setMessage('Hubo un error al buscar la información del quiz');
+            setOpen(true);
+            console.log(error)
+        })}
 
 
     const handleClose = (event, reason) => {
@@ -48,6 +56,11 @@ const CreationPage = () => {
     const [counter, setCounter] = useState(0)
 
     function addQuestion(question) {
+        // setQuizData((prevData) => ({
+        //     ...prevData,
+        //     questions: [...prevData.questions, question],
+        // }));
+        // console.log(quizData)
         const updatedArray = [...questions,{id:counter, question:question}]
         setCounter(counter+1)
         setQuestions(updatedArray)
@@ -75,7 +88,7 @@ const CreationPage = () => {
             <ResponsiveAppBar/>
             <br/>
             <div className={styles.quizQuestionContainer}>
-                <QuizCreatorInfo quizData={quizData} setQuizData={setQuizData}/>
+                <QuizCreatorInfo quizData={quizData} setQuizData={setQuizData} setOpen={setOpen} setMessage={setMessage}/>
                 {questions.length !== 0 ?
                     mappedQuestions
                     : null}
