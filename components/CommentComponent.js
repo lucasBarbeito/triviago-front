@@ -6,14 +6,21 @@ import EditIcon from '@mui/icons-material/Edit';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import {useRequestService} from "@/service/request.service";
+import styles from '../styles/CommentComponent.module.css';
+
 
 const currentDate = new Date();
 const formattedDateTime = currentDate.toLocaleString(); //hora actual, cambiar a la hora que realizo el comentario
 
-const CommentComponent = ({ id, content, authorEmail, likes}) => {
+const CommentComponent = ({ id, content, authorEmail, likes, refresh, openAlert, setAlertMessage}) => {
 
     const service = useRequestService()
     const [likeCount, setLikeCount] = useState(likes); // Estado para realizar un seguimiento de los likes
+
+    const [isEditing, setIsEditing] = useState(false);
+    const [editedContent, setEditedContent] = useState(content);
+
+    const handleEditComment = () => {setIsEditing(true)};
 
     const handleLikeClick = async () => {
         try {
@@ -32,6 +39,17 @@ const CommentComponent = ({ id, content, authorEmail, likes}) => {
             console.error('Hubo un error, por favor intenta más tarde', error);
         }
     };
+
+    const editComment = async (newContent) => {
+        try {
+            await service.editComment(id, newContent)
+            refresh();
+        }
+        catch (error) {
+            setAlertMessage('Hubo un error al editar el comentario')
+            openAlert();
+        }
+    }
 
 
 
@@ -67,7 +85,7 @@ const CommentComponent = ({ id, content, authorEmail, likes}) => {
               </Box>
 
               <Box>
-                <IconButton aria-label="Editar comentario" color="#667085;" sx={{ position: 'relative', zIndex: 0 }}>
+                <IconButton aria-label="Editar comentario" color="#667085;" sx={{ position: 'relative', zIndex: 0 }} onClick={handleEditComment}>
                   <EditIcon />
                 </IconButton>
                 <IconButton aria-label="Eliminar comentario" color="error" sx={{ position: 'relative', zIndex: 0 }}>
@@ -83,7 +101,32 @@ const CommentComponent = ({ id, content, authorEmail, likes}) => {
               top: '208px',
               left: '18px',
               }}>
-                {content}
+                {!isEditing ?
+                    (
+                        <div>{content}</div>
+                    ): (
+                        <div>
+                            <input
+                                type="text"
+                                value={editedContent}
+                                onChange={(e) => setEditedContent(e.target.value)}
+                                className={styles.editInput}
+                            />
+                            <button
+                                onClick={()=> {setIsEditing(false); setEditedContent(content);}}
+                                className={styles.cancelButton}
+                            >
+                                Cancelar
+                            </button>
+                            <button
+                                className={styles.editButton}
+                                onClick={()=> editComment(editedContent)}
+                            >
+                                Editar
+                            </button>
+                        </div>
+                    )
+                }
             </Typography>
             <Box display="flex" alignItems="center" marginTop={1}>
 

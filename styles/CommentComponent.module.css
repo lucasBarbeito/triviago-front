@@ -1,0 +1,43 @@
+/* Estilo para el input de edición */
+.editInput {
+    /*width: 100%; */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-right: 1rem;
+
+}
+
+/* Estilo para el botón "Cancelar" */
+.cancelButton {
+    background-color: #c90202; /* Rojo */
+    color: #fff; /* Texto en blanco */
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    margin-right: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.5s ease-in-out;
+}
+
+/* Estilo para el botón "Editar" */
+.editButton {
+    background-color: #0C6; /* Verde */
+    color: #fff; /* Texto en blanco */
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Estilos adicionales para los botones (hover) */
+.cancelButton:hover {
+    background-color: #9a0101;
+}
+.editButton:hover {
+    background-color: #018543;
+}

@@ -98,6 +98,22 @@ const RequestService = {
             if (response.status === 200) {
                 return response.data;
             }
+    },
+
+    editComment: async (commentId, commentContent) => {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${Cookies.get('jwt')}` // Token en el header
+            },
+        };
+        const data = {
+            content: commentContent
+        }
+        const response = await axios.post(`${url}/comment/${commentId}/edit`, data, config)
+        if (response.status === 200) {
+            return response;
+        }
+        else throw new error()
     }
 
 

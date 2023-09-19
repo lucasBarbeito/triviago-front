@@ -5,6 +5,8 @@ import {useRequestService} from "@/service/request.service";
 import CommentComponent from "@/components/CommentComponent";
 import Cookies from "js-cookie";
 const jwt = require('jsonwebtoken');
+import {Slide, Snackbar} from "@mui/material";
+import {Alert} from "@mui/lab";
 
 const QuizComents = () => {
 
@@ -14,13 +16,18 @@ const QuizComents = () => {
     const service = useRequestService()
     const [quizId, setQuizId] = useState('0')
 
+    const [refresh, setRefresh] = useState(false)
+    const handleRefresh = () => {
+        setRefresh(!refresh)
+    }
+
     useEffect(() => {
         const id = window.location.pathname.split('/')[2]
         setQuizId(id)
         service.fetchComments(id).then(commentsList => {
             setComments(commentsList)
         })
-    }, [quizId]);
+    }, [quizId, refresh]);
 
     function handleComment(event){
         setComment(event.target.value)
@@ -49,7 +56,6 @@ const QuizComents = () => {
 
 
 
-
     function handleCommentBoxOpen(){
         console.log(openComment)
         setOpenComment(true)
@@ -59,6 +65,19 @@ const QuizComents = () => {
         console.log(openComment)
         setOpenComment(false)
     }
+
+    // ALERT
+    const [open, setOpen] = useState(false)
+    const [message, setMessage] = useState('')
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
+
+
 
     return (
         <div className={styles.backgroundBox}>
@@ -83,7 +102,7 @@ const QuizComents = () => {
                         <div >
                             {
                                 comments && comments.map((comment)=>{
-                                    return <CommentComponent id={comment.id} content={comment.content} likes={comment.likes} authorEmail={comment.author.email}/>
+                                    return <CommentComponent id={comment.id} content={comment.content} likes={comment.likes} authorEmail={comment.userId} refresh={handleRefresh} openAlert={()=>setOpen(true)} setAlertMessage={setMessage}/>
                                 })
                             }
                         </div>
@@ -94,6 +113,11 @@ const QuizComents = () => {
                     </div>
                 }
             </div>
+            <Snackbar open={open} autoHideDuration={5000} onClose={handleClose} TransitionComponent={Slide} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+                <Alert onClose={handleClose} severity="error">
+                    {message}
+                </Alert>
+            </Snackbar>
         </div>
     );
 };
