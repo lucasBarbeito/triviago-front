@@ -5,6 +5,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import axios from 'axios';
+import '../styles/CommentComponent.module.css';
 
 const CommentComponent = () => {
   const [newComment, setNewComment] = useState("");
@@ -58,61 +59,35 @@ const CommentComponent = () => {
   };
 
   return (
-    <Card variant="outlined" style={{
-      border: '1px',
-      borderColor: '#667085',
-      color: '#FFFFFF',
-      width: '769px',
-      height: '605px',
-      margin: '0 auto',
-      top: '446px',
-      left: '336px',
-      boxShadow: '0px 3.872286558151245px 3.872286558151245px 0px #00000040'
-     }}>
+    <Card className="componentBox">
       <CardContent>
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Box>
-            <Typography variant="username" style={{ 
-              color: '#000000',
-              font: 'Inter',
-              fontSize: '18px',
-              fontWeight: 'bold',
-              size: '18',
-              weight: '700',
-              height: '22px',
-              align: 'justified',
-              }}>
+            <Typography variant="userNameText">
               usuario1@mail.com
             </Typography>
-            <Typography variant="date" color="#667085" style={{ fontSize: '14px', marginLeft: '8px' }}>
+            <Typography variant="dateText">
                {formattedDateTime}
             </Typography>
           </Box>
 
           <Box>
-            <IconButton aria-label="Editar comentario" color="#667085;" sx={{ position: 'relative', zIndex: 0 }}>
+            <IconButton aria-label="Editar comentario">
               <EditIcon />
             </IconButton>
-            <IconButton aria-label="Eliminar comentario" color="error" sx={{ position: 'relative', zIndex: 0 }}>
+            <IconButton aria-label="Eliminar comentario" className="cancelButton">
               <DeleteIcon />
             </IconButton>
           </Box>
         </Box>
-        <Typography variant="body1" style={{ 
-          color: '#000000',
-          marginTop: '8px', 
-          width: '730px',
-          height: '44px',
-          top: '208px',
-          left: '18px',
-          }}>
+        <Typography variant="text">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </Typography>
-        <Box display="flex" alignItems="center" marginTop={1}>
+        <Box className="likeCount">
           <IconButton aria-label="Me gusta">
             <ThumbUpIcon />
           </IconButton>
-          <Typography variant="body2" style={{ margin: '0 8px', color: '#667085'}}>
+          <Typography variant="text">
             12
           </Typography>
           <IconButton aria-label="No me gusta">
@@ -120,80 +95,56 @@ const CommentComponent = () => {
           </IconButton>
         </Box>
       </CardContent>
-      <CardActions sx={{
-         display: 'flex',
-         justifyContent: 'space-between',
-         alignItems: 'center',
-         height: 'auto'
-         }}>
-         <TextField 
-            variant="standard" 
-            id="standard-multiline-flexible"
-            label="Agrega un comentario..."
-            multiline
-            maxRows={7}
-            fullWidth
-            background= "#FFFFFF"
-            value={newComment}
-            onChange={handleCommentChange}
-          />
-        </CardActions>
-        <Box display="flex" justifyContent="flex-end">
-          <Box sx={{marginTop: '8px'}}>
-            <Button variant="outlined" sx={{ width: '96px', height: '32px', marginRight: '8px' }}>
-              Cancelar
-            </Button>
-            <Button
-            variant="contained"
-            sx={{ width: '98px', height: '32px', background: '#00CC66', marginRight: '8px' }}
-            onClick={handleCommentSubmit}
-            disabled={isButtonDisabled}
-          >
-            Comentar
-          </Button>
-          </Box>
-        </Box>
-        <CardContent>
-          {comments.map((comment, index) => (
-            <Box key={index} marginLeft={3}>
-              <Typography variant="username2" style={{ 
-                color: '#000000',
-                font: 'Inter',
-                fontSize: '18px',
-                fontWeight: 'bold',
-                size: '18',
-                weight: '700',
-                height: '22px',
-                align: 'justified',
-                }}>
-                usuario{index + 1}@mail.com
+      <CardActions className="buttonsContainers">
+        <TextField 
+          variant="standard" 
+          id="standard-multiline-flexible"
+          label="Agrega un comentario..."
+          multiline
+          maxRows={7}
+          fullWidth
+          background="#FFFFFF"
+          value={newComment}
+          onChange={handleCommentChange}
+          className="inputComment"
+        />
+        <Button variant="outlined" className="cancelButton">
+          Cancelar
+        </Button>
+        <Button
+          variant="contained"
+          className="answerButton"
+          onClick={handleCommentSubmit}
+          disabled={isButtonDisabled}
+        >
+          Comentar
+        </Button>
+      </CardActions>
+      <CardContent>
+        {comments.map((comment, index) => (
+          <Box key={index} className="commentBox">
+            <Typography variant="userNameText">
+              usuario{index + 1}@mail.com
+            </Typography>
+            <Typography variant="dateText">
+               {comment.date}
+            </Typography>
+            <Typography variant="text">
+              {comment.content}
+            </Typography>
+            <Box className="likeCount">
+              <IconButton aria-label="Me gusta">
+                <ThumbUpIcon />
+              </IconButton>
+              <Typography variant="text">
+                0
               </Typography>
-              <Typography variant="date2" color="#667085" style={{ fontSize: '14px', marginLeft: '8px' }}>
-                 {comment.date}
-              </Typography>
-              <Typography variant="body2" style={{ 
-                color: '#000000',
-                marginTop: '8px', 
-                width: '730px',
-                height: '44px',
-                top: '208px',
-                left: '18px',
-                }}>
-                {comment.content}
-              </Typography>
-              <Box display="flex" alignItems="center" marginTop={1}>
-                <IconButton aria-label="Me gusta">
-                  <ThumbUpIcon />
-                </IconButton>
-                <Typography variant="body2" style={{ margin: '0 8px', color: '#667085'}}>
-                  0
-                </Typography>
-                <IconButton aria-label="No me gusta">
-                  <ThumbDownIcon />
-                </IconButton>
-              </Box>
+              <IconButton aria-label="No me gusta">
+                <ThumbDownIcon />
+              </IconButton>
             </Box>
-          ))}
+          </Box>
+        ))}
       </CardContent>
       <Snackbar
         anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
