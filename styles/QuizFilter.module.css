@@ -27,7 +27,9 @@
     border-radius: 8px;
     border: 1px solid #D0D5DD;
     background: #FFF;
+    text-indent: 18px;
 }
+
 
 .quizFilterDoubleInputFst {
     width: 90px;
@@ -135,6 +137,8 @@
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+    cursor: pointer;
+
 }
 
 .clearButton {
@@ -151,4 +155,5 @@
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+    cursor: pointer;
 }
