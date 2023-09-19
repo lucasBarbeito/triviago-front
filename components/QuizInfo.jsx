@@ -6,13 +6,26 @@ import RatingSection from './RatingSection';
 import { Inter } from 'next/font/google';
 import { faBookmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import axios from "axios";
 
 
 const inter = Inter({ subsets: ['latin'] });
 
-const QuizInfo = ({ id, title, tags, createdAt, description, rating, questionCount, owner="example@gmail.com" }) => {
-  return (
+const QuizInfo = ({ id, title, tags, creationDate, description, rating, questionCount=10, userEmail="example@gmail.com" }) => {
+
+    function formatDates(date) {
+        const monthNames = [
+            "enero", "febrero", "marzo", "abril",
+            "mayo", "junio", "julio", "agosto",
+            "septiembre", "octubre", "noviembre", "diciembre"
+        ];
+        if (date && date.length <= 3){
+            const day = date[2].toString().padStart(2, '0');
+            const month = monthNames[date[1] - 1];
+            const year = date[0];
+            return `${day} de ${month} de ${year}`;
+        }
+    }
+    return (
     <>
     <div className={`${styles.container} ${inter.className}`} >
         <Stack spacing={1.75} sx={{ height: '100%' }}>
@@ -38,7 +51,7 @@ const QuizInfo = ({ id, title, tags, createdAt, description, rating, questionCou
             </div>
             <div className={styles.divisor}/>
             <div className={styles.ownerData}>
-                Creado el {createdAt} por {owner}.
+                Creado el {formatDates(creationDate)} por {userEmail}
             </div>
             <div className={styles.divisor}/>        
             <div className={styles.rating}>

@@ -74,16 +74,18 @@ const SigninForm = () => {
             return
         }
 
-
         // aca van los datos como los recibe el back
         const service = useRequestService()
         service .signUp({firstName: name, lastName: surname, birthDate: birthDate, email:email, password:password})
             .then( () => router.push("/home"))
             .catch((e) => {
-                setMessage(e.message)
+                if (e.response.status === 500){
+                    setMessage("El correo electrónico ya está en uso.")
+                }else {
+                    setMessage(e.message)
+                }
                 setOpen(true)
             })
-
 
 
     }

@@ -8,18 +8,34 @@ import Image from "next/image";
 import Checkbox from '@mui/material/Checkbox';
 import {Slide, Snackbar} from "@mui/material";
 import {Alert} from "@mui/lab";
+import {useRequestService} from "@/service/request.service"
 
-const QuizFilter = () => {
+const QuizFilter = ({setFilteredQuizzes, setFetchingQuizzes}) => {
     const [quizTitle, setQuizTitle] = useState('');
+    const [labels, setLabels] = useState([]);
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState();
     const [minQuestions, setMinQuestions] = useState('');
     const [maxQuestions, setMaxQuestions] = useState('');
-    const [minCalification, setMinCalification] = useState(null);
-    const [maxCalification, setMaxCalification] = useState(null);
+    const [minCalification, setMinCalification] = useState("");
+    const [maxCalification, setMaxCalification] = useState("");
     const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
     const [message, setMessage] = useState("ERROR");
     const [open, setOpen] = useState(false);
+    const service = useRequestService()
+
+    useEffect(() => {
+        service.getLabels().then((response) => {
+            // console.log(response)
+            setLabels(response)
+        }).catch((error) => {
+            console.log(error)
+        })
+    }, []);
+
+    const handleTitleChange = (event) => {
+        setQuizTitle(event.target.value);
+    };
 
     const handleStartDateChange = (date) => {
         setStartDate(date);
@@ -73,7 +89,7 @@ const QuizFilter = () => {
         setIsCheckboxChecked(event.target.checked);
     };
 
-    const isCreationDateValid = startDate === null || endDate === null || startDate <= endDate;
+    const isCreationDateValid = (startDate && endDate) ? startDate <= endDate : true;
 
     const isQuestionValid =
         (minQuestions === '' && maxQuestions === '') ||
@@ -90,8 +106,9 @@ const QuizFilter = () => {
         isNaN(parseFloat(minCalification));
 
     const handleClearButtonClick = () => {
-        setStartDate(null);
-        setEndDate(null);
+        setQuizTitle("");
+        setStartDate("");
+        setEndDate("");
         setMinQuestions('');
         setMaxQuestions('');
         setMinCalification('');
@@ -110,36 +127,54 @@ const QuizFilter = () => {
 
     const currentDate = new Date()
 
-        function handleSearch(){
-        if(!(isCalificationValid) || !(isQuestionValid) || !(isCreationDateValid)){
+    function handleSearch() {
+        if (!(isCalificationValid) || !(isQuestionValid) || !(isCreationDateValid)) {
             setOpen(true)
-            if(!isCreationDateValid){
+            if (!isCreationDateValid) {
                 setMessage("La fecha desde debe ser anterior a la fecha hasta")
                 return
             }
-            if(!isQuestionValid){
+            if (!isQuestionValid) {
                 setMessage("Minimo debe ser mayor o igual al maximo")
                 return
             }
-            if(!isCalificationValid){
+            if (!isCalificationValid) {
                 setMessage("Rango de calificación inválido")
                 return
             }
         }
-    }
-    const [from, setFrom] = useState("")
-    const [to, setTo] = useState("")
+        const quizFilter = {
+            title: quizTitle,
+            labels: selectedTags,
+            dateFrom: startDate ? startDate.toISOString().split('T')[0] : null,
+            dateTo: endDate ? endDate.toISOString().split('T')[0] : null,
+            minQuestions: minQuestions,
+            maxQuestions: maxQuestions,
+            minRating: minCalification,
+            maxRating: maxCalification,
+        }
 
+        setFetchingQuizzes(true);
+
+        service.filterQuizzes(quizFilter).then((response) => {
+            console.log(response)
+            setFilteredQuizzes(response)
+        }).catch((error) => {
+            console.log(error);
+        });
+
+        setFetchingQuizzes(false)
+    }
 
     return (
         <div className={styles.quizFilterContainer}>
             <p className={styles.quizFilterTitle}>Título</p>
-            <Form.Control id={"titleFilter"} type="search" className={styles.quizFilterSearchInput}/>
+            <Form.Control id={"titleFilter"} type="search" className={styles.quizFilterSearchInput} onChange={handleTitleChange}/>
             <p className={styles.quizFilterTitle}>Etiquetas</p>
             <div>
                 <MultipleSelectCheckmarks
                     tag={"Etiquetas"}
-                    options={["Etiqueta1", "Etiqueta2"]}
+                    options={labels.map(label => label.value)}
                     values={selectedTags}
                     onChange={handleTagChange}
                 />
@@ -148,7 +183,7 @@ const QuizFilter = () => {
             <div className={styles.quizFilterInputPlaceholder}>
                 <div>
                     <DatePicker
-                        id = "fromDate"
+                        id="fromDate"
                         selected={startDate}
                         onChange={handleStartDateChange}
                         placeholderText="Desde"
@@ -159,7 +194,7 @@ const QuizFilter = () => {
                 <div className={styles.line}></div>
                 <div>
                     <DatePicker
-                        id = "toDate"
+                        id="toDate"
                         selected={endDate}
                         onChange={handleEndDateChange}
                         placeholderText="Hasta"
@@ -226,7 +261,8 @@ const QuizFilter = () => {
                 </button>
                 <button className={styles.searchButton} onClick={handleSearch}>Buscar</button>
             </div>
-            <Snackbar open={open} autoHideDuration={5000} onClose={handleClose} TransitionComponent={Slide} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+            <Snackbar open={open} autoHideDuration={5000} onClose={handleClose} TransitionComponent={Slide}
+                      anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
                 <Alert onClose={handleClose} severity="error">
                     {message}
                 </Alert>
