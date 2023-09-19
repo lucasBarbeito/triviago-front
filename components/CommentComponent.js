@@ -46,7 +46,7 @@ const CommentComponent = ({ id, content, authorEmail, likes, refresh, openAlert,
             refresh();
         }
         catch (error) {
-            setAlertMessage('Hubo un error al editar el comentario')
+            setAlertMessage('Hubo un error al editar el comentario, por favor intenta más tarde')
             openAlert();
         }
     }
