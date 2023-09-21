@@ -108,15 +108,24 @@ const CommentComponent = ({ id, content, authorEmail, likes, handleDeleteComment
         {/* Respuestas */}
         {responses.map((response, index) => (
           <div key={index}>
+            {/* Información del usuario de la respuesta */}
+            <div className={styles.responseUserInfo}>
+              <Typography variant="username2">
+                {response.username} {/* Agrega el nombre del usuario */}
+              </Typography>
+              <Typography variant="date2">
+                {response.date} {/* Agrega la fecha */}
+              </Typography>
+            </div>
             {/* Aquí muestra la respuesta */}
             <Typography variant="body2">
               {response.content}
             </Typography>
-            <div className={styles.likesContainer}>
+            <div className={`${styles.likesContainer} ${response.likes > 2 ? styles.expanded : ''}`}>
               <IconButton aria-label="Me gusta">
                 <ThumbUpIcon />
               </IconButton>
-              <Typography variant="body2">
+              <Typography variant="body2" className={styles.likeCount}>
                 {response.likes}
               </Typography>
               <IconButton aria-label="No me gusta">
