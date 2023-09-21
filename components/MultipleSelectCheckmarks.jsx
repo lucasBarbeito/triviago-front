@@ -25,7 +25,7 @@ const MultipleSelectCheckmarks = ({tag, onChange, values, options}) => {
                 renderValue={(selected) => selected.join(', ')}
                 MenuProps={MenuProps}
             >
-                {options.map((name) => (
+                {options?.map((name) => (
                     <MenuItem key={name} value={name}>
                         <Checkbox checked={values.indexOf(name) > -1} />
                         <ListItemText primary={name} />
