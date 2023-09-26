@@ -174,7 +174,7 @@ const QuizFilter = ({setFilteredQuizzes, setFetchingQuizzes}) => {
             <div>
                 <MultipleSelectCheckmarks
                     tag={"Etiquetas"}
-                    options={labels.map(label => label.value)}
+                    options={labels?.map(label => label.value)}
                     values={selectedTags}
                     onChange={handleTagChange}
                 />
