@@ -14,6 +14,7 @@ const QuizComents = () => {
     const [comments, setComments] = useState([])
     const service = useRequestService()
     const [quizId, setQuizId] = useState('0')
+    const [replyToCommentId, setReplyToCommentId] = useState(null);
 
     useEffect(() => {
         const id = window.location.pathname.split('/')[2]
@@ -34,21 +35,55 @@ const QuizComents = () => {
         document.getElementById("comment").value = ""
     }
 
+    // async function logComment() {
+    //     if (comment !== "") {
+    //       const data = jwt.decode(Cookies.get('jwt'));
+    //       const comData = {
+    //         content: comment,
+    //         quizId: quizId,
+    //         userId: data.id,
+    //         parentCommentId: null, // Esto indica que es un comentario principal
+    //       };
+    
+    //       if (replyToCommentId) {
+    //         comData.parentCommentId = replyToCommentId; // Si hay un comentario al que se responde, asigna su ID como parentCommentId
+    //       }
+    
+    //       const com = await service.logComment(comData);
+    //       setComments((prevState) => {
+    //         if (Array.isArray(prevState)) {
+    //           return [...prevState, com];
+    //         } else {
+    //           return [com];
+    //         }
+    //       });
+    //       cancelComment();
+    //       setReplyToCommentId(null); // Reinicia el ID del comentario al que se responde
+    //     }
+    //   }
+
     async function logComment() {
         if (comment !== "") {
-            const data = jwt.decode(Cookies.get('jwt'))
-
-            const com = await service.logComment({content: comment, quizId: quizId, userId: data.id});
-            setComments(prevState => {
-                if (Array.isArray(prevState)) {
-                    return [...prevState, com];
-                } else {
-                    return [com];
-                }
-            });
-            cancelComment();
+          const data = jwt.decode(Cookies.get('jwt'));
+          const comData = {
+            content: comment,
+            quizId: quizId,
+            userId: data.id,
+            parentCommentId: replyToCommentId || null, // Asigna el ID del comentario al que se responde o null si es un comentario principal
+          };
+    
+          const com = await service.logComment(comData);
+          setComments((prevState) => {
+            if (Array.isArray(prevState)) {
+              return [...prevState, com];
+            } else {
+              return [com];
+            }
+          });
+          cancelComment();
+          setReplyToCommentId(null); // Reinicia el ID del comentario al que se responde
         }
-    }
+      }
 
     function handleDeleteComment(index) {
         const selectedComment = comments[index]
@@ -97,12 +132,20 @@ const QuizComents = () => {
                             <button className={styles.greenButton} onClick={logComment}>Comentar</button>
                         </div>
                         <div>
-                            {
-                                comments && comments.map((comment, index) => {
-                                    return <CommentComponent handleDeleteComment={() => handleDeleteComment(index)} id={comment.id} content={comment.content} likes={comment.likes}
-                                                             authorEmail={comment.author?.email}/>
-                                })
-                            }
+                        {comments &&
+            comments.map((comment, index) => {
+              return (
+                <CommentComponent
+                  key={comment.id}
+                  handleDeleteComment={() => handleDeleteComment(index)}
+                  id={comment.id}
+                  content={comment.content}
+                  likes={comment.likes}
+                  authorEmail={comment.author?.email}
+                  replyToComment={() => setReplyToCommentId(comment.id)} // Establece el ID del comentario al que se responde
+                />
+              );
+            })}
                         </div>
                     </div>
                     :
