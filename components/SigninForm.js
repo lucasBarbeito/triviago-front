@@ -108,13 +108,13 @@ const SigninForm = () => {
         <form className={styles.formContainer}>
 
             <div className={styles.labelContainer}>
-                <label className={styles.label}>Nombre</label>
+                <label className={styles.label}>Nombre *</label>
                 <input className={styles.input} type="text" id="name" name="name" placeholder="Ingresa tu nombre"
                        onChange={handleName}/>
             </div>
 
             <div className={styles.labelContainer}>
-                <label className={styles.label}>Apellido</label>
+                <label className={styles.label}>Apellido *</label>
                 <input className={styles.input} type="text" id="surname" name="surname"
                        placeholder="Ingresa tu apellido" onChange={handleSurname}/>
             </div>
@@ -122,7 +122,7 @@ const SigninForm = () => {
             {/*CALENDARIO:*/}
 
             <div className={styles.labelContainer}>
-                <label className={styles.label}>Fecha de nacimiento</label>
+                <label className={styles.label}>Fecha de nacimiento *</label>
                 <input id="date" type="date" defaultValue={formattedDate} className={styles.inputCalendar}
                        max={formattedDate} onChange={handleBirthDate} onKeyDown={(e) => e.preventDefault()}/>
                 <div className={styles.line}></div>
@@ -130,19 +130,19 @@ const SigninForm = () => {
 
 
             <div className={styles.labelContainer}>
-                <label className={styles.label}>Email</label>
+                <label className={styles.label}>Email *</label>
                 <input className={styles.input} type="email" id="email" name="email" placeholder="Ingresa tu email"
                        onChange={handleEmail}/>
             </div>
 
             <div className={styles.labelContainer}>
-                <label className={styles.label}>Contraseña</label>
+                <label className={styles.label}>Contraseña *</label>
                 <input className={styles.input} type="password" id="password" name="password"
                        placeholder="Ingresa tu contraseña" onChange={handlePassword}/>
             </div>
 
             <div className={styles.labelContainer}>
-                <label className={styles.label}>Confirmar contraseña</label>
+                <label className={styles.label}>Confirmar contraseña *</label>
                 <input className={styles.input} type="password" id="confirmPassword" name="confirmPassword"
                        placeholder="Ingresa tu contraseña" onChange={handleConfirmPassword}/>
             </div>

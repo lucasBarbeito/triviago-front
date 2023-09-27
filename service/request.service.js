@@ -140,23 +140,13 @@ const RequestService = {
 
     filterQuizzes: async (quizFilter) => {
         // Codificar los valores de los parámetros en la URL
-        const encodedFilter = {
-            title: encodeURIComponent(quizFilter.title),
-            labels: encodeURIComponent(JSON.stringify(quizFilter.labels)),
-            minQuestions: encodeURIComponent(quizFilter.minQuestions),
-            maxQuestions: encodeURIComponent(quizFilter.maxQuestions),
-            minRating: encodeURIComponent(quizFilter.minRating),
-            maxRating: encodeURIComponent(quizFilter.maxRating),
-            dateFrom: encodeURIComponent(quizFilter.dateFrom),
-            dateTo: encodeURIComponent(quizFilter.dateTo),
-        };
-
-        const response = await axios.get(`${url}/quiz`, {
-            params: encodedFilter,
-            headers: {
-                'Authorization': 'Bearer ' + Cookies.get('jwt')
-            }
-        });
+        const response = await axios.get(
+            `${url}/quiz`, {
+                params: quizFilter,
+                headers: {
+                    'Authorization': 'Bearer ' + Cookies.get('jwt')
+                }
+            });
 
         if (response.status === 200) {
             return response.data;

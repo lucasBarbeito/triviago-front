@@ -8,10 +8,7 @@ import ThumbDownIcon from '@mui/icons-material/ThumbDown';
 import {useRequestService} from "@/service/request.service";
 import styles from '../styles/CommentComponent.module.css';
 
-const currentDate = new Date();
-const formattedDateTime = currentDate.toLocaleString(); //hora actual, cambiar a la hora que realizo el comentario
-
-const CommentComponent = ({id, content, authorEmail, likes, handleDeleteComment}) => {
+const CommentComponent = ({id, content, authorEmail, likes, handleDeleteComment, creationDateTime}) => {
 
     const service = useRequestService()
     const [likeCount, setLikeCount] = useState(likes); // Estado para realizar un seguimiento de los likes
@@ -46,11 +43,10 @@ const CommentComponent = ({id, content, authorEmail, likes, handleDeleteComment}
                 <Box display="flex" justifyContent="space-between" alignItems="center">
                     <Box>
                         <Typography variant="username" className={styles.userNameText}>
-                            {/*{authorEmail}*/}
-                            PEPE@gmail.com
+                            {authorEmail}
                         </Typography>
                         <Typography variant="date" className={styles.dateText}>
-                            {formattedDateTime}
+                            {new Date(creationDateTime).toLocaleDateString("en-US")}
                         </Typography>
                     </Box>
 
