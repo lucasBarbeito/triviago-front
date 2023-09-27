@@ -64,11 +64,6 @@ const CommentComponent = ({ id, content, authorEmail, likes, handleDeleteComment
     }
   };
 
-  // const handleComment = (event) => {
-  //   event.target.style.height = '22px';
-  //   event.target.style.height = event.target.scrollHeight + 'px';
-  // }
-
   const handleCancel = () => {
     setReplyText('');
   };
