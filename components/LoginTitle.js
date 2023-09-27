@@ -8,7 +8,7 @@ const LoginTitle = () => {
         <div className={styles.bigContainer}>
             <div className={styles.logoContainer}>
                 <div className={styles.logo}>
-                    <Image src={"/images/vector.png"} alt={"vector"} width={"123"} height={"123"} />
+                    <Image src={"/assets/images/vector.png"} alt={"vector"} width={"123"} height={"123"} />
                 </div>
                 <p className={styles.logoTriviago}>riviago</p>
             </div>

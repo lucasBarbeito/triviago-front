@@ -25,7 +25,7 @@ const QuizPreview = ({ id, title, labels, creationDate, description, rating, que
                     </div>
                 </div>
                 <div className={styles.tags}>
-                    {labels.join(', ')}
+                    {labels?.join(', ')}
                 </div>
                 <div className={styles.description}>
                     {description}

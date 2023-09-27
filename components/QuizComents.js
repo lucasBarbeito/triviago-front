@@ -20,6 +20,9 @@ const QuizComents = () => {
         setQuizId(id)
         service.fetchComments(id).then(commentsList => {
             setComments(commentsList)
+        }).catch(error =>{
+            console.error("Error fetching comments:", error);
+            setComments([])
         })
     }, [quizId]);
 
@@ -100,7 +103,7 @@ const QuizComents = () => {
                             {
                                 comments && comments.map((comment, index) => {
                                     return <CommentComponent handleDeleteComment={() => handleDeleteComment(index)} id={comment.id} content={comment.content} likes={comment.likes}
-                                                             authorEmail={comment.author?.email}/>
+                                                             authorEmail={comment.author?.email} creationDateTime={comment.creationDate}/>
                                 })
                             }
                         </div>

@@ -26,7 +26,6 @@ const QuizFilter = ({setFilteredQuizzes, setFetchingQuizzes}) => {
 
     useEffect(() => {
         service.getLabels().then((response) => {
-            // console.log(response)
             setLabels(response)
         }).catch((error) => {
             console.log(error)
@@ -145,7 +144,7 @@ const QuizFilter = ({setFilteredQuizzes, setFetchingQuizzes}) => {
         }
         const quizFilter = {
             title: quizTitle,
-            labels: selectedTags,
+            labels: selectedTags.join(","),
             dateFrom: startDate ? startDate.toISOString().split('T')[0] : null,
             dateTo: endDate ? endDate.toISOString().split('T')[0] : null,
             minQuestions: minQuestions,
@@ -174,7 +173,7 @@ const QuizFilter = ({setFilteredQuizzes, setFetchingQuizzes}) => {
             <div>
                 <MultipleSelectCheckmarks
                     tag={"Etiquetas"}
-                    options={labels.map(label => label.value)}
+                    options={labels?.map(label => label.value)}
                     values={selectedTags}
                     onChange={handleTagChange}
                 />

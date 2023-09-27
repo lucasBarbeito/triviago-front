@@ -139,6 +139,7 @@ const RequestService = {
 
 
     filterQuizzes: async (quizFilter) => {
+        // Codificar los valores de los parámetros en la URL
         const response = await axios.get(
             `${url}/quiz`, {
                 params: quizFilter,
@@ -146,10 +147,12 @@ const RequestService = {
                     'Authorization': 'Bearer ' + Cookies.get('jwt')
                 }
             });
+
         if (response.status === 200) {
             return response.data;
         }
     }
+
 }
 
 export const useRequestService = () => RequestService
