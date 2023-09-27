@@ -147,6 +147,8 @@ const RequestService = {
             maxQuestions: encodeURIComponent(quizFilter.maxQuestions),
             minRating: encodeURIComponent(quizFilter.minRating),
             maxRating: encodeURIComponent(quizFilter.maxRating),
+            dateFrom: encodeURIComponent(quizFilter.dateFrom),
+            dateTo: encodeURIComponent(quizFilter.dateTo),
         };
 
         const response = await axios.get(`${url}/quiz`, {

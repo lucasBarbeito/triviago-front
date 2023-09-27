@@ -124,7 +124,7 @@ const SigninForm = () => {
             <div className={styles.labelContainer}>
                 <label className={styles.label}>Fecha de nacimiento</label>
                 <input id="date" type="date" defaultValue={formattedDate} className={styles.inputCalendar}
-                       max={formattedDate} onChange={handleBirthDate}/>
+                       max={formattedDate} onChange={handleBirthDate} onKeyDown={(e) => e.preventDefault()}/>
                 <div className={styles.line}></div>
             </div>
 
