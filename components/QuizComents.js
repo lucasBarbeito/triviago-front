@@ -135,7 +135,6 @@ const QuizComents = () => {
                             <button className={styles.greenButton} onClick={logComment}>Comentar</button>
                         </div>
                         <div>
-<<<<<<< HEAD
                         {comments &&
             comments.map((comment, index) => {
               return (
