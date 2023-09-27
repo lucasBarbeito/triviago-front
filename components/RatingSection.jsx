@@ -7,7 +7,7 @@ function RatingSection({ ratings, comments, questions, startButton }) {
   return (
     <Grid container>
 
-      {ratings && (
+      {ratings !== undefined && (
       <Grid item xs={2.4}>
         <strong>{ratings}</strong> Puntos
       </Grid>

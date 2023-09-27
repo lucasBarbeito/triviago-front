@@ -7,7 +7,7 @@ const LoginHeader = () => {
         <header>
             <div className={styles.bigContainer} >
                 <div className={styles.logoContainer}>
-                    <Image src={"/images/vector.png"} alt={"vector"} width={"62"} height={"62"} />
+                    <Image src={"/assets/images/vector.png"} alt={"vector"} width={"62"} height={"62"} />
                 </div>
                 <h1 className={styles.welcomeText}>Bienvenido</h1>
                 <p className={styles.infoText}>Por favor ingresa tus datos.</p>
