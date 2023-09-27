@@ -8,12 +8,15 @@ import { useRequestService } from "@/service/request.service";
 import styles from '../styles/CommentComponent.module.css';
 
 const currentDate = new Date();
-const formattedDateTime = currentDate.toLocaleString(); //hora actual, cambiar a la hora que realizo el comentario
+const formattedDateTime = currentDate.toLocaleString(); 
 
-const CommentComponent = ({id, content, authorEmail, likes, handleDeleteComment}) => {
-
-    const service = useRequestService()
-    const [likeCount, setLikeCount] = useState(likes); // Estado para realizar un seguimiento de los likes
+const CommentComponent = ({ id, content, authorEmail, likes, handleDeleteComment, replyToComment, quizId, replies }) => {
+  const service = useRequestService();
+  const [likeCount, setLikeCount] = useState(likes);
+  const [replyText, setReplyText] = useState('');
+  const [responses, setResponses] = useState(replies);
+  const [liked, setLiked] = useState(false);
+  const [disliked, setDisLiked] = useState(false);
 
   const handleLikeClick = async () => {
     if (!liked) {
@@ -77,62 +80,100 @@ const CommentComponent = ({id, content, authorEmail, likes, handleDeleteComment}
     console.log(likeCount)
   },[])
 
-    return (
-        <Card variant="outlined" className={styles.componentBox}>
-            <CardContent>
-                <Box display="flex" justifyContent="space-between" alignItems="center">
-                    <Box>
-                        <Typography variant="username" className={styles.userNameText}>
-                            {/*{authorEmail}*/}
-                            PEPE@gmail.com
-                        </Typography>
-                        <Typography variant="date" className={styles.dateText}>
-                            {formattedDateTime}
-                        </Typography>
-                    </Box>
+  return (
+    <Card variant="outlined" className={styles.componentBox}>
+      <CardContent>
+        <Box display="flex" justifyContent="space-between" alignItems="center">
+          <Box>
+            <Typography variant="username" className={styles.userNameText}>
+              {authorEmail}
+            </Typography>
+            <Typography variant="date" className={styles.dateText}>
+              {formattedDateTime}
+            </Typography>
+          </Box>
+          <Box>
+            <IconButton aria-label="Eliminar comentario" color="error" sx={{ position: 'relative', zIndex: 0 }} onClick={handleDeleteComment}>
+              <DeleteIcon />
+            </IconButton>
+          </Box>
+        </Box>
+        <textarea readOnly={true} className={styles.text}>
+          {content}
+        </textarea>
+        <div className={styles.likesContainer}>
+          <IconButton aria-label="Me gusta" onClick={handleLikeClick} color={liked ? 'primary' : 'default'} disabled={liked} >
+            <ThumbUpIcon />
+          </IconButton>
+          <Typography variant="body2" className={styles.likeCount}>
+            {likeCount}
+          </Typography>
+          <IconButton aria-label="No me gusta" onClick={handleDislikeClick} color={disliked ? 'primary' : 'default'} disabled={disliked} >
+          <ThumbDownIcon color={disliked ? 'primary' : 'default'} />
+          </IconButton>
+        </div>
+        <div className={styles.commentBox}>
+          <textarea
+            type="text"
+            id={`comment_${id}`}
+            name={`comment_${id}`}
+            placeholder="Agrega una respuesta al comentario..."
+            className={styles.inputComment}
+            onChange={(e) => setReplyText(e.target.value)}
+            value={replyText}
+          />
+          <div className={styles.line} />
+          <Box className={styles.buttonsContainers}>
+            <button className={styles.cancelButton} onClick={handleCancel}>
+              Cancelar
+            </button>
+            <button className={styles.answerButton} onClick={handleReply}>
+              Responder
+            </button>
+          </Box>
+        </div>
 
-                    <Box>
-                        <IconButton aria-label="Editar comentario" color="#667085;"
-                                    sx={{position: 'relative', zIndex: 0}}>
-                            <EditIcon/>
-                        </IconButton>
-                        <IconButton aria-label="Eliminar comentario" color="error"
-                                    sx={{position: 'relative', zIndex: 0}} onClick={handleDeleteComment}>
-                            <DeleteIcon/>
-                        </IconButton>
-                    </Box>
-                </Box>
-                <textarea readOnly={true} className={styles.text}>
-                {content}
-            </textarea>
-                <div className={`${styles.likesContainer} ${likeCount.length > 2 ? styles.expanded : ''}`}>
-                    <IconButton aria-label="Me gusta" onClick={handleLikeClick}>
-                        <ThumbUpIcon/>
-                    </IconButton>
-                    <Typography variant="body2" className={styles.likeCount}>
-                        {likeCount}
-                    </Typography>
-                    <IconButton aria-label="No me gusta" onClick={handleDislikeClick}>
-                        <ThumbDownIcon/>
-                    </IconButton>
-                </div>
-            </CardContent>
-            <div className={styles.commentBox}>
-                <textarea type="text" id="comment" name="comment" placeholder="Agrega un comentario..."
-                          className={styles.inputComment} onChange={handleComment}/>
-                <div className={styles.line}/>
+        {/*Seccion de Respuesta a comentario */}
+
+        {responses.map((response, index) => (
+        <div key={index}>
+          {replyToComment && (
+            <div className={styles.replyToCommentContainer}>
+              <span className={styles.userNameResponseField}>pepito@mail.com </span>
+              <Typography variant="date2">
+                {response.dateTime}
+              </Typography>
             </div>
-            <Box className={styles.buttonsContainers}>
-                <button className={styles.cancelButton}>
-                    Cancelar
-                </button>
-                <button className={styles.answerButton}>
-                    Responder
-                </button>
-            </Box>
-        </Card>
-    )
 
+          )}
+    <div className={styles.responseUserInfo}>
+      <Typography variant="username2">
+        {response.authorEmail}
+      </Typography>
+    </div>
+    <div className={styles.responseCommentBox}>
+              <Typography variant="body2" className={styles.text}>
+                {response.content}
+              </Typography>
+      <div className={styles.likesContainer}>
+        <IconButton aria-label="Me gusta">
+          <ThumbUpIcon />
+        </IconButton>
+        <Typography variant="Numero de likes" className={styles.likeCount}>
+          {response.likes}
+        </Typography>
+        <IconButton aria-label="No me gusta">
+          <ThumbDownIcon />
+        </IconButton>
+      </div>
+    </div>
+  </div>
+))}
+      </CardContent>
+    </Card>
+  );
 };
 
 export default CommentComponent;
+
+
