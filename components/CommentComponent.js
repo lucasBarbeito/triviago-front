@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Card, CardContent, IconButton, Typography } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
@@ -10,74 +10,80 @@ import styles from '../styles/CommentComponent.module.css';
 const currentDate = new Date();
 const formattedDateTime = currentDate.toLocaleString(); 
 
-const CommentComponent = ({ id, content, authorEmail, likes, handleDeleteComment, replyToComment }) => {
+const CommentComponent = ({ id, content, authorEmail, likes, handleDeleteComment, replyToComment, quizId, replies }) => {
   const service = useRequestService();
   const [likeCount, setLikeCount] = useState(likes);
   const [replyText, setReplyText] = useState('');
-  const [responses, setResponses] = useState([]);
-  const [replyTextToComments, setReplyTextToComments] = useState(Array(responses.length).fill(''));
+  const [responses, setResponses] = useState(replies);
+  const [liked, setLiked] = useState(false);
+  const [disliked, setDisLiked] = useState(false);
 
   const handleLikeClick = async () => {
-    try {
-      await service.likeComment(id);
-      setLikeCount(likeCount + 1);
-    } catch (error) {
-      console.error('Hubo un error, por favor intenta más tarde', error);
+    if (!liked) {
+      try {
+        await service.likeComment(id);
+        setLikeCount(likeCount + 1);
+        setLiked(true);
+        if (disliked) {
+          setDisliked(false);
+        }
+      } catch (error) {
+        console.error('Hubo un error, por favor intenta más tarde', error);
+      }
+    } else {
+      try {
+        await service.removeLikeComment(id);
+        setLikeCount(likeCount - 1);
+        setLiked(false);
+      } catch (error) {
+        console.error('Hubo un error, por favor intenta más tarde', error);
+      }
     }
   };
 
   const handleDislikeClick = async () => {
-    try {
-      await service.dislikeComment(id);
-      setLikeCount(likeCount - 1);
-    } catch (error) {
-      console.error('Hubo un error, por favor intenta más tarde', error);
+    if (!disliked) {
+      try {
+        await service.dislikeComment(id);
+        setLikeCount(likeCount - 1);
+        setDisliked(true);
+        if (liked) {
+          setLiked(false);
+        }
+      } catch (error) {
+        console.error('Hubo un error, por favor intenta más tarde', error);
+      }
+    } else {
+      try {
+        await service.removeDislikeComment(id);
+        setLikeCount(likeCount + 1);
+        setDisliked(false);
+      } catch (error) {
+        console.error('Hubo un error, por favor intenta más tarde', error);
+      }
     }
   };
 
-  const handleComment = (event) => {
-    event.target.style.height = '22px';
-    event.target.style.height = event.target.scrollHeight + 'px';
-  }
+  // const handleComment = (event) => {
+  //   event.target.style.height = '22px';
+  //   event.target.style.height = event.target.scrollHeight + 'px';
+  // }
 
   const handleCancel = () => {
     setReplyText('');
   };
 
-  const handleReply = () => {
+  const handleReply = async () => {
     if (replyText !== '') {
-      const newReply = { content: replyText, likes: 0, dateTime: formattedDateTime };
-      setResponses([...responses, newReply]);
+      const aux = await service.logComment({parentCommentId:id, content:replyText, quizId: quizId})
+      setResponses([...responses, aux]);
       setReplyText('');
-      
     }
   };
 
-  // const handleReply = async () => {
-  //   if (replyText !== '') {
-  //     try {
-  //       const response = await service.logComment({
-  //         content: replyText,
-  //         quizId: null, // Opcional: Si es necesario, puedes establecer el ID del quiz aquí
-  //         userId: null, // Opcional: Si es necesario, puedes establecer el ID del usuario aquí
-  //         parentCommentId: replyToComment !== null ? replyToComment : null, // Asigna el ID del comentario al que se responde o null si es un comentario principal
-  //       });
-
-  //       const newReply = {
-  //         id: response.id, // Asigna el ID del comentario que se acaba de crear
-  //         content: replyText,
-  //         likes: 0,
-  //         dateTime: formattedDateTime,
-  //         authorEmail: authorEmail, // Agregar el autor del comentario
-  //       };
-
-  //       setResponses([...responses, newReply]);
-  //       setReplyText('');
-  //     } catch (error) {
-  //       console.error('Hubo un error al responder al comentario', error);
-  //     }
-  //   }
-  // };
+  useEffect(()=> {
+    console.log(likeCount)
+  },[])
 
   return (
     <Card variant="outlined" className={styles.componentBox}>
@@ -101,14 +107,14 @@ const CommentComponent = ({ id, content, authorEmail, likes, handleDeleteComment
           {content}
         </textarea>
         <div className={styles.likesContainer}>
-          <IconButton aria-label="Me gusta" onClick={handleLikeClick}>
+          <IconButton aria-label="Me gusta" onClick={handleLikeClick} color={liked ? 'primary' : 'default'} disabled={liked} >
             <ThumbUpIcon />
           </IconButton>
           <Typography variant="body2" className={styles.likeCount}>
             {likeCount}
           </Typography>
-          <IconButton aria-label="No me gusta" onClick={handleDislikeClick}>
-            <ThumbDownIcon />
+          <IconButton aria-label="No me gusta" onClick={handleDislikeClick} color={disliked ? 'primary' : 'default'} disabled={disliked} >
+          <ThumbDownIcon color={disliked ? 'primary' : 'default'} />
           </IconButton>
         </div>
         <div className={styles.commentBox}>
@@ -139,16 +145,15 @@ const CommentComponent = ({ id, content, authorEmail, likes, handleDeleteComment
           {replyToComment && (
             <div className={styles.replyToCommentContainer}>
               <span className={styles.userNameResponseField}>pepito@mail.com </span>
-              <span>Respondiendo a: </span>
-              <span className={styles.userNameResponseField}>{authorEmail}</span>
+              <Typography variant="date2">
+                {response.dateTime}
+              </Typography>
             </div>
+
           )}
     <div className={styles.responseUserInfo}>
       <Typography variant="username2">
         {response.authorEmail}
-      </Typography>
-      <Typography variant="date2">
-        {response.dateTime}
       </Typography>
     </div>
     <div className={styles.responseCommentBox}>

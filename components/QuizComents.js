@@ -136,13 +136,15 @@ const QuizComents = () => {
             comments.map((comment, index) => {
               return (
                 <CommentComponent
+                  quizId={quizId}
                   key={comment.id}
                   handleDeleteComment={() => handleDeleteComment(index)}
                   id={comment.id}
                   content={comment.content}
                   likes={comment.likes}
                   authorEmail={comment.author?.email}
-                  replyToComment={() => setReplyToCommentId(comment.id)} // Establece el ID del comentario al que se responde
+                  replyToComment={comment.id} // Establece el ID del comentario al que se responde
+                  replies={comment.responses}
                 />
               );
             })}
