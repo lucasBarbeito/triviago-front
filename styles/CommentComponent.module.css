@@ -197,7 +197,7 @@
     color: #000;
     font-size: 16px;
     margin-left: 70px;
-  }
+}
 
 .replyToComment{
     color: #000;
@@ -221,3 +221,27 @@
     text-align: justify;
 }
 
+.editInput {
+    /*width: 100%; */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-right: 1rem;
+
+}
+
+.editButton {
+    background-color: #0C6; /* Verde */
+    color: #fff; /* Texto en blanco */
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease-in-out;
+}
+
+.editButton:hover {
+    background-color: #018543;
+}
