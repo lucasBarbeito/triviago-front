@@ -69,17 +69,47 @@ const QuizComents = () => {
                 setMessage("El comentario no puede tener mas de 255 caracteres");
                 setOpen(true);
             }
+        } else {
+            setMessage("El comentario no puede estar vacío");
+            setOpen(true);
         }
     }
 
-    function handleDeleteComment(index) {
-        const selectedComment = comments[index]
-        if (selectedComment) {
-            service.deleteComment(selectedComment.id).then(() => {
-                const updatedList = [...comments.slice(0, index), ...comments.slice(index + 1)];
-                setComments(updatedList);
-            })
+    function handleEditComment(id, newContent) {
+        const newContentTrimmed = newContent.trim();
+        if (newContentTrimmed !== "") {
+            if (newContentTrimmed.length <= 255) {
+                service.editComment(id, newContentTrimmed).then(() => {
+                    service.fetchComments(quizId).then(commentsList => {
+                        setComments(commentsList);
+                    }).catch(error => {
+                        console.error("Error editing comment:", error);
+                        setComments(comments)
+                        setMessage("Error al editar el comentario")
+                        setOpen(true)
+                    })
+                })
+            } else {
+                setMessage("El comentario no puede tener mas de 255 caracteres");
+                setOpen(true);
+            }
+        } else {
+            setMessage("El comentario no puede estar vacío");
+            setOpen(true);
         }
+    }
+
+    function handleDeleteComment(id) {
+        service.deleteComment(id).then(() => {
+            service.fetchComments(quizId).then(commentsList => {
+                setComments(commentsList)
+            }).catch(error => {
+                console.error("Error fetching comments:", error);
+                setComments(comments)
+                setMessage("Error al borrar el comentario")
+                setOpen(true)
+            })
+        })
     }
 
 
@@ -127,14 +157,16 @@ const QuizComents = () => {
                         </div>
                         <div>
                             {
-                                comments && comments.map((comment, index) => {
-                                    return <CommentComponent handleDeleteComment={() => handleDeleteComment(index)}
-                                                             id={comment.id} content={comment.content} likes={comment.likes}
-                                                             authorEmail={comment.author?.email}
-                                                             creationDateTime={comment.creationDate} quizId={quizId}
-                                                             key={comment.id} replyToComment={comment.id}
-                                                             replies={comment.responses}/>
-                                })
+                                comments && comments.map((comment, index) => (
+                                    <CommentComponent
+                                        key={comment.id}
+                                        comment={comment}
+                                        handleDeleteComment={(commentId) => handleDeleteComment(commentId)}
+                                        handleEditComment={(id, newContent) => handleEditComment(id, newContent)}
+                                        quizId={quizId}
+                                        showReplyInput={true}
+                                    />
+                                ))
                             }
                         </div>
                     </div>

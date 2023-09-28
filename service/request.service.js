@@ -70,7 +70,6 @@ const RequestService = {
     },
 
     likeComment: async (commentId) => {
-
         const response = await axios.post(
             `${url}/comment/${commentId}/like`,
             {},
@@ -98,6 +97,40 @@ const RequestService = {
         );
         if (response.status === 200) {
             return response.data;
+        }
+    },
+
+    removeLikeComment: async (commentId) => {
+        const response = await axios.delete(
+            `${url}/comment/${commentId}/removeLike`,
+            {
+                headers: {
+                    'Authorization': 'Bearer ' + Cookies.get('jwt')
+                }
+            }
+        );
+        if (response.status === 200) {
+            return response.data;
+        }
+    },
+
+    editComment: async (id, newContent) => {
+        try {
+            const response = await axios.put(
+                `${url}/comment/${id}`,
+                {newContent: newContent},
+                {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                }
+            );
+
+            if (response.status === 200) {
+                return response.data
+            }
+        } catch (error) {
+            console.error(error);
         }
     },
 
