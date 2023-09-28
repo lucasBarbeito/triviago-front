@@ -39,6 +39,7 @@ const ResultPage = () => {
         <div>
             <ResponsiveAppBar/>
             <br></br>
+            {console.log(quiz)}
             <div className={styles.componentBox}>
                 <QuizInfo {...quiz}/>
 
