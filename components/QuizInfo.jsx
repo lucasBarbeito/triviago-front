@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const inter = Inter({ subsets: ['latin'] });
 
-const QuizInfo = ({ id, title, tags, creationDate, description, rating, questionCount=10, userEmail="example@gmail.com" }) => {
+const QuizInfo = ({ id, title, tags, creationDate, description, rating, questionCount=10, author = "@example.com"}) => {
 
     function formatDates(date) {
         const monthNames = [
@@ -51,7 +51,7 @@ const QuizInfo = ({ id, title, tags, creationDate, description, rating, question
             </div>
             <div className={styles.divisor}/>
             <div className={styles.ownerData}>
-                Creado el {formatDates(creationDate)} por {userEmail}
+                Creado el {formatDates(creationDate)} por {author?.email}
             </div>
             <div className={styles.divisor}/>        
             <div className={styles.rating}>
