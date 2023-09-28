@@ -12,6 +12,7 @@ const QuizCreatorInfo = ({ quizData, setQuizData, setMessage, setOpen }) => {
 
     const service = useRequestService();
     const [tags, setTags] = useState([]);
+    const [selectedTags, setSelectedTags] = useState([]);
 
     useEffect(() => {
         service.getLabels()
@@ -47,14 +48,17 @@ const QuizCreatorInfo = ({ quizData, setQuizData, setMessage, setOpen }) => {
         event.target.style.height = '22px'
         event.target.style.height = (event.target.scrollHeight + 1)+'px'
     }
+
     const handleTag = (event) => {
-        const { target: { value },} = event;
-        const newLabels = typeof value === 'string' ? value.split(',') : value;
+        const selectedTags = event.target.value;
+        setSelectedTags(selectedTags);
+        const formatedTags = selectedTags.map(label => ({value: label.trim()}));
         setQuizData((prevData) => ({
             ...prevData,
-            labels: newLabels,
+            labels: formatedTags,
         }));
     };
+
 
     return(
         <div className={styles.componentBox}>
@@ -73,7 +77,7 @@ const QuizCreatorInfo = ({ quizData, setQuizData, setMessage, setOpen }) => {
                         id="tags"
                         multiple
                         className ={styles.inputTag}
-                        value={quizData.labels}
+                        value={selectedTags}
                         onChange={handleTag}
                         variant="standard"
                     >

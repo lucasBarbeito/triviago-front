@@ -4,7 +4,7 @@ import React, {useState} from 'react';
 import styles from '../styles/QuizQuestion.module.css';
 import Image from "next/image";
 
-const QuizQuestion = ({deleteFunction, index}) => {
+const QuizQuestion = ({deleteFunction, questionIndex, quizData, setQuizData}) => {
     const [multplCorrect, setMultplCorrect] = useState(false);
     const [answers, setAnswers] = useState([{ text: '', type: 'radio', isCorrect: false }]);
     const [currAnswer, setCurrAnswer] = useState("");
@@ -17,12 +17,53 @@ const QuizQuestion = ({deleteFunction, index}) => {
 
     function addAnswer() {
         if(currAnswer.length > 0){
-            setAnswers([...answers, { text: currAnswer, type: multplCorrect ? 'checkbox' : 'radio' , isCorrect: isCorrectCurr}]);
+            const updatedQuestions = [...quizData.questions];
+            const updatedAnswers = answers.map((answer) => ({
+                content: answer.text,
+                isCorrect: answer.isCorrect
+            }));            const newAnswer = { content: currAnswer, isCorrect: isCorrectCurr };
+            setAnswers([...answers, { text: currAnswer, type: multplCorrect ? 'checkbox' : 'radio', isCorrect: isCorrectCurr }]);
+            updatedAnswers.push(newAnswer);
+
+            if (!updatedQuestions[questionIndex]) {
+                updatedQuestions[questionIndex] = {
+                    content: question,
+                    answers: [newAnswer],
+                };
+            } else {
+                updatedQuestions[questionIndex].answers.push(newAnswer);
+            }
+
+            updateQuizData(updatedQuestions)
             setAnswerAreaHeight()
             setCurrAnswer("")
             setIsCorrectCurr(false)
         }
     }
+
+
+    function removeAnswer(index) {
+        //porque el index del array de answers empieza en 1 pero el de quizData en 0
+        const zeroBaseIndex = index - 1;
+        const updatedAnswers = [...answers];
+        //Primero lo borro de la lista de answers que es la que se esta mostrando en la UI
+        updatedAnswers.splice(index, 1);
+        setAnswers(updatedAnswers);
+
+        const updatedQuestions = [...quizData.questions];
+        if (updatedQuestions[questionIndex] && updatedQuestions[questionIndex].answers.length > 0) {
+            // Eliminar la respuesta correspondiente en el array de respuestas de la pregunta para el quizData
+            updatedQuestions[questionIndex].answers.splice(zeroBaseIndex, 1);
+
+            // Si la pregunta ya no tiene respuestas, eliminar la pregunta
+            if (updatedQuestions[questionIndex].answers.length === 0) {
+                updatedQuestions.splice(questionIndex, 1);
+            }
+            updateQuizData(updatedQuestions);
+            console.log(updatedQuestions)
+        }
+    }
+
 
     const setAnswerAreaHeight = () => {
         const answerArea = document.getElementById("answerArea");
@@ -31,12 +72,6 @@ const QuizQuestion = ({deleteFunction, index}) => {
         }
     };
 
-    function removeAnswer(index) {
-        const updatedAnswers = [...answers];
-        updatedAnswers.splice(index, 1);
-        setAnswers(updatedAnswers);
-    }
-
     function handleAnswerTextChange(event) {
         setCurrAnswer(event.target.value)
         event.target.style.height = '22px'
@@ -44,10 +79,29 @@ const QuizQuestion = ({deleteFunction, index}) => {
     }
 
     function handleQuestionTextChange(event) {
-        setQuestion(event.target.value)
-        event.target.style.height = '44px'
-        event.target.style.height = (event.target.scrollHeight + 1)+'px'
+        const updatedQuestions = [...quizData.questions];
+
+        // Si no existe una pregunta en el índice, crea una nueva pregunta
+        if (!updatedQuestions[questionIndex]) {
+            updatedQuestions[questionIndex] = {
+                content: event.target.value,
+                answers: [],
+            };
+        } else {
+            // Si la pregunta ya existe, actualiza su contenido
+            updatedQuestions[questionIndex].content = event.target.value;
+        }
+
+        setQuestion(event.target.value);
+        setQuizData((prevData) => ({
+            ...prevData,
+            questions: updatedQuestions,
+        }));
+
+        event.target.style.height = '44px';
+        event.target.style.height = (event.target.scrollHeight + 1) + 'px';
     }
+
 
     function correctHandler (){
         setIsCorrectCurr(!isCorrectCurr)
@@ -58,22 +112,44 @@ const QuizQuestion = ({deleteFunction, index}) => {
     }
 
     function indexCorrectHandler(index) {
+        const zeroBaseIndex = index - 1;
         const updatedAnswers = [...answers];
+        console.log(updatedAnswers)
         const answerToUpdate = updatedAnswers[index];
 
         if (answerToUpdate) {
             answerToUpdate.isCorrect = !answerToUpdate.isCorrect;
             setAnswers(updatedAnswers);
+
+            const updatedQuestions = [...quizData.questions];
+            console.log(updatedQuestions)
+            console.log(index)
+            if (updatedQuestions[questionIndex] && updatedQuestions[questionIndex].answers.length > 0) {
+                // Actualizar el valor isCorrect de la respuesta correspondiente en el array de respuestas de la pregunta
+                updatedQuestions[questionIndex].answers[zeroBaseIndex].isCorrect = !updatedQuestions[questionIndex].answers[zeroBaseIndex].isCorrect;
+                updateQuizData(updatedQuestions);
+                console.log(updatedQuestions)
+            }
         }
     }
+
+
+
 
     const handleRemove = () => {
         // deleteFunction(index)
     }
 
     const handleRemoveQuestion = () =>{
-        deleteFunction(index)
+        deleteFunction(questionIndex)
     }
+
+    const updateQuizData = (updatedQuestions) => {
+        setQuizData((prevData) => ({
+            ...prevData,
+            questions: updatedQuestions,
+        }));
+    };
 
     return(
         <div className={styles.containerQuestion}>
