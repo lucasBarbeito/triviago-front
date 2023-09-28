@@ -157,7 +157,14 @@ const CommentComponent = ({
                                 {currentComment.author.email}
                             </Typography>
                             <Typography variant="date" className={styles.dateText}>
-                                {new Date(currentComment.creationDate).toLocaleDateString("en-US")}
+                                {new Date(currentComment.creationDate).toLocaleString("en-US", {
+                                    day: '2-digit',
+                                    month: 'numeric',
+                                    year: 'numeric',
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                    hour12: false
+                                }).replace(",", "")}
                             </Typography>
                         </Box>
                         <Box>
