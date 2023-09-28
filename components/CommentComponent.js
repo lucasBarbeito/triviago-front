@@ -70,12 +70,18 @@ const CommentComponent = ({ id, content, authorEmail, likes, handleDeleteComment
   };
 
   const handleReply = async () => {
-    if (replyText !== '') {
-      const aux = await service.logComment({parentCommentId:id, content:replyText, quizId: quizId})
+    const trimmedReplyText = replyText.trim();
+    if (trimmedReplyText !== '') {
+      const aux = await service.logComment({
+        parentCommentId: id,
+        content: trimmedReplyText,
+        quizId: quizId,
+      });
       setResponses([...responses, aux]);
       setReplyText('');
     }
   };
+  
 
   useEffect(()=> {
     console.log(likeCount)
@@ -94,6 +100,9 @@ const CommentComponent = ({ id, content, authorEmail, likes, handleDeleteComment
             </Typography>
           </Box>
           <Box>
+          <IconButton aria-label="Editar comentario" color="default" sx={{ position: 'relative', zIndex: 0 }}>
+            <EditIcon />
+          </IconButton>
             <IconButton aria-label="Eliminar comentario" color="error" sx={{ position: 'relative', zIndex: 0 }} onClick={handleDeleteComment}>
               <DeleteIcon />
             </IconButton>

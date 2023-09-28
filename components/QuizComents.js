@@ -28,7 +28,7 @@ const QuizComents = () => {
     }, [quizId]);
 
     function handleComment(event) {
-        setComment(event.target.value)
+        setComment(event.target.value.trim());
         event.target.style.height = '22px'
         event.target.style.height = (event.target.scrollHeight + 1)+'px'
     }
@@ -72,7 +72,7 @@ const QuizComents = () => {
             content: comment,
             quizId: quizId,
             userId: data.id,
-            parentCommentId: replyToCommentId || null, // Asigna el ID del comentario al que se responde o null si es un comentario principal
+            parentCommentId: replyToCommentId || null,
           };
     
           const com = await service.logComment(comData);
@@ -146,7 +146,7 @@ const QuizComents = () => {
                   content={comment.content}
                   likes={comment.likes}
                   authorEmail={comment.author?.email}
-                  replyToComment={comment.id} // Establece el ID del comentario al que se responde
+                  replyToComment={comment.id}
                   replies={comment.responses}
                 />
               );
