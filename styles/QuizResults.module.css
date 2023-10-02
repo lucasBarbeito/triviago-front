@@ -1,0 +1,99 @@
+.componentBox{
+    padding-top: 10px;
+    width: 770px;
+    height: auto;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #FFF;
+    box-shadow: 0px 3.87229px 3.87229px 0px rgba(0, 0, 0, 0.25);
+    margin-right: 52px;
+    gap: 18px;
+}
+
+.quizTitle{
+    color: #000;
+    font-family: Inter, sans-serif;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    width: 731px;
+    height: 46px;
+    flex-shrink: 0;
+}
+
+.quizResultText{
+    width: 731px;
+    height: 40px;
+    flex-direction: column;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #000;
+    font-family: Inter, sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.quizResultTextBold{
+    width: 731px;
+    height: 40px;
+    flex-direction: column;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #000;
+    font-family: Inter, sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.rateBox{
+    margin-top: 13px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start; /* Change to flex-start */
+    gap: 5px;
+    width: 735px;
+    margin-bottom: 17px;
+}
+
+.rateText{
+    display: flex;
+    margin-top: 5px;
+    flex-direction: column;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #000;
+    font-family: Inter, sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+
+}
+
+.starsBox{
+    display: flex;
+    width: 180px;
+    flex-shrink: 0;
+    justify-content: center;
+}
+
+.react-rater {
+    color: #00CC66; /* color of star not rated */
+}
+
+.react-rater:hover {
+    color: #00CC66; /* color of star on hover */
+}
+
+.react-rater.is-active {
+    color: #00CC66; /* color of star rated */
+}
+
+
