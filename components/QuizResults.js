@@ -13,7 +13,7 @@ const QuizResults = () => {
     const service = useRequestService();
     const [ratingSubmitted, setRatingSubmitted] = useState(false);
     const [errorSnackbarOpen, setErrorSnackbarOpen] = useState(false);
-    const [quizId, setQuizId] = useState('0'); // Inicializa quizId con un valor predeterminado
+    const [quizId, setQuizId] = useState('0');
 
     useEffect(() => {
         const pathname = window.location.pathname;
@@ -25,6 +25,7 @@ const QuizResults = () => {
     function handleRate(event) {
         const rating = event.rating;
         if (quizId !== '0') {
+            console.log('Valor de quizId válido:', quizId);
             service.rateQuiz(quizId, rating)
                 .then(response => {
                     setRatingSubmitted(true);
@@ -50,11 +51,8 @@ const QuizResults = () => {
             <div className={styles.rateBox}>
                 <p className={styles.rateText}>¿Cómo calificarías este quiz?</p>
                 <div className={styles.starsBox}>
-                    <Rater style={{fontSize: '35px'}} onRate={handleRate}/>
+                    <Rater style={{fontSize: '35px'}} onRate={handleRate} disabled={ratingSubmitted}/>
                 </div>
-            </div>
-            <div className={styles.starsBox}>
-                <Rater style={{ fontSize: '35px' }} onRate={handleRate} disabled={ratingSubmitted} />
             </div>
             <Snackbar
                 open={errorSnackbarOpen}

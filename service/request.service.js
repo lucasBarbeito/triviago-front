@@ -185,27 +185,27 @@ const RequestService = {
         }
     },
 
+
+
     rateQuiz: async (quizId, rating) => {
+
         try {
             const response = await axios.put(
                 `${url}/quiz/${quizId}/rate`,
-                { rating },
+                null,
                 {
-                    headers: {
-                        'Authorization': 'Bearer ' + Cookies.get('jwt')
-                    }
+                    params: {rating,},
+                    headers: {'Authorization': 'Bearer ' + Cookies.get('jwt'),},
                 }
             );
 
             if (response.status === 200) {
                 return response.data;
-            } else {
-                throw new Error("Hubo un error al calificar el quiz, por favor intenta más tarde");
             }
         } catch (error) {
-            console.error('Error al calificar el quiz:', error);
-            throw error;
+            throw new Error("Hubo un error al calificar el quiz, por favor intenta más tarde");
         }
+
     },
 
 }
