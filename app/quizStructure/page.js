@@ -1,4 +1,3 @@
-"use client"
 import React, { useEffect, useState } from 'react';
 import QuizResults from "@/components/QuizResults";
 import QuizComents from "../../../../components/QuizComents";
@@ -7,7 +6,7 @@ import styles from '../../styles/QuizResultPage.module.css';
 import axios from "axios";
 import { useParams } from 'next/router';
 
-const ResultPage = () => {
+const QuizStructurePage = () => {
     const [quiz, setQuiz] = useState({});
     const { id } = useParams();
 
@@ -47,4 +46,4 @@ const ResultPage = () => {
     );
 };
 
-export default ResultPage;
+export default QuizStructurePage;
