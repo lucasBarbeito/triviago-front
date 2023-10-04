@@ -184,7 +184,28 @@ const RequestService = {
         if (response.status === 200) {
             return response.data;
         }
+    },
+
+    saveQuiz: async (quizId, saved) => {
+    try {
+        const response = await axios.post(`${url}/quiz/${quizId}/save`,
+            {
+                save: saved
+            },
+            {
+                headers: {
+                    'Authorization': 'Bearer ' + Cookies.get('jwt')
+                }
+            });
+
+        if (response.status === 200) {
+            return response.data
+        }
+    } catch (error) {
+        console.error(error);
     }
+
+},
 
 }
 
