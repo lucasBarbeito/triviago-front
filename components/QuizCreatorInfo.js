@@ -7,69 +7,82 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import {OutlinedInput, Switch} from "@mui/material";
 import {useRequestService} from "@/service/request.service";
-import MultipleSelectCheckmarks from "@/components/MultipleSelectCheckmarks";
 
-const QuizCreatorInfo = () => {
+const QuizCreatorInfo = ({ quizData, setQuizData, setMessage, setOpen }) => {
 
-    const [privacy, setPrivacy] = useState(false);
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [selectedLabels, setSelectedLabels] = useState([]);
-    const [labels, setLabels] = useState([]);
-    const service = useRequestService()
+    const service = useRequestService();
+    const [tags, setTags] = useState([]);
+    const [selectedTags, setSelectedTags] = useState([]);
 
     useEffect(() => {
-        service.getLabels().then((response) => {
-            // console.log(response)
-            setLabels(response)
-        }).catch((error) => {
-            console.log(error)
-        })
+        service.getLabels()
+            .then((response) => {
+                setTags(response);
+            })
+            .catch((error) => {
+                setMessage('Hubo un error al obtener las etiquetas');
+                setOpen(true);
+                console.log(error)
+            });
+
     }, []);
 
+
     function changePrivacy(event) {
-        setPrivacy(!privacy);
+        setQuizData((prevData) => ({
+            ...prevData,
+            isPrivate: !quizData.isPrivate,
+        }));
     }
-
-    function handleTitle(event) {
-        setTitle(event.target.value)
+    function handleTitle(event){
+        setQuizData((prevData) => ({
+            ...prevData,
+            title: event.target.value,
+        }));
     }
-
-    function handleDescription(event) {
-        setDescription(event.target.value)
+    function handleDescription(event){
+        setQuizData((prevData) => ({
+            ...prevData,
+            description: event.target.value,
+        }));
         event.target.style.height = '22px'
-        event.target.style.height = (event.target.scrollHeight + 1) + 'px'
+        event.target.style.height = (event.target.scrollHeight + 1)+'px'
     }
 
-    const handleTagChange = (event) => {
-        setSelectedLabels(event.target.value)
+    const handleTag = (event) => {
+        const selectedTags = event.target.value;
+        setSelectedTags(selectedTags);
+        const formatedTags = selectedTags.map(label => ({value: label.trim()}));
+        setQuizData((prevData) => ({
+            ...prevData,
+            labels: formatedTags,
+        }));
     };
 
-    return (
+    return(
         <div className={styles.componentBox}>
             <div className={styles.titleText}>Nuevo quiz</div>
             <div className={styles.labelsContainer}>
 
                 <div className={styles.labelsInterior}>
                     <label htmlFor="title" className={styles.labelTitle}>Título *</label>
-                    <input type="text" id="title" name="title" className={styles.inputText}
-                           placeholder="Agrega un título..." onChange={handleTitle}/>
+                    <input type="text" id="title" name="title" className={styles.inputText} placeholder="Agrega un título..." onChange={handleTitle}/>
                     <div className={styles.line}/>
                 </div>
 
                 <div className={styles.labelsInterior}>
-                    <label htmlFor="title" className={styles.labelTitle}>Etiquetas *</label>
+                    <label htmlFor="title" className={styles.labelTitle}>Etiquetas</label>
                     <Select
-                        id="labels"
+                        id="tags"
                         multiple
-                        className={styles.inputTag}
-                        value={selectedLabels}
-                        onChange={handleTagChange}
+                        className ={styles.inputTag}
+                        value={selectedTags}
+                        onChange={handleTag}
                         variant="standard"
                     >
-                        {labels?.map((label) => (
-                            <MenuItem key={label.id}  value={label.value}>
-                                {label.value}
+                        {tags?.map((tag) => (
+                            <MenuItem key={tag.value} value={String(tag.value)}>
+                                {tag.value}
                             </MenuItem>
                         ))}
                     </Select>
@@ -77,8 +90,7 @@ const QuizCreatorInfo = () => {
 
                 <div className={styles.labelsInterior}>
                     <label htmlFor="title" className={styles.labelTitle}>Descripción *</label>
-                    <textarea type="text" id="description" name="description" className={styles.textAreaInput}
-                              placeholder="Agrega una descripción..." onChange={handleDescription}/>
+                    <textarea type="text" id="description" name="description" className={styles.textAreaInput} placeholder="Agrega una descripción..." onChange={handleDescription}/>
                     <div className={styles.line}/>
                 </div>
 
@@ -86,10 +98,29 @@ const QuizCreatorInfo = () => {
                     <label htmlFor="title" className={styles.labelTitle}>Visibilidad</label>
                     <div className={styles.privateContainer}>
                         <p className={styles.text}>Privado</p>
-                        {privacy ? <Image src="/assets/images/activeSwitch.png" alt={""} width={"34"} height={"18"}
-                                          onClick={changePrivacy}/>
-                            : <Image src="/assets/images/notActiveSwitch.png" alt={""} width={"34"} height={"18"}
-                                     onClick={changePrivacy}/>}
+                        <Switch
+                            sx={{
+                                '& .MuiSwitch-switchBase': {
+                                    '&.Mui-checked': {
+                                        color: '#00CC66',
+                                        '& + .MuiSwitch-track': {
+                                            background: '#00CC66',
+                                        },
+                                    },
+                                    '&.Mui-disabled.MuiSwitch-thumb': {
+                                        color: '#FFFFFF',
+                                    },
+                                },
+                                '& .MuiSwitch-thumb': {
+                                    color: !(quizData.isPrivate) && '#FFFFFF',
+                                },
+                                '& .MuiSwitch-track': {
+                                    backgroundColor: '#000000',
+                                },
+                            }}
+                            checked={quizData.isPrivate}
+                            onChange={changePrivacy}
+                        />
                     </div>
                 </div>
             </div>

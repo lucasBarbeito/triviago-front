@@ -4,7 +4,7 @@ import styles from '../styles/QuizComents.module.css';
 import {useRequestService} from "@/service/request.service";
 import CommentComponent from "@/components/CommentComponent";
 import Cookies from "js-cookie";
-import {Slide, Snackbar} from "@mui/material";
+import {Button, Slide, Snackbar} from "@mui/material";
 import {Alert} from "@mui/lab";
 
 const jwt = require('jsonwebtoken');
@@ -152,8 +152,8 @@ const QuizComents = () => {
                                   className={styles.inputComment} onChange={handleComment}/>
                         <div className={styles.insertCommentLine}/>
                         <div className={styles.buttonsContainers}>
-                            <button className={styles.whiteButton} onClick={cancelComment}>Cancelar</button>
-                            <button className={styles.greenButton} onClick={logComment}>Comentar</button>
+                            <Button variant="outlined" style={{color: '#000000', borderColor: '#000000'}} onClick={cancelComment}>Cancelar</Button>
+                            <Button variant="contained" style={{backgroundColor: '#00CC66'}} onClick={logComment}>Comentar</Button>
                         </div>
                         <div>
                             {

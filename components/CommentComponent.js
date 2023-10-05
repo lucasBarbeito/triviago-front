@@ -1,6 +1,6 @@
 "use client";
 import React, {useState} from 'react';
-import {Box, Card, CardContent, IconButton, Slide, Snackbar, Typography} from '@mui/material';
+import {Box, Button, Card, CardContent, IconButton, Slide, Snackbar, Typography} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
@@ -12,6 +12,7 @@ import styles from '../styles/CommentComponent.module.css';
 import {Alert} from "@mui/lab";
 import Cookies from "js-cookie";
 import jwt_decode from "jwt-decode";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 const CommentComponent = ({
                               comment,
@@ -31,6 +32,8 @@ const CommentComponent = ({
     const jwtDecoded = jwt_decode(jwt)
     const actualUserEmail = jwtDecoded.sub
     const [currentComment, setCurrentComment] = useState(comment);
+
+
 
     const handleLikeClick = async () => {
         if (currentComment.isLikedByUser === true) {
@@ -120,18 +123,7 @@ const CommentComponent = ({
 
     function handleDeleteReply(id) {
         service.deleteComment(id).then(() => {
-            service.fetchComments(quizId).then(commentsList => {
-                setCurrentComment(prevState => ({
-                        ...prevState,
-                        responses: prevState.responses.filter(reply => reply.id !== id)
-                    }
-                ))
-            }).catch(error => {
-                console.error("Error deleting reply:", error);
-                setMessage("Error al borrar el comentario")
-                setOpen(true)
-            })
-        })
+            window.location.reload(false);        })
     }
 
     function handleAnswer(event) {
@@ -149,22 +141,15 @@ const CommentComponent = ({
 
     return (
         <>
-            <Card variant="outlined" className={styles.componentBox}>
-                <CardContent>
+            <div className={styles.componentBox}>
+                <div style={{padding: '0 24px 0 24px'}}>
                     <Box display="flex" justifyContent="space-between" alignItems="center">
                         <Box>
                             <Typography variant="username" className={styles.userNameText}>
                                 {currentComment.author.email}
                             </Typography>
                             <Typography variant="date" className={styles.dateText}>
-                                {new Date(currentComment.creationDate).toLocaleString("en-US", {
-                                    day: '2-digit',
-                                    month: 'numeric',
-                                    year: 'numeric',
-                                    hour: '2-digit',
-                                    minute: '2-digit',
-                                    hour12: false
-                                }).replace(",", "")}
+                                {new Date(currentComment.creationDate).toLocaleDateString("en-US")}
                             </Typography>
                         </Box>
                         <Box>
@@ -216,13 +201,16 @@ const CommentComponent = ({
                                 <button
                                     className={styles.editButton}
                                     onClick={() => {
-                                        handleEditComment(currentComment.id, editedContent);
-                                        setCurrentComment(prevState => ({
-                                            ...prevState,
-                                            content: editedContent
-                                        }));
-                                        setIsEditing(false);
+                                        if (editedContent.trim() !== '') { // Check if editedContent is not empty or only spaces
+                                            handleEditComment(currentComment.id, editedContent);
+                                            setCurrentComment((prevState) => ({
+                                                ...prevState,
+                                                content: editedContent,
+                                            }));
+                                            setIsEditing(false);
+                                        }
                                     }}
+                                    disabled={editedContent.trim() === ''} // Disable the button if content is empty or only spaces
                                 >
                                     Editar
                                 </button>
@@ -251,7 +239,7 @@ const CommentComponent = ({
                             }
                         </IconButton>
                     </div>
-                </CardContent>
+                </div>
                 {
                     showReplyInput &&
                     <>
@@ -268,21 +256,17 @@ const CommentComponent = ({
                             <div className={styles.line}/>
                         </div>
                         <Box className={styles.buttonsContainers}>
-                            <button className={styles.cancelButton} onClick={handleCancel}>
-                                Cancelar
-                            </button>
-                            <button className={styles.answerButton} onClick={handleReply}>
-                                Responder
-                            </button>
+                            <Button variant="outlined" style={{color: '#000000', borderColor: '#000000'}} onClick={handleCancel}>Cancelar</Button>
+                            <Button variant="contained" style={{backgroundColor: '#00CC66'}} onClick={handleReply}>Responder</Button>
                         </Box>
                     </>
                 }
                 {currentComment.responses?.map((response, index) => {
                     return <div style={{
-                        padding: '10px',
-                        backgroundColor: '#f5f5f5',
-                        border: '1px solid #e0e0e0',
-                        borderRadius: '5px',
+                        paddingLeft: '24px',
+                        // backgroundColor: '#f5f5f5',
+                        border: '0px solid #e0e0e0',
+                        // borderRadius: '5px',
                         marginTop: '5px',
                     }}>
                         <CommentComponent
@@ -294,7 +278,7 @@ const CommentComponent = ({
                         />
                     </div>
                 })}
-            </Card>
+            </div>
             <Snackbar open={open} autoHideDuration={5000} onClose={handleClose} TransitionComponent={Slide}
                       anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
                 <Alert onClose={handleClose} severity="error">
