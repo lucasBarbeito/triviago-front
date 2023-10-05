@@ -47,8 +47,8 @@ const ResponsiveAppBar = () => {
 
   return (
     <AppBar
-    position="static" 
-    sx={{ backgroundColor: '#00CC66', margin: '0px', position: 'sticky', top: 0, paddingLeft: '20px',  paddingRight: '20px' }}
+    position="static"
+    sx={{ backgroundColor: '#00CC66', margin: '0px', position: 'sticky', top: 0, paddingLeft: '20px',  paddingRight: '20px', zIndex: 1 }}
     >
     <div 
     style={{

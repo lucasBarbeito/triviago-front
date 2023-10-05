@@ -10,7 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const inter = Inter({ subsets: ['latin'] });
 
-const QuizInfo = ({ id, title, tags, creationDate, description, rating, questionCount=10, author = "@example.com"}) => {
+const QuizInfo = ({ id, title, labels, creationDate, description, rating, questions, author = "@example.com"}) => {
 
     function formatDates(date) {
         const monthNames = [
@@ -41,8 +41,8 @@ const QuizInfo = ({ id, title, tags, creationDate, description, rating, question
                         </button>
                     </div>
                 </div>
-                    {tags&&(<div className={styles.tags}>
-                        {tags.join(', ')}
+                    {labels&&(<div className={styles.tags}>
+                        {labels?.join(', ')}
                     </div>)}
                 <div className={styles.description}>
                     {description}
@@ -55,7 +55,7 @@ const QuizInfo = ({ id, title, tags, creationDate, description, rating, question
             </div>
             <div className={styles.divisor}/>        
             <div className={styles.rating}>
-                <RatingSection ratings={rating} questions={questionCount} startButton={true}/>
+                <RatingSection ratings={rating} questions={questions.length} startButton={true}/>
             </div>
         </Stack>
     </div>
