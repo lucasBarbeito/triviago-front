@@ -55,7 +55,7 @@ const QuizInfo = ({ id, title, tags, creationDate, description, rating, question
             </div>
             <div className={styles.divisor}/>        
             <div className={styles.rating}>
-                <RatingSection ratings={rating} questions={questionCount} startButton={true}/>
+                <RatingSection ratings={rating} questions={questionCount} startButton={true} quizId={id}/>
             </div>
         </Stack>
     </div>

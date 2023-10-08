@@ -4,29 +4,20 @@ import styles from '../styles/QuizResults.module.css';
 import Rater from "react-rater";
 import 'react-rater/lib/react-rater.css'
 import {useRequestService} from "@/service/request.service";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {Snackbar} from "@mui/material";
 import {Alert} from "@mui/lab";
 
-const QuizResults = () => {
+const QuizResults = (quizId) => {
 
     const service = useRequestService();
     const [ratingSubmitted, setRatingSubmitted] = useState(false);
     const [errorSnackbarOpen, setErrorSnackbarOpen] = useState(false);
-    const [quizId, setQuizId] = useState('0');
-
-    useEffect(() => {
-        const pathname = window.location.pathname;
-        const parts = pathname.split('/');
-        const id = parts[parts.length - 1]; // Obtiene el último segmento del pathname
-        setQuizId(id);
-    }, []);
 
     function handleRate(event) {
         const rating = event.rating;
         if (quizId !== '0') {
-            console.log('Valor de quizId válido:', quizId);
-            service.rateQuiz(quizId, rating)
+            service.rateQuiz(quizId.quizId, rating)
                 .then(response => {
                     setRatingSubmitted(true);
                 })

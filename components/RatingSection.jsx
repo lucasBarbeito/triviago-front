@@ -1,9 +1,17 @@
 import React from 'react';
 import Grid from '@mui/material/Grid';
 import styles from '../styles/QuizInfo.module.css';
+import {useRouter} from "next/navigation";
 
 
-function RatingSection({ ratings, comments, questions, startButton }) {
+function RatingSection({ ratings, comments, questions, startButton, quizId }) {
+
+  const router = useRouter()
+
+  const handleQuizClick = (id) => {
+    router.push(`/quiz/${id}/result`)
+  }
+
   return (
     <Grid container>
 
@@ -24,7 +32,7 @@ function RatingSection({ ratings, comments, questions, startButton }) {
       )}
       {startButton && (
       <Grid item xs={7.2} sx={{position: 'relative'}}>
-        <button className={styles.startButton}>Realizar</button>
+        <button className={styles.startButton} onClick={() => {handleQuizClick(quizId)}}>Realizar</button>
       </Grid>
       )}
     </Grid>

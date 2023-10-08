@@ -121,7 +121,7 @@ const RequestService = {
                 {newContent: newContent},
                 {
                     headers: {
-                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                        'Authorization': 'Bearer ' + Cookies.get('jwt')
                     }
                 }
             );
@@ -139,7 +139,7 @@ const RequestService = {
             const response = await axios.delete(`${url}/comment/${id}`,
                 {
                     headers: {
-                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                        'Authorization': 'Bearer ' + Cookies.get('jwt')
                     }
                 }
             );
@@ -188,14 +188,16 @@ const RequestService = {
 
 
     rateQuiz: async (quizId, rating) => {
-
         try {
-            const response = await axios.put(
+            console.log("Rating: ", rating)
+            console.log("quizId: ", quizId)
+            const response = await axios.post(
                 `${url}/quiz/${quizId}/rate`,
-                null,
+                { rating },
                 {
-                    params: {rating,},
-                    headers: {'Authorization': 'Bearer ' + Cookies.get('jwt'),},
+                    headers: {
+                        'Authorization': 'Bearer ' + Cookies.get('jwt'),
+                    },
                 }
             );
 
@@ -205,7 +207,6 @@ const RequestService = {
         } catch (error) {
             throw new Error("Hubo un error al calificar el quiz, por favor intenta más tarde");
         }
-
     },
 
 }
