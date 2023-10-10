@@ -31,7 +31,7 @@ const ResponsiveAppBar = () => {
 
   const handleProfileClick = () => {
     handleCloseUserMenu();
-    router.push('/profile');
+    router.push('/user');
   };
 
   const handleLogoClick = () => {
