@@ -121,7 +121,7 @@ const RequestService = {
                 {newContent: newContent},
                 {
                     headers: {
-                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                        'Authorization': 'Bearer ' + Cookies.get('jwt')
                     }
                 }
             );
@@ -139,7 +139,7 @@ const RequestService = {
             const response = await axios.delete(`${url}/comment/${id}`,
                 {
                     headers: {
-                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                        'Authorization': 'Bearer ' + Cookies.get('jwt')
                     }
                 }
             );
@@ -170,7 +170,6 @@ const RequestService = {
 
     },
 
-
     filterQuizzes: async (quizFilter) => {
         // Codificar los valores de los parámetros en la URL
         const response = await axios.get(
@@ -184,7 +183,29 @@ const RequestService = {
         if (response.status === 200) {
             return response.data;
         }
-    }
+    },
+
+    rateQuiz: async (quizId, rating) => {
+        try {
+            console.log("Rating: ", rating)
+            console.log("quizId: ", quizId)
+            const response = await axios.post(
+                `${url}/quiz/${quizId}/rate`,
+                { rating },
+                {
+                    headers: {
+                        'Authorization': 'Bearer ' + Cookies.get('jwt'),
+                    },
+                }
+            );
+
+            if (response.status === 200) {
+                return response.data;
+            }
+        } catch (error) {
+            throw new Error("Hubo un error al calificar el quiz, por favor intenta más tarde");
+        }
+    },
 
 }
 

@@ -1,10 +1,16 @@
 import React from 'react';
-import Grid from '@mui/material/Grid';
 import styles from '../styles/QuizInfo.module.css';
-import {Button} from "@mui/material";
+import {useRouter} from "next/navigation";
 
 
-function RatingSection({ ratings, comments, questions, startButton }) {
+function RatingSection({ ratings, comments, questions, startButton, quizId }) {
+
+  const router = useRouter()
+
+  const handleQuizClick = (id) => {
+    router.push(`/quiz/${id}/result`)
+  }
+
   return (
       <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
           <div style={{display: 'flex', gap: '64px'}}>
@@ -18,7 +24,9 @@ function RatingSection({ ratings, comments, questions, startButton }) {
                   <strong>{comments}</strong> Comentarios
               </div>}
           </div>
-          {startButton && <div><Button variant="contained" style={{backgroundColor: '#00CC66'}}>Realizar</Button></div>}
+          {startButton && <div>
+              <button className={styles.startButton} onClick={() => {handleQuizClick(quizId)}}>Realizar</button>
+          </div>}
       </div>
   );
 }

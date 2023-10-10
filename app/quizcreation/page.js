@@ -148,7 +148,6 @@ const CreationPage = () => {
 
     )
 
-
     return (
         <div>
             <ResponsiveAppBar/>

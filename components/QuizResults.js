@@ -3,11 +3,36 @@
 import styles from '../styles/QuizResults.module.css';
 import Rater from "react-rater";
 import 'react-rater/lib/react-rater.css'
+import {useRequestService} from "@/service/request.service";
+import {useState} from "react";
+import {Snackbar} from "@mui/material";
+import {Alert} from "@mui/lab";
 
-const QuizResults = () => {
+const QuizResults = (quizId) => {
 
-    // Ro escuchame te dejo aca el handleRate que es para sacar el valor de las estrellas
-    function handleRate(event) {}
+    const service = useRequestService();
+    const [ratingSubmitted, setRatingSubmitted] = useState(false);
+    const [errorSnackbarOpen, setErrorSnackbarOpen] = useState(false);
+
+    function handleRate(event) {
+        const rating = event.rating;
+        if (quizId !== '0') {
+            service.rateQuiz(quizId.quizId, rating)
+                .then(response => {
+                    setRatingSubmitted(true);
+                })
+                .catch(error => {
+                    console.error('Hubo un error al calificar el quiz:', error);
+                    setErrorSnackbarOpen(true);
+                });
+        } else {
+            console.error('No se pudo obtener el ID del quiz desde el URL.');
+        }
+    }
+
+    const handleCloseErrorSnackbar = () => {
+        setErrorSnackbarOpen(false);
+    };
 
     return (
         <div className={styles.componentBox}>
@@ -17,11 +42,22 @@ const QuizResults = () => {
             <div className={styles.rateBox}>
                 <p className={styles.rateText}>¿Cómo calificarías este quiz?</p>
                 <div className={styles.starsBox}>
-                    <Rater style={{fontSize: '35px'}} onRate={handleRate}/>
+                    <Rater style={{fontSize: '35px'}} onRate={handleRate} disabled={ratingSubmitted}/>
                 </div>
             </div>
+            <Snackbar
+                open={errorSnackbarOpen}
+                autoHideDuration={5000}
+                onClose={handleCloseErrorSnackbar}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            >
+                <Alert onClose={handleCloseErrorSnackbar} severity="error">
+                    Hubo un error al calificar el quiz, por favor intenta más tarde.
+                </Alert>
+            </Snackbar>
         </div>
     )
+
 }
 
 export default QuizResults;
