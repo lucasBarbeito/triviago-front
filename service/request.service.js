@@ -185,8 +185,6 @@ const RequestService = {
         }
     },
 
-
-
     rateQuiz: async (quizId, rating) => {
         try {
             console.log("Rating: ", rating)
