@@ -12,26 +12,25 @@ const CreationPage = () => {
     const [counter, setCounter] = useState(0)
 
     function addQuestion(question) {
-        const updatedArray = [...questions,{id:counter, question:question}]
-        setCounter(counter+1)
+        const updatedArray = [...questions, {id: counter, question: question}]
+        setCounter(counter + 1)
         setQuestions(updatedArray)
     }
 
     function removeQuestion(pos) {
-        const updatedArray = questions.filter((question)=> {
+        const updatedArray = questions.filter((question) => {
             return question.id !== pos;
         })
         setQuestions(updatedArray);
     }
 
-    const mappedQuestions = questions.map((question, index) =>
-        {return (
-            <div key={question.id} className={styles.answerField}>
-                          <QuizQuestion deleteFunction={removeQuestion} index={question.id}/>
-            </div>
-        )}
-
-
+    const mappedQuestions = questions.map((question, index) => {
+            return (
+                <div key={question.id} className={styles.answerField}>
+                    <QuizQuestion deleteFunction={removeQuestion} index={question.id}/>
+                </div>
+            )
+        }
     )
 
     return (
