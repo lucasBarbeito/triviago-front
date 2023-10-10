@@ -8,33 +8,54 @@ import QuizResults from "@/components/QuizResults";
 import styles from '@/styles/QuizComents.module.css';
 import axios from "axios";
 import {useParams, useRouter} from 'next/navigation';
-
+import API_URL from '@root/config';
+import {Slide, Snackbar} from "@mui/material";
+import {Alert} from "@mui/lab";
 
 const ResultPage = () => {
-    const [quiz, setQuiz] = useState({});
-    const router = useRouter();
-    const { id } = useParams();
+    const [quizData, setQuizData] = useState(null);
+    const token = localStorage.getItem("token");
 
-    const fetchQuizz = () => {
-        const apiUrl = `http://localhost:8080/quiz/${id}`;
-        const token = localStorage.getItem('token');
-        const axiosConfig = {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        };
-        axios.get(apiUrl, axiosConfig)
-            .then((response) => {
-                setQuiz(response.data);
-            })
-            .catch((error) => {
-                console.error('Error fetching data:', error);
-            });
-    }
+    const [open, setOpen] = useState(false)
+    const [message, setMessage] = useState('')
+
+    const params = useParams ();
+
+    // obtiene el id de los parámetros de búsqueda (url)
+    const id = params.id;
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
 
     useEffect(() => {
-        fetchQuizz();
-    }, []);
+        const fetchData = async () => {
+            try {
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${token}` // Token en el header
+                    },
+                };
+                const response = await axios.get(API_URL + "/quiz/" + id, config);
+
+                if (response.status === 200) {
+                    setQuizData(response.data);
+                }
+            } catch (error) {
+                setMessage('Hubo un error al buscar la información del quiz')
+                setOpen(true)
+            }
+        };
+
+        // Llamar a la función de carga de datos después de que la página se haya montado
+        fetchData();
+    }, [id]);
+
+    if (quizData === null) return(<div></div>)
 
     return (
         <div>
@@ -45,7 +66,11 @@ const ResultPage = () => {
             </div>
             <br></br>
             <QuizComents/>
-
+            <Snackbar open={open} autoHideDuration={5000} onClose={handleClose} TransitionComponent={Slide} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+                <Alert onClose={handleClose} severity="error">
+                    {message}
+                </Alert>
+            </Snackbar>
         </div>
     );
 };
