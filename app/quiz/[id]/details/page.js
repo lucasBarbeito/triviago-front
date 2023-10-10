@@ -1,11 +1,11 @@
 "use client"
 import React, {useEffect, useState} from 'react';
 // import LoginPage from "../../../login/page";
-import QuizComents from "../../../../components/QuizComents";
-// import QuizInfo from "../../../../components/QuizInfo";
+import QuizComents from "@/components/QuizComents";
+//import QuizInfo from "@/components/QuizInfo";
 import ResponsiveAppBar from "@/components/ResponsiveAppBar";
 import QuizResults from "@/components/QuizResults";
-import styles from '../../../../styles/QuizComents.module.css';
+import styles from '@/styles/QuizComents.module.css';
 import axios from "axios";
 import {useParams, useRouter} from 'next/navigation';
 
