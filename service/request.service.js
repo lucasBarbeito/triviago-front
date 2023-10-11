@@ -184,7 +184,26 @@ const RequestService = {
         if (response.status === 200) {
             return response.data;
         }
-    }
+    },
+
+    rateQuiz: async (quizId, rating) => {
+        try {
+            const response = await axios.post(
+                `${url}/quiz/${quizId}/rate`,
+                { rating },
+                {
+                    headers: {
+                        'Authorization': 'Bearer ' + Cookies.get('jwt'),
+                    },
+                }
+            );
+            if (response.status === 200) {
+                return response.data;
+            }
+        } catch (error) {
+            throw new Error("Hubo un error al calificar el quiz, por favor intenta más tarde");
+        }
+    },
 
 }
 
