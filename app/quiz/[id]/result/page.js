@@ -1,7 +1,7 @@
 "use client"
 import React, {useEffect, useState} from 'react';
 import QuizComents from "@/components/QuizComents";
-import QuizInfo from "@/components/QuizInfo";
+import QuizResults from "@/components/QuizResults";
 import ResponsiveAppBar from "@/components/ResponsiveAppBar";
 import styles from '@/styles/QuizComents.module.css';
 import axios from "axios";
@@ -25,7 +25,7 @@ const ResultPage = () => {
                 setQuiz(response.data);
             })
             .catch((error) => {
-                console.error('Hubo un error al buscar la información del quiz', error);
+                console.error('Error fetching data:', error);
             });
     }
 
@@ -37,9 +37,8 @@ const ResultPage = () => {
         <div>
             <ResponsiveAppBar/>
             <br></br>
-            {console.log(quiz)}
             <div className={styles.componentBox}>
-                <QuizInfo {...quiz}/>
+            <QuizResults />
             </div>
             <br></br>
             <QuizComents/>
