@@ -10,9 +10,9 @@ const QuizQuestionAnswer = () => {
     // const [answers, setAnswers] = useState([{}])
     const answers = [{
         id: 1,
-        text: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA1",
+        text: "Large Mock up question 1 (AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA)",
         isCorrect: true
-    }, {id: 2, text: "hola don jose", isCorrect: true}, {id: 3, text: "hola augurusa", isCorrect: false}]
+    }, {id: 2, text: "Mock up question 2", isCorrect: true}, {id: 3, text: "Mock up question 3", isCorrect: false}]
 
     const [oneSelected, setOneSelected] = useState(false)
 
@@ -21,9 +21,10 @@ const QuizQuestionAnswer = () => {
     }, 0);
 
     function handleClickRadio(event) {
-
+        if(!oneSelected){
+            setOneSelected(true)
+        }
     }
-
 
     return (
         <div className={styles.componentBox}>
