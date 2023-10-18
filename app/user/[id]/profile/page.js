@@ -7,13 +7,15 @@ import TabBar from "@/components/TabBar";
 import QuizPreview from "@/components/QuizPreview";
 import QuizInfo from "@/components/QuizInfo";
 import {useRequestService} from "@/service/request.service";
+import jwt from "jsonwebtoken";
+import Cookies from "js-cookie";
 
 const Page = () => {
 
     const service = useRequestService()
     const [userId, setUserId] = useState('0')
     const [quizzes, setQuizzes] = useState([{id:1, title: 'Quiz', labels: [], creationDate:'04/04/2002', description:'lalala', rating:10, author: 'yo', questions:[]}]);
-
+    const [tokenId, setTokenId] = useState('1')
     const [currentUser, setCurrentUser] = useState({email: 'usuario@mail.com',
                                                                         firstName: 'Nombre',
                                                                         lastName: 'Apellido',
@@ -23,7 +25,10 @@ const Page = () => {
 
     useEffect(() => {
         const id = window.location.pathname.split('/')[2]
+        const data = jwt.decode(Cookies.get('jwt'))
         setUserId(id)
+        setTokenId(data.id)
+        console.log(data.id)
         service.getUserInformation(id).then(commentsList => {
         setCurrentUser(commentsList)
         }).catch(error => {
@@ -43,7 +48,7 @@ const Page = () => {
                     lastName={currentUser.lastName}
                     birthDate={currentUser.birthDate}
                     createdAt={currentUser.createdDate??[2002,4,5]}
-                    isCurrentUser={true}
+                    isCurrentUser={tokenId.toString() === userId}
                 />
                 }
                 <TabBar/>
