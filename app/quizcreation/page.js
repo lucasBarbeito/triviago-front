@@ -108,14 +108,8 @@ const CreationPage = () => {
 
         setOpen(false);
     };
-    const [questions, setQuestions] = useState([]);
-    const [counter, setCounter] = useState(0)
 
     function addQuestion() {
-        const updatedArray = [...questions, { id: counter }];
-        setCounter(counter + 1);
-        setQuestions(updatedArray);
-
         setQuizData((prevData) => ({
             ...prevData,
             questions: [
@@ -129,11 +123,6 @@ const CreationPage = () => {
     }
 
     function removeQuestion(pos) {
-        const updatedArray = questions.filter((question) => {
-            return question.id !== pos;
-        });
-        setQuestions(updatedArray);
-
         setQuizData((prevData) => ({
             ...prevData,
             questions: prevData.questions.filter((_, index) => index !== pos),
@@ -156,7 +145,7 @@ const CreationPage = () => {
             <br/>
             <div className={styles.quizQuestionContainer}>
                 <QuizCreatorInfo quizData={quizData} setQuizData={setQuizData} setOpen={setOpen} setMessage={setMessage}/>
-                {questions.length !== 0 ?
+                {quizData.questions.length !== 0 ?
                     mappedQuestions
                     : null}
                 <Button variant="outlined" startIcon={<AddCircleIcon/>} onClick={addQuestion} style={{color: '#00CC66', borderColor: '#00CC66'}}>
