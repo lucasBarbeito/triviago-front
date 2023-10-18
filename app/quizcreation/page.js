@@ -1,14 +1,14 @@
 "use client"
 
 import ResponsiveAppBar from "@/components/ResponsiveAppBar";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import QuizQuestion from "@/components/QuizQuestion";
 import styles from '../../styles/QuizCreatorPage.module.css';
 import QuizCreatorInfo from "@/components/QuizCreatorInfo";
 import Image from "next/image";
 import {useRouter} from "next/navigation";
 import {Button, IconButton, Slide, Snackbar} from "@mui/material";
-import {Alert} from "@mui/lab";
+import {Alert} from "@mui/material";
 import {useRequestService} from "@/service/request.service";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 
@@ -86,6 +86,7 @@ const CreationPage = () => {
 
     const createQuiz = () => {
         // Si no se puede validar el quiz (o sea el validateQuiz da false), retorna, ya que no debe mandar la query.
+        console.log(quizData)
         if (!validateQuiz(quizData)) {return}
         service.createQuiz(quizData)
             .then((response)=>{
@@ -139,10 +140,10 @@ const CreationPage = () => {
         }));
     }
 
-    const mappedQuestions = questions.map((question, index) =>
+    const mappedQuestions = quizData.questions.map((question, index) =>
         {return (
-            <div key={question.id} className={styles.answerField}>
-                <QuizQuestion deleteFunction={removeQuestion} questionIndex={question.id} quizData={quizData} setQuizData={setQuizData}/>
+            <div key={index} className={styles.answerField}>
+                <QuizQuestion deleteFunction={removeQuestion} questionIndex={index} quizData={quizData} setQuizData={setQuizData}/>
             </div>
         )}
 
