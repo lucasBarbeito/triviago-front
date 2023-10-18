@@ -10,7 +10,7 @@ const UserProfile = ({
                          birthDate,
                          createdAt,
                          isCurrentUser
-                     }) => {
+                         }) => {
 
 
 
@@ -56,21 +56,21 @@ const UserProfile = ({
                     <div className={styles.userInfoEditableContainer}>
                         <p className={styles.userInfoSubtitle}>{firstName + ' ' + lastName } </p>
                         {isCurrentUser && <Image
-                            src="/assets/images/EditComment.png"
-                            alt="editicon"
-                            width={24}
-                            height={24}
-                        />
+                                                src="/assets/images/EditComment.png"
+                                                alt="editicon"
+                                                width={24}
+                                                height={24}
+                                                />
                         }
                     </div>
                     <div className={styles.userInfoEditableContainer}>
                         <p className={styles.userInfoSubtitle}>{birthDate}</p>
                         {isCurrentUser && <Image
-                            src="/assets/images/EditComment.png"
-                            alt="editicon"
-                            width={24}
-                            height={24}
-                        />
+                                                src="/assets/images/EditComment.png"
+                                                alt="editicon"
+                                                width={24}
+                                                height={24}
+                                                />
                         }
                     </div>
                     <p className={styles.userInfoSubtitle}>{ `Miembro desde el ${parseDate(createdAt)}`}</p>

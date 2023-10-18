@@ -1,0 +1,16 @@
+.wrapper{
+    gap:24px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+}
+
+.quizzesContainer{
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:24px;
+    width:100%;
+}
