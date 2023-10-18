@@ -1,7 +1,8 @@
 'use client'
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from '../styles/UserProfile.module.css';
 import Image from "next/image";
+import {useRequestService} from "@/service/request.service";
 
 const UserProfile = ({
                          firstName,
@@ -13,7 +14,6 @@ const UserProfile = ({
                          }) => {
 
 
-
     const onDeleteClick = () => {
 
     }
@@ -23,12 +23,15 @@ const UserProfile = ({
     }
 
     const parseDate = (date) => {
-        const dateParts = date.split('/');
-        const day = dateParts[0];
-        const month = dateParts[1];
-        const year = dateParts[2];
 
-        const parsedDate = new Date(`${year}-${month}-${day}`);
+        const day = date[2];
+        const month = date[1];
+        const year = date[0];
+
+        // Convierte el día a un número entero
+        const dayNumber = parseInt(day, 10);
+
+        const parsedDate = new Date(`${year}-${month}-${dayNumber}`);
 
         const monthNames = [
             'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
@@ -36,8 +39,9 @@ const UserProfile = ({
         ];
         const monthName = monthNames[parsedDate.getMonth()];
 
-        return  `${day} de ${monthName} de ${year}`;
+        return dayNumber + " de " + monthName + " del " + year; // Devuelve un arreglo en lugar de una cadena
     }
+
 
     return (
         <div className={styles.userInfoContainer}>
@@ -64,7 +68,7 @@ const UserProfile = ({
                         }
                     </div>
                     <div className={styles.userInfoEditableContainer}>
-                        <p className={styles.userInfoSubtitle}>{birthDate}</p>
+                        <p className={styles.userInfoSubtitle}>{`${birthDate[2]}/${birthDate[1]}/${birthDate[0]}`}</p>
                         {isCurrentUser && <Image
                                                 src="/assets/images/EditComment.png"
                                                 alt="editicon"

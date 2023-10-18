@@ -38,7 +38,6 @@ const RequestService = {
 
     },
 
-
     fetchComments: async (quizId) => {
         try {
             const response = await axios.get(`${url}/quiz/${quizId}/comment`,
@@ -171,7 +170,6 @@ const RequestService = {
 
     },
 
-
     filterQuizzes: async (quizFilter) => {
         // Codificar los valores de los parámetros en la URL
         const response = await axios.get(
@@ -205,6 +203,25 @@ const RequestService = {
             throw new Error("Hubo un error al calificar el quiz, por favor intenta más tarde");
         }
     },
+
+    getUserInformation: async (userId) => {
+        try{
+            const response = await axios.get(`${url}/user/${userId}`,
+                {
+                    headers:{
+                        'Authorization': 'Bearer ' + Cookies.get('jwt')
+                    }
+                });
+            if(response.status ===200){
+                return response.data
+            }
+
+        } catch (error){
+            console.error(error);
+        }
+    }
+
+
 
 }
 
