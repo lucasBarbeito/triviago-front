@@ -1,8 +1,7 @@
 'use client'
 import React from 'react';
 import styles from '../styles/UserProfile.module.css';
-import UserAvatarIcon from "@/components/UserAvatarIcon";
-import EditIcon from "@/components/EditIcon";
+import Image from "next/image";
 
 const UserProfile = ({
                          firstName,
@@ -44,17 +43,35 @@ const UserProfile = ({
         <div className={styles.userInfoContainer}>
             <div className={styles.userBoxes}>
                 <div className={styles.userAvatar}>
-                    <UserAvatarIcon />
+                    <Image
+                        src="/assets/images/UserIconGray.png"
+                        alt="usericon"
+                        width={128}
+                        height={128}
+                    />
+
                 </div>
                 <div className={styles.userInfo}>
                     <p className={styles.userInfoTitle}>{email}</p>
                     <div className={styles.userInfoEditableContainer}>
                         <p className={styles.userInfoSubtitle}>{firstName + ' ' + lastName } </p>
-                        {isCurrentUser && <EditIcon/> }
+                        {isCurrentUser && <Image
+                                                src="/assets/images/EditComment.png"
+                                                alt="editicon"
+                                                width={24}
+                                                height={24}
+                                                />
+                        }
                     </div>
                     <div className={styles.userInfoEditableContainer}>
                         <p className={styles.userInfoSubtitle}>{birthDate}</p>
-                        {isCurrentUser && <EditIcon/> }
+                        {isCurrentUser && <Image
+                                                src="/assets/images/EditComment.png"
+                                                alt="editicon"
+                                                width={24}
+                                                height={24}
+                                                />
+                        }
                     </div>
                     <p className={styles.userInfoSubtitle}>{ `Miembro desde el ${parseDate(createdAt)}`}</p>
 
