@@ -121,25 +121,23 @@ const QuizComents = (props) => {
     };
 
     function handleCommentBoxOpen() {
-        console.log(openComment);
+        console.log(openComment)
         setOpenComment(true);
+        setShowTable(false);
     }
 
     function handleCommentBoxClose() {
-        console.log(openComment);
+        console.log(openComment)
         setOpenComment(false);
-        setShowTable(false);
+        setShowTable(true);
     }
 
     return (
         <div className={styles.backgroundBox}>
             <div className={styles.componentBox}>
                 <div className={styles.dividerBox}>
-                    <button
-                        className={openComment ? styles.titleSelectedText : styles.titleNotSelected}
-                        onClick={handleCommentBoxOpen}
-                    >
-                        Comentarios
+                    <button className={openComment ? styles.titleSelectedText : styles.titleNotSelected}
+                            onClick={handleCommentBoxOpen}>Comentarios
                     </button>
                     <button
                         className={openComment ? styles.titleNotSelected : styles.titleSelectedText}
