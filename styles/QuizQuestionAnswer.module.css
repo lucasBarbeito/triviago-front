@@ -27,19 +27,19 @@
 }
 
 .answerOptionText{
-    color: #000;
-    font-family: Inter, sans-serif;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 400;
-    flex-shrink: 0;
-    overflow-y: hidden;
-    resize: none;
-    width: inherit;
-    border: none;
-    line-height: normal;
-    word-wrap: break-word;
-    word-break: break-word;
+    color: #000 !important;
+    font-family: Inter, sans-serif !important;
+    font-size: 18px !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    flex-shrink: 0 !important;
+    overflow-y: hidden !important;
+    resize: none !important;
+    width: inherit !important;
+    border: none !important;
+    line-height: normal !important;
+    word-wrap: break-word !important;
+    word-break: break-word !important;
 }
 
 .answerOptionText:focus {
@@ -63,4 +63,8 @@
     width:670px;
     gap: 20px;
     align-items: center;
+}
+
+.rowContainer {
+    width: 100%;
 }
