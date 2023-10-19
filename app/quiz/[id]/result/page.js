@@ -8,6 +8,30 @@ import axios from "axios";
 import {useParams, useRouter} from 'next/navigation';
 
 const ResultPage = () => {
+    const data = [
+        {
+            Usuario: 'usuario1@mail.com',
+            Puntaje: '11 de 11',
+            Fecha: '03/06/2023',
+            Hora: '18:43',
+            Posicion: '#1',
+        },
+        {
+            Usuario: 'usuario2@mail.com',
+            Puntaje: '9 de 11',
+            Fecha: '03/06/2023',
+            Hora: '09:12',
+            Posicion: '#2',
+        },
+        {
+            Usuario: 'usuario3@mail.com',
+            Puntaje: '8 de 11',
+            Fecha: '03/08/2023',
+            Hora: '13:02',
+            Posicion: '#3',
+        }
+    ];
+
     const [quiz, setQuiz] = useState({});
     const router = useRouter();
     const { id } = useParams();
@@ -41,7 +65,7 @@ const ResultPage = () => {
             <QuizResults />
             </div>
             <br></br>
-            <QuizComents/>
+            <QuizComents />
         </div>
     );
 };

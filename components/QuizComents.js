@@ -6,35 +6,36 @@ import CommentComponent from "@/components/CommentComponent";
 import Cookies from "js-cookie";
 import {Button, Slide, Snackbar} from "@mui/material";
 import {Alert} from "@mui/lab";
+import QualificationTable from "@/components/QualificationTable";
 
 const jwt = require('jsonwebtoken');
 
-const QuizComents = () => {
-
+const QuizComents = (props) => {
     const [comment, setComment] = useState("");
     const [openComment, setOpenComment] = useState(true);
-    const [comments, setComments] = useState([])
-    const service = useRequestService()
-    const [quizId, setQuizId] = useState('0')
+    const [comments, setComments] = useState([]);
+    const service = useRequestService();
+    const [quizId, setQuizId] = useState('0');
     const [replyToCommentId, setReplyToCommentId] = useState(null);
-    const [open, setOpen] = React.useState(false);
-    const [message, setMessage] = React.useState("ERROR");
+    const [open, setOpen] = useState(false);
+    const [message, setMessage] = useState("ERROR");
+    const [showTable, setShowTable] = useState(false);
 
     useEffect(() => {
-        const id = window.location.pathname.split('/')[2]
-        setQuizId(id)
+        const id = window.location.pathname.split('/')[2];
+        setQuizId(id);
         service.fetchComments(id).then(commentsList => {
-            setComments(commentsList)
+            setComments(commentsList);
         }).catch(error => {
             console.error("Error fetching comments:", error);
-            setComments([])
-        })
+            setComments([]);
+        });
     }, [quizId]);
 
     function handleComment(event) {
-        setComment(event.target.value)
-        event.target.style.height = '22px'
-        event.target.style.height = (event.target.scrollHeight + 1) + 'px'
+        setComment(event.target.value);
+        event.target.style.height = '22px';
+        event.target.style.height = (event.target.scrollHeight + 1) + 'px';
     }
 
     function cancelComment() {
@@ -112,17 +113,6 @@ const QuizComents = () => {
         })
     }
 
-
-    function handleCommentBoxOpen() {
-        console.log(openComment)
-        setOpenComment(true)
-    }
-
-    function handleCommentBoxClose() {
-        console.log(openComment)
-        setOpenComment(false)
-    }
-
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
             return;
@@ -130,34 +120,65 @@ const QuizComents = () => {
         setOpen(false);
     };
 
+    function handleCommentBoxOpen() {
+        console.log(openComment);
+        setOpenComment(true);
+    }
+
+    function handleCommentBoxClose() {
+        console.log(openComment);
+        setOpenComment(false);
+        setShowTable(false);
+    }
+
     return (
         <div className={styles.backgroundBox}>
             <div className={styles.componentBox}>
                 <div className={styles.dividerBox}>
-                    <button className={openComment ? styles.titleSelectedText : styles.titleNotSelected}
-                            onClick={handleCommentBoxOpen}>Comentarios
+                    <button
+                        className={openComment ? styles.titleSelectedText : styles.titleNotSelected}
+                        onClick={handleCommentBoxOpen}
+                    >
+                        Comentarios
                     </button>
-                    <button className={openComment ? styles.titleNotSelected : styles.titleSelectedText}
-                            onClick={handleCommentBoxClose}>Clasificación
+                    <button
+                        className={openComment ? styles.titleNotSelected : styles.titleSelectedText}
+                        onClick={() => {
+                            handleCommentBoxClose();
+                            setShowTable(true);
+                        }}
+                    >
+                        Clasificación
                     </button>
                 </div>
                 <div className={styles.lineBox}>
-                    <div className={openComment ? styles.dividerSelectedLine : styles.dividerNotSelectedLine}/>
-                    <div className={openComment ? styles.dividerNotSelectedLine : styles.dividerSelectedLine}/>
+                    <div className={openComment ? styles.dividerSelectedLine : styles.dividerNotSelectedLine} />
+                    <div className={openComment ? styles.dividerNotSelectedLine : styles.dividerSelectedLine} />
                 </div>
-                {openComment ?
-                    <div className={styles.comentBox} id="commentBox">
-                        <p className={styles.numberTextComents}>{comments.length} Comentarios</p>
-                        <textarea type="text" id="comment" name="comment" placeholder="Agrega un comentario..."
-                                  className={styles.inputComment} onChange={handleComment}/>
-                        <div className={styles.insertCommentLine}/>
-                        <div className={styles.buttonsContainers}>
-                            <Button variant="outlined" style={{color: '#000000', borderColor: '#000000'}} onClick={cancelComment}>Cancelar</Button>
-                            <Button variant="contained" style={{backgroundColor: '#00CC66'}} onClick={logComment}>Comentar</Button>
-                        </div>
-                        <div>
-                            {
-                                comments && comments.map((comment, index) => (
+                <div className={styles.whiteBox}>
+                    {showTable ? (
+                        <>
+                            <h2 className={styles.titleClasificacion}>Clasificación</h2>
+                            <QualificationTable />
+                        </>
+                    ) : (
+                        <div className={styles.comentBox} id="commentBox">
+                            <p className={styles.numberTextComents}>{comments.length} Comentarios</p>
+                            <textarea
+                                type="text"
+                                id="comment"
+                                name="comment"
+                                placeholder="Agrega un comentario..."
+                                className={styles.inputComment}
+                                onChange={handleComment}
+                            />
+                            <div className={styles.insertCommentLine} />
+                            <div className={styles.buttonsContainers}>
+                                <Button variant="outlined" style={{ color: '#000000', borderColor: '#000000' }} onClick={cancelComment}>Cancelar</Button>
+                                <Button variant="contained" style={{ backgroundColor: '#00CC66' }} onClick={logComment}>Comentar</Button>
+                            </div>
+                            <div>
+                                {comments && comments.map((comment, index) => (
                                     <CommentComponent
                                         key={comment.id}
                                         comment={comment}
@@ -166,23 +187,20 @@ const QuizComents = () => {
                                         quizId={quizId}
                                         showReplyInput={true}
                                     />
-                                ))
-                            }
+                                ))}
+                            </div>
                         </div>
-                    </div>
-                    :
-                    <div className={styles.comentBox} id="classificationtBox">
-                        <p className={styles.numberTextComents}>Clasificación</p>
-                    </div>
-                }
+                    )}
+                </div>
             </div>
             <Snackbar open={open} autoHideDuration={5000} onClose={handleClose} TransitionComponent={Slide}
-                      anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
+                      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
                 <Alert onClose={handleClose} severity="error">
                     {message}
                 </Alert>
             </Snackbar>
         </div>
     );
+
 };
 export default QuizComents;

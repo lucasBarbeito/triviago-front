@@ -1,0 +1,45 @@
+.tableTitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 34px;
+    letter-spacing: 0;
+    text-align: left;
+    width: 730.05px;
+    height: 46px;
+    top: 10px;
+    left: 16.98px;
+}
+
+/* Para la tabla */
+.qualificationTable {
+    width: 769px;
+    height: 214px;
+    top: 66px;
+    left: 336px;
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: 0;
+    text-align: justify;
+}
+
+/* Para las celdas */
+.tableHeadCell {
+    font-weight: bold;
+}
+
+.tableCell, .tableHeadCell {
+    border: none;
+    padding: 8px;
+}
+
+.tableRow, .noBorderRow {
+    border-bottom: none;
+}
+
+.customTable {
+    borderCollapse: separate;
+    borderSpacing: 0;
+}
