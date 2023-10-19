@@ -7,6 +7,7 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from "@mui/material/Checkbox";
+import {Typography} from "@mui/material";
 
 
 const QuizQuestionAnswer = () => {
@@ -52,7 +53,7 @@ const QuizQuestionAnswer = () => {
 
     return (
         <div className={styles.componentBox}>
-            <p className={styles.questionTitle}>Pregunta 1</p>
+            <Typography className={styles.questionTitle}>Cuantas veces maradona golpeo un balon de futbol en la cancha del balon de futbol de balon de los balones cuantas veces deberian o no abrir o no fin</Typography>
             <div className={styles.answerBox}>
                 {correctCount > 1 ?
                     (answers.map((answer) => {
