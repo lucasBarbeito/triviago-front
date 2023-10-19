@@ -19,23 +19,23 @@ const QualificationTable = ({ data }) => {
                 <Table aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell align="left"><b>Usuario</b></TableCell>
-                            <TableCell align="right"><b>Puntaje</b></TableCell>
-                            <TableCell align="right"><b>Fecha</b></TableCell>
-                            <TableCell align="right"><b>Hora</b></TableCell>
-                            <TableCell align="right"><b>Posición</b></TableCell>
+                            <TableCell align="center" className={styles.tableHeadCell}><b>Usuario</b></TableCell>
+                            <TableCell align="center" className={styles.tableHeadCell}><b>Puntaje</b></TableCell>
+                            <TableCell align="center" className={styles.tableHeadCell}><b>Fecha</b></TableCell>
+                            <TableCell align="center" className={styles.tableHeadCell}><b>Hora</b></TableCell>
+                            <TableCell align="center" className={styles.tableHeadCell}><b>Posición</b></TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {rows.map((row, index) => (
                             <TableRow key={index} className={styles.noBorderRow}>
-                                <TableCell component="th" scope="row">
+                                <TableCell component="th" scope="row" align="center" className={styles.tableInfoCell}>
                                     {row.user}
                                 </TableCell>
-                                <TableCell align="right">{row.rating}</TableCell>
-                                <TableCell align="right">{row.date}</TableCell>
-                                <TableCell align="right">{row.time}</TableCell>
-                                <TableCell align="right">{row.position}</TableCell>
+                                <TableCell align="center" className={styles.tableInfoCell}>{row.rating}</TableCell>
+                                <TableCell align="center" className={styles.tableInfoCell}>{row.date}</TableCell>
+                                <TableCell align="center" className={styles.tableInfoCell}>{row.time}</TableCell>
+                                <TableCell align="center" className={styles.tableInfoCell}>{row.position}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

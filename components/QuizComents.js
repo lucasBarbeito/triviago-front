@@ -174,7 +174,6 @@ const QuizComents = (props) => {
                         </div>
                     ) : (
                         <div className={styles.comentBox} id="classificationtBox">
-                            <p className={styles.numberTextComents}>Clasificación</p>
                             <QualificationTable />
                         </div>
                     )}

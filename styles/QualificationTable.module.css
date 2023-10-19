@@ -1,16 +1,3 @@
-.tableTitle {
-    font-family: 'Inter', sans-serif;
-    font-size: 28px;
-    font-weight: 700;
-    line-height: 34px;
-    letter-spacing: 0;
-    text-align: left;
-    width: 730.05px;
-    height: 46px;
-    top: 10px;
-    left: 16.98px;
-}
-
 /* Para la tabla */
 .qualificationTable {
     width: 769px;
@@ -27,7 +14,20 @@
 
 /* Para las celdas */
 .tableHeadCell {
-    font-weight: bold;
+    /*font-weight: bold !important;*/
+    font-family: 'Inter', sans-serif !important;
+    font-size: 18px !important;
+    font-weight: 700 !important;
+    line-height: 22px !important;
+    letter-spacing: 0em !important;
+}
+
+.tableInfoCell {
+    font-family: Inter, sans-serif !important;
+    font-size: 18px !important;
+    font-weight: 400 !important;
+    line-height: 22px !important;
+    letter-spacing: 0em !important;
 }
 
 .tableCell, .tableHeadCell {
