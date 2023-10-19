@@ -73,9 +73,6 @@ const ResultPage = () => {
                 </Alert>
             </Snackbar>
 
-            <div>
-                <ConfirmationModal/>
-            </div>
         </div>
     );
 };

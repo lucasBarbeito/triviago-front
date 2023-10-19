@@ -1,26 +1,37 @@
-import React from 'react';
-import Grid from '@mui/material/Grid';
+import React, { useState } from 'react';
 import styles from '../styles/QuizInfo.module.css';
-import {Button} from "@mui/material";
+import { Button } from "@mui/material";
+import ConfirmationModal from './ConfirmationModal';
 
+function RatingSection({ ratings, comments, questions }) {
+    const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
-function RatingSection({ ratings, comments, questions, startButton }) {
-  return (
-      <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-          <div style={{display: 'flex', gap: '64px'}}>
-              { ratings !== undefined && <div>
-                  <strong>{ratings}</strong> Puntos
-              </div>}
-              { questions !== undefined && <div>
-                  <strong>{questions}</strong> Preguntas
-              </div>}
-              { comments !== undefined && <div>
-                  <strong>{comments}</strong> Comentarios
-              </div>}
-          </div>
-          {startButton && <div><Button variant="contained" style={{backgroundColor: '#00CC66'}}>Realizar</Button></div>}
-      </div>
-  );
+    const handleConfirmationModal = () => {
+        setShowConfirmationModal(true);
+    }
+
+    const handleCloseConfirmationModal = () => {
+        setShowConfirmationModal(false);
+    }
+
+    return (
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ display: 'flex', gap: '64px' }}>
+                {/* ... (resto del código) */}
+            </div>
+            <div>
+                <Button variant="contained" style={{ backgroundColor: '#00CC66' }} onClick={handleConfirmationModal}>
+                    Realizar
+                </Button>
+            </div>
+
+            {showConfirmationModal && (
+                <div className={styles.modalBackdrop}>
+                    <ConfirmationModal onClose={handleCloseConfirmationModal} />
+                </div>
+            )}
+        </div>
+    );
 }
 
 export default RatingSection;

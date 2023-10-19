@@ -7,7 +7,6 @@ import { Inter } from 'next/font/google';
 import { faBookmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-
 const inter = Inter({ subsets: ['latin'] });
 
 const QuizInfo = ({ id, title, labels, creationDate, description, rating, questions, author = "@example.com"}) => {
