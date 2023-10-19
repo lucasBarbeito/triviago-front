@@ -1,11 +1,10 @@
-"use client"
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from '../styles/QuizComents.module.css';
-import {useRequestService} from "@/service/request.service";
+import { useRequestService } from "@/service/request.service";
 import CommentComponent from "@/components/CommentComponent";
 import Cookies from "js-cookie";
-import {Button, Slide, Snackbar} from "@mui/material";
-import {Alert} from "@mui/lab";
+import { Button, Slide, Snackbar } from "@mui/material";
+import { Alert } from "@mui/lab";
 import QualificationTable from "@/components/QualificationTable";
 
 const jwt = require('jsonwebtoken');
@@ -19,7 +18,6 @@ const QuizComents = (props) => {
     const [replyToCommentId, setReplyToCommentId] = useState(null);
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState("ERROR");
-    const [showTable, setShowTable] = useState(false);
 
     useEffect(() => {
         const id = window.location.pathname.split('/')[2];
@@ -39,9 +37,9 @@ const QuizComents = (props) => {
     }
 
     function cancelComment() {
-        setComment("")
-        document.getElementById("comment").style.height = '22px'
-        document.getElementById("comment").value = ""
+        setComment("");
+        document.getElementById("comment").style.height = '22px';
+        document.getElementById("comment").value = "";
     }
 
     async function logComment() {
@@ -53,7 +51,7 @@ const QuizComents = (props) => {
                     content: trimmedComment,
                     quizId: quizId,
                     userId: data.id,
-                    parentCommentId: replyToCommentId || null, // Asigna el ID del comentario al que se responde o null si es un comentario principal
+                    parentCommentId: replyToCommentId || null,
                 };
 
                 const com = await service.logComment(comData);
@@ -65,9 +63,9 @@ const QuizComents = (props) => {
                     }
                 });
                 cancelComment();
-                setReplyToCommentId(null); // Reinicia el ID del comentario al que se responde
+                setReplyToCommentId(null);
             } else {
-                setMessage("El comentario no puede tener mas de 255 caracteres");
+                setMessage("El comentario no puede tener más de 255 caracteres");
                 setOpen(true);
             }
         } else {
@@ -85,13 +83,13 @@ const QuizComents = (props) => {
                         setComments(commentsList);
                     }).catch(error => {
                         console.error("Error editing comment:", error);
-                        setComments(comments)
-                        setMessage("Error al editar el comentario")
-                        setOpen(true)
-                    })
-                })
+                        setComments(comments);
+                        setMessage("Error al editar el comentario");
+                        setOpen(true);
+                    });
+                });
             } else {
-                setMessage("El comentario no puede tener mas de 255 caracteres");
+                setMessage("El comentario no puede tener más de 255 caracteres");
                 setOpen(true);
             }
         } else {
@@ -103,14 +101,14 @@ const QuizComents = (props) => {
     function handleDeleteComment(id) {
         service.deleteComment(id).then(() => {
             service.fetchComments(quizId).then(commentsList => {
-                setComments(commentsList)
+                setComments(commentsList);
             }).catch(error => {
                 console.error("Error fetching comments:", error);
-                setComments(comments)
-                setMessage("Error al borrar el comentario")
-                setOpen(true)
-            })
-        })
+                setComments(comments);
+                setMessage("Error al borrar el comentario");
+                setOpen(true);
+            });
+        });
     }
 
     const handleClose = (event, reason) => {
@@ -121,15 +119,11 @@ const QuizComents = (props) => {
     };
 
     function handleCommentBoxOpen() {
-        console.log(openComment)
         setOpenComment(true);
-        setShowTable(false);
     }
 
     function handleCommentBoxClose() {
-        console.log(openComment)
         setOpenComment(false);
-        setShowTable(true);
     }
 
     return (
@@ -140,26 +134,19 @@ const QuizComents = (props) => {
                             onClick={handleCommentBoxOpen}>Comentarios
                     </button>
                     <button
-                        className={openComment ? styles.titleNotSelected : styles.titleSelectedText}
-                        onClick={() => {
-                            handleCommentBoxClose();
-                            setShowTable(true);
-                        }}
+                        className={!openComment ? styles.titleSelectedText : styles.titleNotSelected}
+                        onClick={handleCommentBoxClose}
                     >
                         Clasificación
                     </button>
                 </div>
                 <div className={styles.lineBox}>
                     <div className={openComment ? styles.dividerSelectedLine : styles.dividerNotSelectedLine} />
-                    <div className={openComment ? styles.dividerNotSelectedLine : styles.dividerSelectedLine} />
+                    <div className={!openComment ? styles.dividerSelectedLine : styles.dividerNotSelectedLine} />
                 </div>
                 <div className={styles.whiteBox}>
-                    {showTable ? (
-                        <>
-                            <h2 className={styles.titleClasificacion}>Clasificación</h2>
-                            <QualificationTable />
-                        </>
-                    ) : (
+                    <div className={styles.backgroundLayer} />
+                    {openComment ? (
                         <div className={styles.comentBox} id="commentBox">
                             <p className={styles.numberTextComents}>{comments.length} Comentarios</p>
                             <textarea
@@ -172,8 +159,8 @@ const QuizComents = (props) => {
                             />
                             <div className={styles.insertCommentLine} />
                             <div className={styles.buttonsContainers}>
-                                <Button variant="outlined" style={{ color: '#000000', borderColor: '#000000' }} onClick={cancelComment}>Cancelar</Button>
-                                <Button variant="contained" style={{ backgroundColor: '#00CC66' }} onClick={logComment}>Comentar</Button>
+                                <Button variant="outlined" className={styles.whiteButton} onClick={cancelComment}>Cancelar</Button>
+                                <Button variant="contained" className={styles.greenButton} onClick={logComment}>Comentar</Button>
                             </div>
                             <div>
                                 {comments && comments.map((comment, index) => (
@@ -188,6 +175,11 @@ const QuizComents = (props) => {
                                 ))}
                             </div>
                         </div>
+                    ) : (
+                        <>
+                            <h1 className={styles.numberTextComents}>Clasificación</h1>
+                            <QualificationTable/>
+                        </>
                     )}
                 </div>
             </div>
@@ -199,6 +191,6 @@ const QuizComents = (props) => {
             </Snackbar>
         </div>
     );
-
 };
+
 export default QuizComents;
