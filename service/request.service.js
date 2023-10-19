@@ -184,7 +184,22 @@ const RequestService = {
         if (response.status === 200) {
             return response.data;
         }
-    }
+    },
+
+    createQuiz: async (quizData) => {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}` // Token en el header
+            },
+        };
+        const response = await axios.post(url + "/quiz", quizData, config);
+        if (response.status === 200) {
+            return response.data;
+        }
+        else throw new error()
+        // setId(response.data.id);
+        // router.push(`/${id}/details`)
+    },
 
 }
 

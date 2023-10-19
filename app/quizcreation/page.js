@@ -54,10 +54,6 @@ const CreationPage = () => {
         for (const question of quiz.questions) {
             // Verificar que cada pregunta tenga al menos dos respuestas
             if (!Array.isArray(question.answers) || question.answers.length < 2) {
-                console.log("HERE")
-                console.log(question.answers)
-                console.log(Array.isArray(question.answers))
-                console.log(!Array.isArray(question.answers))
                 setMessage('Cada pregunta debe tener al menos dos opciones');
                 setOpen(true);
                 return false;
@@ -86,12 +82,11 @@ const CreationPage = () => {
 
     const createQuiz = () => {
         // Si no se puede validar el quiz (o sea el validateQuiz da false), retorna, ya que no debe mandar la query.
-        console.log(quizData)
         if (!validateQuiz(quizData)) {return}
         service.createQuiz(quizData)
             .then((response)=>{
-                setId(response.data.id);
-                router.push(`/quiz/${response.data.id}/details`)
+                setId(response.id);
+                router.push(`/quiz/${response.id}/details`)
             })
             .catch((error)=>{
                 setMessage('Hubo un error al crear el quiz');
