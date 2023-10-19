@@ -1,6 +1,6 @@
 "use client";
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from '../styles/QuizQuestion.module.css';
 import Image from "next/image";
 import {IconButton, Radio, Switch, TextField} from "@mui/material";
@@ -10,10 +10,8 @@ import Checkbox from "@mui/material/Checkbox";
 
 const QuizQuestion = ({deleteFunction, questionIndex, quizData, setQuizData}) => {
     const [multplCorrect, setMultplCorrect] = useState(false);
-    const [answers, setAnswers] = useState([{ text: '', type: 'radio', isCorrect: false }]);
     const [currAnswer, setCurrAnswer] = useState("");
     const [isCorrectCurr, setIsCorrectCurr] = useState(false)
-    const [question, setQuestion] = useState("")
 
     function addAnswer() {
         if(currAnswer.length > 0){
@@ -108,11 +106,11 @@ const QuizQuestion = ({deleteFunction, questionIndex, quizData, setQuizData}) =>
     }
 
     function correctAmount() {
-        return answers.filter((answer) => answer.isCorrect).length;
+        return quizData.questions[questionIndex].answers.filter((answer) => answer.isCorrect).length;
     }
 
     function indexCorrectHandler(index) {
-        const zeroBaseIndex = index - 1;
+        const zeroBaseIndex = index ;
         const updatedAnswers = [...answers];
         console.log(updatedAnswers)
         const answerToUpdate = updatedAnswers[index];
@@ -166,7 +164,7 @@ const QuizQuestion = ({deleteFunction, questionIndex, quizData, setQuizData}) =>
                         multiline
                         fullWidth
                         onChange={handleQuestionTextChange}
-                        value={question}
+                        value={quizData.questions[questionIndex].content}
                         maxRows={4}
                     />
                     <div className={styles.columnAnswer}>
@@ -199,9 +197,9 @@ const QuizQuestion = ({deleteFunction, questionIndex, quizData, setQuizData}) =>
                         </div>
                     </div>
                     <div className={styles.answerContainer}>
-                        {answers.map((answer, index) => (
+                        {quizData.questions[questionIndex].answers.map((answer, index) => (
                             <div>
-                                {(index > 0) && (<div key={index} className={styles.answerField}>
+                                {(index >= 0) && (<div key={index} className={styles.answerField}>
                                     <div className={styles.bulletPointContainer}>
                                         {   multplCorrect || correctAmount() > 1
                                             ?   <Checkbox
@@ -213,7 +211,7 @@ const QuizQuestion = ({deleteFunction, questionIndex, quizData, setQuizData}) =>
                                                 onChange={() => indexCorrectHandler(index)}
                                             />
                                         }
-                                        <p className={styles.text}>{answer.text}</p>
+                                        <p className={styles.text}>{answer.content}</p>
                                     </div>
                                     <IconButton onClick={() => removeAnswer(index)}>
                                         <CancelIcon sx={{ color: 'red' }}/>
