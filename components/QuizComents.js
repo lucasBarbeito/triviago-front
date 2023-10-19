@@ -130,9 +130,7 @@ const QuizComents = (props) => {
         <div className={styles.backgroundBox}>
             <div className={styles.componentBox}>
                 <div className={styles.dividerBox}>
-                    <button className={openComment ? styles.titleSelectedText : styles.titleNotSelected}
-                            onClick={handleCommentBoxOpen}>Comentarios
-                    </button>
+                    <button className={openComment ? styles.titleSelectedText : styles.titleNotSelected} onClick={handleCommentBoxOpen}>Comentarios</button>
                     <button
                         className={!openComment ? styles.titleSelectedText : styles.titleNotSelected}
                         onClick={handleCommentBoxClose}
@@ -145,7 +143,6 @@ const QuizComents = (props) => {
                     <div className={!openComment ? styles.dividerSelectedLine : styles.dividerNotSelectedLine} />
                 </div>
                 <div className={styles.whiteBox}>
-                    <div className={styles.backgroundLayer} />
                     {openComment ? (
                         <div className={styles.comentBox} id="commentBox">
                             <p className={styles.numberTextComents}>{comments.length} Comentarios</p>
@@ -176,15 +173,21 @@ const QuizComents = (props) => {
                             </div>
                         </div>
                     ) : (
-                        <>
-                            <h1 className={styles.numberTextComents}>Clasificación</h1>
-                            <QualificationTable/>
-                        </>
+                        <div className={styles.comentBox} id="classificationtBox">
+                            <p className={styles.numberTextComents}>Clasificación</p>
+                            <QualificationTable />
+                        </div>
                     )}
                 </div>
             </div>
-            <Snackbar open={open} autoHideDuration={5000} onClose={handleClose} TransitionComponent={Slide}
-                      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+
+            <Snackbar
+                open={open}
+                autoHideDuration={5000}
+                onClose={handleClose}
+                TransitionComponent={Slide}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            >
                 <Alert onClose={handleClose} severity="error">
                     {message}
                 </Alert>
