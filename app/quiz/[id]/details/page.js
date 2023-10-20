@@ -1,5 +1,4 @@
 "use client";
-
 import React, {useEffect, useState} from 'react';
 import QuizComents from "@components/QuizComents";
 import QuizInfo from "@components/QuizInfo";

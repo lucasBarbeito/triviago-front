@@ -6,7 +6,7 @@ import RatingSection from './RatingSection';
 import { Inter } from 'next/font/google';
 import { faBookmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {useRouter} from "next/navigation";
+import { useRouter } from 'next/router';
 
 const inter = Inter({ subsets: ['latin'] });
 const QuizInfo = ({ id, title, labels, creationDate, description, rating, questions, author = "@example.com"}) => {

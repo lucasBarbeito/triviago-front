@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useEffect, useState } from 'react';
 import QuizInfo from "@components/QuizInfo"; // Asegúrate de que quizInfo no utilice useRouter
 import ResponsiveAppBar from "@components/ResponsiveAppBar";
