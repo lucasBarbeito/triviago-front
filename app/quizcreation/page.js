@@ -1,14 +1,14 @@
 "use client"
 
 import ResponsiveAppBar from "@/components/ResponsiveAppBar";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import QuizQuestion from "@/components/QuizQuestion";
 import styles from '../../styles/QuizCreatorPage.module.css';
 import QuizCreatorInfo from "@/components/QuizCreatorInfo";
 import Image from "next/image";
 import {useRouter} from "next/navigation";
 import {Button, IconButton, Slide, Snackbar} from "@mui/material";
-import {Alert} from "@mui/lab";
+import {Alert} from "@mui/material";
 import {useRequestService} from "@/service/request.service";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 
@@ -54,10 +54,6 @@ const CreationPage = () => {
         for (const question of quiz.questions) {
             // Verificar que cada pregunta tenga al menos dos respuestas
             if (!Array.isArray(question.answers) || question.answers.length < 2) {
-                console.log("HERE")
-                console.log(question.answers)
-                console.log(Array.isArray(question.answers))
-                console.log(!Array.isArray(question.answers))
                 setMessage('Cada pregunta debe tener al menos dos opciones');
                 setOpen(true);
                 return false;
@@ -89,8 +85,8 @@ const CreationPage = () => {
         if (!validateQuiz(quizData)) {return}
         service.createQuiz(quizData)
             .then((response)=>{
-                setId(response.data.id);
-                router.push(`/quiz/${response.data.id}/details`)
+                setId(response.id);
+                router.push(`/quiz/${response.id}/details`)
             })
             .catch((error)=>{
                 setMessage('Hubo un error al crear el quiz');
@@ -107,14 +103,8 @@ const CreationPage = () => {
 
         setOpen(false);
     };
-    const [questions, setQuestions] = useState([]);
-    const [counter, setCounter] = useState(0)
 
     function addQuestion() {
-        const updatedArray = [...questions, { id: counter }];
-        setCounter(counter + 1);
-        setQuestions(updatedArray);
-
         setQuizData((prevData) => ({
             ...prevData,
             questions: [
@@ -128,21 +118,16 @@ const CreationPage = () => {
     }
 
     function removeQuestion(pos) {
-        const updatedArray = questions.filter((question) => {
-            return question.id !== pos;
-        });
-        setQuestions(updatedArray);
-
         setQuizData((prevData) => ({
             ...prevData,
             questions: prevData.questions.filter((_, index) => index !== pos),
         }));
     }
 
-    const mappedQuestions = questions.map((question, index) =>
+    const mappedQuestions = quizData.questions.map((question, index) =>
         {return (
-            <div key={question.id} className={styles.answerField}>
-                <QuizQuestion deleteFunction={removeQuestion} questionIndex={question.id} quizData={quizData} setQuizData={setQuizData}/>
+            <div key={index} className={styles.answerField}>
+                <QuizQuestion deleteFunction={removeQuestion} questionIndex={index} quizData={quizData} setQuizData={setQuizData}/>
             </div>
         )}
 
@@ -155,7 +140,7 @@ const CreationPage = () => {
             <br/>
             <div className={styles.quizQuestionContainer}>
                 <QuizCreatorInfo quizData={quizData} setQuizData={setQuizData} setOpen={setOpen} setMessage={setMessage}/>
-                {questions.length !== 0 ?
+                {quizData.questions.length !== 0 ?
                     mappedQuestions
                     : null}
                 <Button variant="outlined" startIcon={<AddCircleIcon/>} onClick={addQuestion} style={{color: '#00CC66', borderColor: '#00CC66'}}>
