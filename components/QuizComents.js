@@ -1,46 +1,45 @@
-"use client"
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from '../styles/QuizComents.module.css';
-import {useRequestService} from "@/service/request.service";
+import { useRequestService } from "@/service/request.service";
 import CommentComponent from "@/components/CommentComponent";
 import Cookies from "js-cookie";
-import {Button, Slide, Snackbar} from "@mui/material";
-import {Alert} from "@mui/lab";
+import { Button, Slide, Snackbar } from "@mui/material";
+import { Alert } from "@mui/lab";
+import QualificationTable from "@/components/QualificationTable";
 
 const jwt = require('jsonwebtoken');
 
-const QuizComents = () => {
-
+const QuizComents = (props) => {
     const [comment, setComment] = useState("");
     const [openComment, setOpenComment] = useState(true);
-    const [comments, setComments] = useState([])
-    const service = useRequestService()
-    const [quizId, setQuizId] = useState('0')
+    const [comments, setComments] = useState([]);
+    const service = useRequestService();
+    const [quizId, setQuizId] = useState('0');
     const [replyToCommentId, setReplyToCommentId] = useState(null);
-    const [open, setOpen] = React.useState(false);
-    const [message, setMessage] = React.useState("ERROR");
+    const [open, setOpen] = useState(false);
+    const [message, setMessage] = useState("ERROR");
 
     useEffect(() => {
-        const id = window.location.pathname.split('/')[2]
-        setQuizId(id)
+        const id = window.location.pathname.split('/')[2];
+        setQuizId(id);
         service.fetchComments(id).then(commentsList => {
-            setComments(commentsList)
+            setComments(commentsList);
         }).catch(error => {
             console.error("Error fetching comments:", error);
-            setComments([])
-        })
+            setComments([]);
+        });
     }, [quizId]);
 
     function handleComment(event) {
-        setComment(event.target.value)
-        event.target.style.height = '22px'
-        event.target.style.height = (event.target.scrollHeight + 1) + 'px'
+        setComment(event.target.value);
+        event.target.style.height = '22px';
+        event.target.style.height = (event.target.scrollHeight + 1) + 'px';
     }
 
     function cancelComment() {
-        setComment("")
-        document.getElementById("comment").style.height = '22px'
-        document.getElementById("comment").value = ""
+        setComment("");
+        document.getElementById("comment").style.height = '22px';
+        document.getElementById("comment").value = "";
     }
 
     async function logComment() {
@@ -52,7 +51,7 @@ const QuizComents = () => {
                     content: trimmedComment,
                     quizId: quizId,
                     userId: data.id,
-                    parentCommentId: replyToCommentId || null, // Asigna el ID del comentario al que se responde o null si es un comentario principal
+                    parentCommentId: replyToCommentId || null,
                 };
 
                 const com = await service.logComment(comData);
@@ -64,9 +63,9 @@ const QuizComents = () => {
                     }
                 });
                 cancelComment();
-                setReplyToCommentId(null); // Reinicia el ID del comentario al que se responde
+                setReplyToCommentId(null);
             } else {
-                setMessage("El comentario no puede tener mas de 255 caracteres");
+                setMessage("El comentario no puede tener más de 255 caracteres");
                 setOpen(true);
             }
         } else {
@@ -84,13 +83,13 @@ const QuizComents = () => {
                         setComments(commentsList);
                     }).catch(error => {
                         console.error("Error editing comment:", error);
-                        setComments(comments)
-                        setMessage("Error al editar el comentario")
-                        setOpen(true)
-                    })
-                })
+                        setComments(comments);
+                        setMessage("Error al editar el comentario");
+                        setOpen(true);
+                    });
+                });
             } else {
-                setMessage("El comentario no puede tener mas de 255 caracteres");
+                setMessage("El comentario no puede tener más de 255 caracteres");
                 setOpen(true);
             }
         } else {
@@ -102,25 +101,14 @@ const QuizComents = () => {
     function handleDeleteComment(id) {
         service.deleteComment(id).then(() => {
             service.fetchComments(quizId).then(commentsList => {
-                setComments(commentsList)
+                setComments(commentsList);
             }).catch(error => {
                 console.error("Error fetching comments:", error);
-                setComments(comments)
-                setMessage("Error al borrar el comentario")
-                setOpen(true)
-            })
-        })
-    }
-
-
-    function handleCommentBoxOpen() {
-        console.log(openComment)
-        setOpenComment(true)
-    }
-
-    function handleCommentBoxClose() {
-        console.log(openComment)
-        setOpenComment(false)
+                setComments(comments);
+                setMessage("Error al borrar el comentario");
+                setOpen(true);
+            });
+        });
     }
 
     const handleClose = (event, reason) => {
@@ -130,34 +118,49 @@ const QuizComents = () => {
         setOpen(false);
     };
 
+    function handleCommentBoxOpen() {
+        setOpenComment(true);
+    }
+
+    function handleCommentBoxClose() {
+        setOpenComment(false);
+    }
+
     return (
         <div className={styles.backgroundBox}>
             <div className={styles.componentBox}>
                 <div className={styles.dividerBox}>
-                    <button className={openComment ? styles.titleSelectedText : styles.titleNotSelected}
-                            onClick={handleCommentBoxOpen}>Comentarios
-                    </button>
-                    <button className={openComment ? styles.titleNotSelected : styles.titleSelectedText}
-                            onClick={handleCommentBoxClose}>Clasificación
+                    <button className={openComment ? styles.titleSelectedText : styles.titleNotSelected} onClick={handleCommentBoxOpen}>Comentarios</button>
+                    <button
+                        className={!openComment ? styles.titleSelectedText : styles.titleNotSelected}
+                        onClick={handleCommentBoxClose}
+                    >
+                        Clasificación
                     </button>
                 </div>
                 <div className={styles.lineBox}>
-                    <div className={openComment ? styles.dividerSelectedLine : styles.dividerNotSelectedLine}/>
-                    <div className={openComment ? styles.dividerNotSelectedLine : styles.dividerSelectedLine}/>
+                    <div className={openComment ? styles.dividerSelectedLine : styles.dividerNotSelectedLine} />
+                    <div className={!openComment ? styles.dividerSelectedLine : styles.dividerNotSelectedLine} />
                 </div>
-                {openComment ?
-                    <div className={styles.comentBox} id="commentBox">
-                        <p className={styles.numberTextComents}>{comments.length} Comentarios</p>
-                        <textarea type="text" id="comment" name="comment" placeholder="Agrega un comentario..."
-                                  className={styles.inputComment} onChange={handleComment}/>
-                        <div className={styles.insertCommentLine}/>
-                        <div className={styles.buttonsContainers}>
-                            <Button variant="outlined" style={{color: '#000000', borderColor: '#000000'}} onClick={cancelComment}>Cancelar</Button>
-                            <Button variant="contained" style={{backgroundColor: '#00CC66'}} onClick={logComment}>Comentar</Button>
-                        </div>
-                        <div>
-                            {
-                                comments && comments.map((comment, index) => (
+                <div className={styles.whiteBox}>
+                    {openComment ? (
+                        <div className={styles.comentBox} id="commentBox">
+                            <p className={styles.numberTextComents}>{comments.length} Comentarios</p>
+                            <textarea
+                                type="text"
+                                id="comment"
+                                name="comment"
+                                placeholder="Agrega un comentario..."
+                                className={styles.inputComment}
+                                onChange={handleComment}
+                            />
+                            <div className={styles.insertCommentLine} />
+                            <div className={styles.buttonsContainers}>
+                                <Button variant="outlined" className={styles.whiteButton} onClick={cancelComment}>Cancelar</Button>
+                                <Button variant="contained" className={styles.greenButton} onClick={logComment}>Comentar</Button>
+                            </div>
+                            <div>
+                                {comments && comments.map((comment, index) => (
                                     <CommentComponent
                                         key={comment.id}
                                         comment={comment}
@@ -166,18 +169,24 @@ const QuizComents = () => {
                                         quizId={quizId}
                                         showReplyInput={true}
                                     />
-                                ))
-                            }
+                                ))}
+                            </div>
                         </div>
-                    </div>
-                    :
-                    <div className={styles.comentBox} id="classificationtBox">
-                        <p className={styles.numberTextComents}>Clasificación</p>
-                    </div>
-                }
+                    ) : (
+                        <div className={styles.comentBox} id="classificationtBox">
+                            <QualificationTable />
+                        </div>
+                    )}
+                </div>
             </div>
-            <Snackbar open={open} autoHideDuration={5000} onClose={handleClose} TransitionComponent={Slide}
-                      anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
+
+            <Snackbar
+                open={open}
+                autoHideDuration={5000}
+                onClose={handleClose}
+                TransitionComponent={Slide}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            >
                 <Alert onClose={handleClose} severity="error">
                     {message}
                 </Alert>
@@ -185,4 +194,5 @@ const QuizComents = () => {
         </div>
     );
 };
+
 export default QuizComents;

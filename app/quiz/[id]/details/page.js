@@ -10,11 +10,12 @@ import API_URL from '@root/config';
 import {Slide, Snackbar} from "@mui/material";
 import {Alert} from "@mui/lab";
 import styles from '../../../../styles/QuizComents.module.css';
+import Cookies from "js-cookie";
 
 const ResultPage = () => {
     const [quizData, setQuizData] = useState(null);
 
-    const token = localStorage.getItem("token");
+    const token = Cookies.get("jwt") ? Cookies.get("jwt") : undefined;
 
     const [open, setOpen] = useState(false)
     const [message, setMessage] = useState('')
