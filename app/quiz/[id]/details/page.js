@@ -2,7 +2,6 @@
 
 import React, {useEffect, useState} from 'react';
 import QuizComents from "@components/QuizComents";
-import ConfirmationModal from "@/components/ConfirmationModal";
 import QuizInfo from "@components/QuizInfo";
 import ResponsiveAppBar from "@components/ResponsiveAppBar";
 import {useParams} from "next/navigation";

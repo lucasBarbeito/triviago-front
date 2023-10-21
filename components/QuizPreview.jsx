@@ -31,7 +31,7 @@ const QuizPreview = ({ id, title, labels, creationDate, description, rating, que
                     {description}
                 </div>
                 <div className={styles.rating}>
-                    <RatingSection ratings={rating} comments={commentCount} questions={questionCount}/>
+                    <RatingSection ratings={rating} comments={commentCount} questions={questionCount} id={id}/>
                 </div>
 
             </Stack>
