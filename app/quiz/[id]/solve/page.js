@@ -9,10 +9,10 @@ import { Alert } from "@mui/lab";
 import styles from '../../../../styles/QuizComents.module.css';
 import Cookies from "js-cookie";
 import QuizPreview from "@/components/QuizPreview";
+import QuizQuestionAnswer from "@/components/QuizQuestionAnswer";
 
 const quizSolve = () => {
     const [quizData, setQuizData] = useState(null);
-    const router = useRouter(); // Utiliza useRouter aquí
     const token = Cookies.get("jwt") ? Cookies.get("jwt") : undefined;
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState('');
@@ -55,6 +55,8 @@ const quizSolve = () => {
             <br></br>
             <div className={styles.componentBox}>
                 <QuizPreview {...quizData} />
+                <br></br>
+                <QuizQuestionAnswer />
             </div>
             <br></br>
             <Snackbar open={open} autoHideDuration={5000} onClose={handleClose} TransitionComponent={Slide}

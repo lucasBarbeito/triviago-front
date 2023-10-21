@@ -35,9 +35,11 @@ const QuizInfo = ({ id, title, labels, creationDate, description, rating, questi
                                     {title}
                                 </div>
                                 <div className={styles.date}>
-                                    <button className={styles.saveButton} onClick={()=>{alert('click')}}>
-                                        <FontAwesomeIcon icon={faBookmark} style={{height: '1.1rem', marginTop: 8}}/>
-                                    </button>
+                                    <a href={`/quiz/${id}/solve`}> {/* Enlace al botón "Realizar" */}
+                                        <button className={styles.saveButton} onClick={()=>{alert('click')}}>
+                                            <FontAwesomeIcon icon={faBookmark} style={{height: '1.1rem', marginTop: 8}}/>
+                                        </button>
+                                    </a>
                                 </div>
                             </div>
                             {labels && (<div className={styles.tags}>
