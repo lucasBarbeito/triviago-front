@@ -11,10 +11,6 @@ import { useRouter } from 'next/router';
 const inter = Inter({ subsets: ['latin'] });
 const QuizInfo = ({ id, title, labels, creationDate, description, rating, questions, author = "@example.com"}) => {
 
-    const router = useRouter();
-
-    const shouldShowStartButton = router.pathname === "/quiz/5/details";
-
     function formatDates(date) {
         const monthNames = [
             "enero", "febrero", "marzo", "abril",
@@ -39,11 +35,9 @@ const QuizInfo = ({ id, title, labels, creationDate, description, rating, questi
                                     {title}
                                 </div>
                                 <div className={styles.date}>
-                                    {shouldShowStartButton && (
-                                        <button className={styles.saveButton} onClick={()=>{alert('click')}}>
-                                            <FontAwesomeIcon icon={faBookmark} style={{height: '1.1rem', marginTop: 8}}/>
-                                        </button>
-                                    )}
+                                    <button className={styles.saveButton} onClick={()=>{alert('click')}}>
+                                        <FontAwesomeIcon icon={faBookmark} style={{height: '1.1rem', marginTop: 8}}/>
+                                    </button>
                                 </div>
                             </div>
                             {labels && (<div className={styles.tags}>
@@ -60,7 +54,7 @@ const QuizInfo = ({ id, title, labels, creationDate, description, rating, questi
                     </div>
                     <div className={styles.divisor}/>
                     <div className={styles.rating}>
-                        <RatingSection ratings={rating} questions={questions.length} startButton={shouldShowStartButton} />
+                        <RatingSection ratings={rating} questions={questions.length} startButton={true} />
                     </div>
                 </Stack>
             </div>

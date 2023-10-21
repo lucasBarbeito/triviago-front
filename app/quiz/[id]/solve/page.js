@@ -1,14 +1,14 @@
 "use client";
 import React, { useEffect, useState } from 'react';
-import QuizInfo from "@components/QuizInfo"; // Asegúrate de que quizInfo no utilice useRouter
 import ResponsiveAppBar from "@components/ResponsiveAppBar";
-import { useParams, useRouter } from "next/navigation"; // Importa useRouter aquí
+import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import API_URL from '@root/config';
 import { Slide, Snackbar } from "@mui/material";
 import { Alert } from "@mui/lab";
 import styles from '../../../../styles/QuizComents.module.css';
 import Cookies from "js-cookie";
+import QuizPreview from "@/components/QuizPreview";
 
 const quizSolve = () => {
     const [quizData, setQuizData] = useState(null);
@@ -44,7 +44,6 @@ const quizSolve = () => {
                 setOpen(true);
             }
         };
-
         fetchData();
     }, [id]);
 
@@ -55,7 +54,7 @@ const quizSolve = () => {
             <ResponsiveAppBar />
             <br></br>
             <div className={styles.componentBox}>
-                <QuizInfo {...quizData} shouldShowStartButton={router.pathname === "/quiz/5/details"} /> {/* Pasa la condición shouldShowStartButton */}
+                <QuizPreview {...quizData} />
             </div>
             <br></br>
             <Snackbar open={open} autoHideDuration={5000} onClose={handleClose} TransitionComponent={Slide}
