@@ -3,12 +3,12 @@ import styles from '../styles/QuizInfo.module.css';
 import { Button } from "@mui/material";
 import ConfirmationModal from './ConfirmationModal';
 
-function RatingSection({ ratings, comments, questions, id }) {
+function RatingSection({ ratings, comments, questions, id, showButton }) {
     const [showConfirmationModal, setShowConfirmationModal] = useState(false);
     const [quizId, setQuizId] = useState(null);
 
     const handleConfirmationModal = (id) => {
-        console.log(id)
+        console.log(id);
         setQuizId(id);
         setShowConfirmationModal(true);
     }
@@ -31,16 +31,17 @@ function RatingSection({ ratings, comments, questions, id }) {
                     <strong>{comments}</strong> Comentarios
                 </div>}
             </div>
-            <div>
-                <Button
-                    variant="contained"
-                    style={{ backgroundColor: '#00CC66' }}
-                    onClick={() => handleConfirmationModal(id)}
-                >
-                    Realizar
-                </Button>
-            </div>
-
+            {showButton && (
+                <div>
+                    <Button
+                        variant="contained"
+                        style={{ backgroundColor: '#00CC66' }}
+                        onClick={() => handleConfirmationModal(id)}
+                    >
+                        Realizar
+                    </Button>
+                </div>
+            )}
             {showConfirmationModal && (
                 <div className={styles.modalBackdrop}>
                     <ConfirmationModal onClose={handleCloseConfirmationModal} quizId={quizId} />
