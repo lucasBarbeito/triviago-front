@@ -5,8 +5,7 @@ import styles from '../styles/QuizInfo.module.css';
 import RatingSection from './RatingSection';
 import { Inter } from 'next/font/google';
 import { faBookmark } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useRouter } from 'next/router';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {useRequestService} from "@/service/request.service";
 
 const inter = Inter({ subsets: ['latin'] });
@@ -69,7 +68,7 @@ const QuizInfo = ({ id, title, labels, creationDate, description, rating, questi
                     </div>
                     <div className={styles.divisor}/>
                     <div className={styles.rating}>
-                        <RatingSection ratings={rating} questions={questions.length} showButton={true} id={id}/>
+                        <RatingSection ratings={rating} questions={questions.length} comments={comments.length} showButton={true} id={id}/>
                     </div>
                 </Stack>
             </div>
