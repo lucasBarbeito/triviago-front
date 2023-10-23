@@ -7,7 +7,6 @@ import { Inter } from 'next/font/google';
 import { faBookmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRouter } from 'next/router';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {useRequestService} from "@/service/request.service";
 
 const inter = Inter({ subsets: ['latin'] });
