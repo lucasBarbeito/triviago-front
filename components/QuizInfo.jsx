@@ -36,7 +36,7 @@ const QuizInfo = ({ id, title, tags, creationDate, description, rating, question
 
     function handleSaveQuiz(quizId) {
         if (quizId !== null) {
-            service.saveQuiz(quizId, saved)
+            service.saveQuiz(quizId)
                 .then(() => {
                     setSaved(!saved)
                 }).catch(error => {

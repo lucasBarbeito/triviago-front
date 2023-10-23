@@ -186,12 +186,10 @@ const RequestService = {
         }
     },
 
-    saveQuiz: async (quizId, saved) => {
+    saveQuiz: async (quizId) => {
     try {
-        const response = await axios.post(`${url}/quiz/${quizId}/save`,
-            {
-                save: saved
-            },
+        const response = await axios.put(`${url}/user/save-quiz/${quizId}`,
+            {},
             {
                 headers: {
                     'Authorization': 'Bearer ' + Cookies.get('jwt')
@@ -201,8 +199,12 @@ const RequestService = {
         if (response.status === 200) {
             return response.data
         }
+        else {
+            throw new Error("Error en la respuesta del servidor");
+        }
     } catch (error) {
-        console.error(error);
+        console.log(error)
+        throw error
     }
 
 },
