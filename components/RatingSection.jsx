@@ -44,7 +44,7 @@ function RatingSection({ ratings, comments, questions, id, showButton }) {
             )}
             {showConfirmationModal && (
                 <div className={styles.modalBackdrop}>
-                    <ConfirmationModal onClose={handleCloseConfirmationModal} quizId={quizId} />
+                    <ConfirmationModal onClose={handleCloseConfirmationModal} quizId={quizId}/>
                 </div>
             )}
         </div>
