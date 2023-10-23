@@ -71,6 +71,7 @@ const ResultPage = () => {
                     {message}
                 </Alert>
             </Snackbar>
+
         </div>
     );
 };
