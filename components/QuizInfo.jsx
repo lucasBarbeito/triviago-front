@@ -1,15 +1,28 @@
 "use client";
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { Stack } from '@mui/material';
 import styles from '../styles/QuizInfo.module.css';
 import RatingSection from './RatingSection';
 import { Inter } from 'next/font/google';
 import { faBookmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {useRequestService} from "@/service/request.service";
 
 const inter = Inter({ subsets: ['latin'] });
 
 const QuizInfo = ({ id, title, labels, creationDate, description, rating, questions, author = "@example.com"}) => {
+
+    const [comments, setComments] = useState([]);
+    const service = useRequestService();
+
+    useEffect(() => {
+        service.fetchComments(id).then((commentsList) => {
+            setComments(commentsList);
+        }).catch((error) => {
+            console.error('Error fetching comments:', error);
+            setComments([]);
+        });
+    }, [id]);
 
     function formatDates(date) {
         const monthNames = [
@@ -54,7 +67,7 @@ const QuizInfo = ({ id, title, labels, creationDate, description, rating, questi
             </div>
             <div className={styles.divisor}/>        
             <div className={styles.rating}>
-                <RatingSection ratings={rating} questions={questions.length} id={id} showButton={true}/>
+                <RatingSection ratings={rating} questions={questions.length} comments={comments.length} id={id} showButton={true}/>
             </div>
         </Stack>
     </div>

@@ -1,14 +1,26 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { Stack } from '@mui/material';
 import styles from '../styles/QuizPreview.module.css';
 import RatingSection from './RatingSection';
 import { Inter } from 'next/font/google';
 import {useRouter} from "next/navigation";
+import {useRequestService} from "@/service/request.service";
 
 const inter = Inter({ subsets: ['latin'] });
 
-const QuizPreview = ({ id, title, labels, creationDate, description, rating, questionCount=10, commentCount }) => {
+const QuizPreview = ({ id, title, labels, creationDate, description, rating, questionCount=10, commentCount=10 }) => {
     const router = useRouter()
+    const [comments, setComments] = useState([]);
+    const service = useRequestService();
+
+    useEffect(() => {
+        service.fetchComments(id).then((commentsList) => {
+            setComments(commentsList);
+        }).catch((error) => {
+            console.error('Error fetching comments:', error);
+            setComments([]);
+        });
+    }, [id]);
 
     const handleQuizClick = (quizId) => {
         router.push(`/quiz/${quizId}/details`)
@@ -31,7 +43,7 @@ const QuizPreview = ({ id, title, labels, creationDate, description, rating, que
                     {description}
                 </div>
                 <div className={styles.rating}>
-                    <RatingSection ratings={rating} comments={commentCount} questions={questionCount} id={id} showButton={false}/>
+                    <RatingSection ratings={rating} comments={comments.length} questions={questionCount} id={id} showButton={false}/>
                 </div>
 
             </Stack>
