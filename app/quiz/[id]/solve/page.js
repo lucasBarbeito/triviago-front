@@ -4,7 +4,7 @@ import ResponsiveAppBar from "@components/ResponsiveAppBar";
 import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import API_URL from '@root/config';
-import { Slide, Snackbar } from "@mui/material";
+import {Button, Slide, Snackbar} from "@mui/material";
 import { Alert } from "@mui/lab";
 import styles from '../../../../styles/QuizComents.module.css';
 import Cookies from "js-cookie";
@@ -57,6 +57,16 @@ const quizSolve = () => {
                 <QuizPreview {...quizData} />
                 <br></br>
                 <QuizQuestionAnswer />
+            </div>
+            <br></br>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <Button
+                    variant="contained"
+                    style={{ backgroundColor: '#00CC66' }}
+                    // onClick={() => handleConfirmationModal(id)}
+                >
+                    Enviar
+                </Button>
             </div>
             <br></br>
             <Snackbar open={open} autoHideDuration={5000} onClose={handleClose} TransitionComponent={Slide}

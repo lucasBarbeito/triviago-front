@@ -8,7 +8,6 @@ function RatingSection({ ratings, comments, questions, id, showButton }) {
     const [quizId, setQuizId] = useState(null);
 
     const handleConfirmationModal = (id) => {
-        console.log(id);
         setQuizId(id);
         setShowConfirmationModal(true);
     }
