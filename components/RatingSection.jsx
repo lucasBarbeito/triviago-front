@@ -5,7 +5,7 @@ import ConfirmationModal from './ConfirmationModal';
 
 function RatingSection({ ratings, comments, questions, id }) {
     const [showConfirmationModal, setShowConfirmationModal] = useState(false);
-    const [quizId, setQuizId] = useState(null); // Asumiendo que tienes un estado para el quizId
+    const [quizId, setQuizId] = useState(null);
 
     const handleConfirmationModal = (id) => {
         console.log(id)
@@ -29,7 +29,8 @@ function RatingSection({ ratings, comments, questions, id }) {
                 </div>}
                 { comments !== undefined && <div>
                     <strong>{comments}</strong> Comentarios
-                </div>}            </div>
+                </div>}
+            </div>
             <div>
                 <Button
                     variant="contained"
