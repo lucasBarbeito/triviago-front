@@ -205,6 +205,19 @@ const RequestService = {
         }
     },
 
+    createQuiz: async (quizData) => {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}` // Token en el header
+            },
+        };
+        const response = await axios.post(url + "/quiz", quizData, config);
+        if (response.status === 200) {
+            return response.data;
+        }
+        else throw new error()
+    },
+
 }
 
 export const useRequestService = () => RequestService

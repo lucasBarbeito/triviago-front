@@ -1,6 +1,6 @@
 "use client";
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from '../styles/QuizQuestion.module.css';
 import Image from "next/image";
 import {IconButton, Radio, Switch, TextField} from "@mui/material";
@@ -9,25 +9,18 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Checkbox from "@mui/material/Checkbox";
 
 const QuizQuestion = ({deleteFunction, questionIndex, quizData, setQuizData}) => {
-    const [multplCorrect, setMultplCorrect] = useState(false);
-    const [answers, setAnswers] = useState([{ text: '', type: 'radio', isCorrect: false }]);
     const [currAnswer, setCurrAnswer] = useState("");
     const [isCorrectCurr, setIsCorrectCurr] = useState(false)
-    const [question, setQuestion] = useState("")
 
     function addAnswer() {
         if(currAnswer.length > 0){
             const updatedQuestions = [...quizData.questions];
-            const updatedAnswers = answers.map((answer) => ({
-                content: answer.text,
-                isCorrect: answer.isCorrect
-            }));            const newAnswer = { content: currAnswer, isCorrect: isCorrectCurr };
-            setAnswers([...answers, { text: currAnswer, type: multplCorrect ? 'checkbox' : 'radio', isCorrect: isCorrectCurr }]);
-            updatedAnswers.push(newAnswer);
+
+            const newAnswer = { content: currAnswer, isCorrect: isCorrectCurr };
 
             if (!updatedQuestions[questionIndex]) {
                 updatedQuestions[questionIndex] = {
-                    content: question,
+                    content: quizData.questions[questionIndex].question,
                     answers: [newAnswer],
                 };
             } else {
@@ -43,24 +36,16 @@ const QuizQuestion = ({deleteFunction, questionIndex, quizData, setQuizData}) =>
 
 
     function removeAnswer(index) {
-        //porque el index del array de answers empieza en 1 pero el de quizData en 0
-        const zeroBaseIndex = index - 1;
-        const updatedAnswers = [...answers];
-        //Primero lo borro de la lista de answers que es la que se esta mostrando en la UI
-        updatedAnswers.splice(index, 1);
-        setAnswers(updatedAnswers);
-
         const updatedQuestions = [...quizData.questions];
         if (updatedQuestions[questionIndex] && updatedQuestions[questionIndex].answers.length > 0) {
             // Eliminar la respuesta correspondiente en el array de respuestas de la pregunta para el quizData
-            updatedQuestions[questionIndex].answers.splice(zeroBaseIndex, 1);
+            updatedQuestions[questionIndex].answers.splice(index, 1);
 
             // Si la pregunta ya no tiene respuestas, eliminar la pregunta
             if (updatedQuestions[questionIndex].answers.length === 0) {
                 updatedQuestions.splice(questionIndex, 1);
             }
             updateQuizData(updatedQuestions);
-            console.log(updatedQuestions)
         }
     }
 
@@ -92,7 +77,6 @@ const QuizQuestion = ({deleteFunction, questionIndex, quizData, setQuizData}) =>
             updatedQuestions[questionIndex].content = event.target.value;
         }
 
-        setQuestion(event.target.value);
         setQuizData((prevData) => ({
             ...prevData,
             questions: updatedQuestions,
@@ -108,36 +92,16 @@ const QuizQuestion = ({deleteFunction, questionIndex, quizData, setQuizData}) =>
     }
 
     function correctAmount() {
-        return answers.filter((answer) => answer.isCorrect).length;
+        return quizData.questions[questionIndex].answers.filter((answer) => answer.isCorrect).length;
     }
 
     function indexCorrectHandler(index) {
-        const zeroBaseIndex = index - 1;
-        const updatedAnswers = [...answers];
-        console.log(updatedAnswers)
-        const answerToUpdate = updatedAnswers[index];
-
-        if (answerToUpdate) {
-            answerToUpdate.isCorrect = !answerToUpdate.isCorrect;
-            setAnswers(updatedAnswers);
-
-            const updatedQuestions = [...quizData.questions];
-            console.log(updatedQuestions)
-            console.log(index)
-            if (updatedQuestions[questionIndex] && updatedQuestions[questionIndex].answers.length > 0) {
-                // Actualizar el valor isCorrect de la respuesta correspondiente en el array de respuestas de la pregunta
-                updatedQuestions[questionIndex].answers[zeroBaseIndex].isCorrect = !updatedQuestions[questionIndex].answers[zeroBaseIndex].isCorrect;
-                updateQuizData(updatedQuestions);
-                console.log(updatedQuestions)
-            }
+        const updatedQuestions = [...quizData.questions];
+        if (updatedQuestions[questionIndex] && updatedQuestions[questionIndex].answers.length > 0) {
+            // Actualizar el valor isCorrect de la respuesta correspondiente en el array de respuestas de la pregunta
+            updatedQuestions[questionIndex].answers[index].isCorrect = !updatedQuestions[questionIndex].answers[index].isCorrect;
+            updateQuizData(updatedQuestions);
         }
-    }
-
-
-
-
-    const handleRemove = () => {
-        // deleteFunction(index)
     }
 
     const handleRemoveQuestion = () =>{
@@ -166,44 +130,18 @@ const QuizQuestion = ({deleteFunction, questionIndex, quizData, setQuizData}) =>
                         multiline
                         fullWidth
                         onChange={handleQuestionTextChange}
-                        value={question}
+                        value={quizData.questions[questionIndex].content}
                         maxRows={4}
                     />
                     <div className={styles.columnAnswer}>
                         <p className={styles.titleAnsw}>Respuestas</p>
-                        <div className={styles.interiorColumn}>
-                            {/*<p className={styles.text}>Múltiples respuestas correctas</p>*/}
-                            {/*<Switch*/}
-                            {/*    sx={{*/}
-                            {/*        '& .MuiSwitch-switchBase': {*/}
-                            {/*            '&.Mui-checked': {*/}
-                            {/*                color: '#00CC66',*/}
-                            {/*                '& + .MuiSwitch-track': {*/}
-                            {/*                    background: '#00CC66',*/}
-                            {/*                },*/}
-                            {/*            },*/}
-                            {/*            '&.Mui-disabled.MuiSwitch-thumb': {*/}
-                            {/*                color: '#FFFFFF',*/}
-                            {/*            },*/}
-                            {/*        },*/}
-                            {/*        '& .MuiSwitch-thumb': {*/}
-                            {/*            color: !(multplCorrect || correctAmount() > 1) && '#FFFFFF',*/}
-                            {/*        },*/}
-                            {/*        '& .MuiSwitch-track': {*/}
-                            {/*            backgroundColor: '#000000',*/}
-                            {/*        },*/}
-                            {/*    }}*/}
-                            {/*    checked={multplCorrect || correctAmount() > 1}*/}
-                            {/*    onChange={() => setMultplCorrect(!multplCorrect)}*/}
-                            {/*/>*/}
-                        </div>
                     </div>
                     <div className={styles.answerContainer}>
-                        {answers.map((answer, index) => (
+                        {quizData.questions[questionIndex].answers.map((answer, index) => (
                             <div>
-                                {(index > 0) && (<div key={index} className={styles.answerField}>
+                                {(index >= 0) && (<div key={index} className={styles.answerField}>
                                     <div className={styles.bulletPointContainer}>
-                                        {   multplCorrect || correctAmount() > 1
+                                        {   correctAmount() > 1
                                             ?   <Checkbox
                                                 checked={answer.isCorrect}
                                                 onChange={() => indexCorrectHandler(index)}
@@ -213,7 +151,7 @@ const QuizQuestion = ({deleteFunction, questionIndex, quizData, setQuizData}) =>
                                                 onChange={() => indexCorrectHandler(index)}
                                             />
                                         }
-                                        <p className={styles.text}>{answer.text}</p>
+                                        <p className={styles.text}>{answer.content}</p>
                                     </div>
                                     <IconButton onClick={() => removeAnswer(index)}>
                                         <CancelIcon sx={{ color: 'red' }}/>
@@ -224,7 +162,7 @@ const QuizQuestion = ({deleteFunction, questionIndex, quizData, setQuizData}) =>
                         <div className={styles.newAnswer}>
                             <div className={styles.bulletPointContainer}>
                                 {
-                                    multplCorrect || correctAmount() > 1
+                                    correctAmount() > 1
                                         ?   <Checkbox
                                             checked={isCorrectCurr}
                                             onChange={correctHandler}
@@ -236,12 +174,10 @@ const QuizQuestion = ({deleteFunction, questionIndex, quizData, setQuizData}) =>
                                 }
                                 <textarea
                                     type="answerArea"
-                                    // id="answerArea"
                                     name="answerArea"
                                     className={styles.answerInput}
                                     placeholder="Respuesta..."
                                     value = {currAnswer}
-                                    // onChange={(e) => handleAnswerTextChange(e.target.value)}
                                     onChange={handleAnswerTextChange}
                                 />
                                 <IconButton onClick={addAnswer}>
