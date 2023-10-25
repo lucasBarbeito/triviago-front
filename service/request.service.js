@@ -244,7 +244,6 @@ const RequestService = {
             console.log(error)
             throw error
         }
-    }
     },
 
     rateQuiz: async (quizId, rating) => {
