@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from 'react';
 import styles from '../styles/QuizInfo.module.css';
 import { Button } from "@mui/material";

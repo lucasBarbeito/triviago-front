@@ -1,15 +1,18 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import ResponsiveAppBar from "@components/ResponsiveAppBar";
-import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import API_URL from '@root/config';
-import {Button, Slide, Snackbar} from "@mui/material";
+import { Button, Slide, Snackbar } from "@mui/material";
 import { Alert } from "@mui/lab";
 import styles from '../../../../styles/QuizComents.module.css';
+import modalStyles from '../../../../styles/QuizInfo.module.css';
 import Cookies from "js-cookie";
 import QuizPreview from "@/components/QuizPreview";
 import QuizQuestionAnswer from "@/components/QuizQuestionAnswer";
+import QuizResolutionModal from "@/components/QuizResolutionModal";
+import {useParams} from "next/navigation";
+import {useRouter} from "next/router";
 
 const quizSolve = () => {
     const [quizData, setQuizData] = useState(null);
@@ -18,6 +21,8 @@ const quizSolve = () => {
     const [message, setMessage] = useState('');
     const params = useParams();
     const id = params.id;
+
+    const [showResolutionModal, setShowResolutionModal] = useState(false); // Add state to control the modal
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -47,6 +52,11 @@ const quizSolve = () => {
         fetchData();
     }, [id]);
 
+    const handleSendResolution = () => {
+        // Display the QuizResolutionModal when the "Enviar" button is clicked
+        setShowResolutionModal(true);
+    };
+
     if (quizData === null) return (<div></div>);
 
     return (
@@ -63,7 +73,7 @@ const quizSolve = () => {
                 <Button
                     variant="contained"
                     style={{ backgroundColor: '#00CC66' }}
-                    // onClick={() => handleConfirmationModal(id)}
+                    onClick={handleSendResolution} // Call the function to display the modal
                 >
                     Enviar
                 </Button>
@@ -75,6 +85,12 @@ const quizSolve = () => {
                     {message}
                 </Alert>
             </Snackbar>
+
+            {showResolutionModal && (
+                <div className={modalStyles.modalBackdrop}>
+                    <QuizResolutionModal handleClose={handleSendResolution} quizId={id} />
+                </div>
+            )}
         </div>
     );
 };
