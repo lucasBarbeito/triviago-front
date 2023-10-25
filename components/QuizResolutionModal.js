@@ -2,7 +2,6 @@
 
 import styles from '../styles/QuizResolutionModal.module.css';
 
-
 const QuizResolutionModal = () =>{
     return(
         <div className={styles.box}>
