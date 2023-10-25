@@ -1,5 +1,5 @@
 "use client";
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Slide, Snackbar, Stack} from '@mui/material';
 import styles from '../styles/QuizInfo.module.css';
 import RatingSection from './RatingSection';
@@ -12,13 +12,27 @@ import {Alert} from "@mui/lab";
 
 const inter = Inter({ subsets: ['latin'] });
 
-const QuizInfo = ({ id, title, tags, creationDate, description, rating, questionCount=10, author = "@example.com"}) => {
+const QuizInfo = ({ id, title, tags, creationDate, description, rating, questionCount=10, author = "@example.com", saved, setSaved}) => {
 
     const service = useRequestService()
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState("ERROR");
-    const [saved, setSaved] = useState(false);
+    // const [saved, setSaved] = useState(false);
 
+    // useEffect(() => {
+    //     service.getSavedQuizzes()
+    //         .then(savedQuizzes => {
+    //             setSaved(savedQuizzes.some(quiz => quiz.id === id))
+    //             console.log(savedQuizzes)
+    //             console.log(quiz.id)
+    //             console.log(savedQuizzes.some(quiz => quiz.id === id))
+    //         }).catch(error => {
+    //             console.error("Error getting saved quizzes:", error);
+    //             setMessage("Error al cargar el quiz")
+    //             setOpen(true)
+    //         })
+    //
+    // }, []);
 
     function formatDates(date) {
         const monthNames = [
