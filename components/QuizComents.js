@@ -156,8 +156,8 @@ const QuizComents = (props) => {
                             />
                             <div className={styles.insertCommentLine} />
                             <div className={styles.buttonsContainers}>
-                                <Button variant="outlined" className={styles.whiteButton} onClick={cancelComment}>Cancelar</Button>
-                                <Button variant="contained" className={styles.greenButton} onClick={logComment}>Comentar</Button>
+                                <Button variant="outlined" style={{color: '#000000', borderColor: '#000000'}} onClick={cancelComment}>Cancelar</Button>
+                                <Button variant="contained" style={{backgroundColor: '#00CC66'}} onClick={logComment}>Comentar</Button>
                             </div>
                             <div>
                                 {comments && comments.map((comment, index) => (

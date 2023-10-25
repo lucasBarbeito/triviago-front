@@ -8,7 +8,6 @@ function RatingSection({ ratings, comments, questions, id, showButton }) {
     const [quizId, setQuizId] = useState(null);
 
     const handleConfirmationModal = (id) => {
-        console.log(id);
         setQuizId(id);
         setShowConfirmationModal(true);
     }
@@ -44,7 +43,7 @@ function RatingSection({ ratings, comments, questions, id, showButton }) {
             )}
             {showConfirmationModal && (
                 <div className={styles.modalBackdrop}>
-                    <ConfirmationModal onClose={handleCloseConfirmationModal} quizId={quizId} />
+                    <ConfirmationModal onClose={handleCloseConfirmationModal} quizId={quizId}/>
                 </div>
             )}
         </div>
