@@ -17,22 +17,6 @@ const QuizInfo = ({ id, title, tags, creationDate, description, rating, question
     const service = useRequestService()
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState("ERROR");
-    // const [saved, setSaved] = useState(false);
-
-    // useEffect(() => {
-    //     service.getSavedQuizzes()
-    //         .then(savedQuizzes => {
-    //             setSaved(savedQuizzes.some(quiz => quiz.id === id))
-    //             console.log(savedQuizzes)
-    //             console.log(quiz.id)
-    //             console.log(savedQuizzes.some(quiz => quiz.id === id))
-    //         }).catch(error => {
-    //             console.error("Error getting saved quizzes:", error);
-    //             setMessage("Error al cargar el quiz")
-    //             setOpen(true)
-    //         })
-    //
-    // }, []);
 
     function formatDates(date) {
         const monthNames = [
@@ -50,8 +34,9 @@ const QuizInfo = ({ id, title, tags, creationDate, description, rating, question
 
     function handleSaveQuiz(quizId) {
         if (quizId !== null) {
-            service.saveQuiz(quizId)
+            service.saveQuiz(quizId, saved)
                 .then(() => {
+                    console.log("Quiz saved successfully");
                     setSaved(!saved)
                 }).catch(error => {
                     console.error("Error saving quiz:", error);

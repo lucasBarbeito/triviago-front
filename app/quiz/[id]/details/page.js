@@ -29,48 +29,34 @@ const ResultPage = () => {
         setOpen(false);
     };
 
-    const fetchQuiz = () => {
-        const apiUrl = `http://localhost:8080/quiz/${id}`;
-        const token = localStorage.getItem('token');
-        const axiosConfig = {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        };
-        axios.get(apiUrl, axiosConfig)
-            .then((response) => {
-                return response.data
-                // setQuiz(response.data);
+    const getSavedQuizzes = () => {
+        return service.getSavedQuizzes()
+            .then(savedQuizzes => {
+                return savedQuizzes.some(quiz => quiz.id === parseInt(id));
             })
-            .catch((error) => {
-                console.error('Error fetching data:', error);
+            .catch(error => {
+                console.error("Error getting saved quizzes:", error);
+                throw error; // Re-lanzar el error para que se maneje en el useEffect.
             });
     }
 
-    const getSavedQuizzes = () => {
-        service.getSavedQuizzes()
-            .then(savedQuizzes => {
-                setSaved(savedQuizzes.some(quiz => quiz.id === id))
-                console.log(savedQuizzes)
-                console.log(quiz.id)
-                console.log(savedQuizzes.some(quiz => quiz.id === id))
-            }).catch(error => {
-            console.error("Error getting saved quizzes:", error);
-            setMessage("Error al cargar el quiz")
-            setOpen(true)
-        })
-    }
-
     useEffect(() => {
-        fetchQuiz()
+        service.getQuiz(id)
             .then(quiz => {
-                setQuiz(quiz)
-                getSavedQuizzes()
-            }).catch(error => {
-            console.error("Error getting quiz:", error);
+                setQuiz(quiz);
+                return getSavedQuizzes();
             })
+            .then(isSaved => {
+                console.log(isSaved)
+                setSaved(isSaved);
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                setMessage("Error al cargar el quiz");
+                setOpen(true);
+            });
+    }, [saved]);
 
-    }, []);
 
     return (
         <div>
