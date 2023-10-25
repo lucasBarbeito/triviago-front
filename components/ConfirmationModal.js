@@ -5,7 +5,6 @@ const ConfirmationModal = ({ onClose, quizId }) => {
     const router = useRouter();
 
     const handleStartQuiz = () => {
-        console.log(quizId)
         router.push(`/quiz/${quizId}/solve`);
     };
 
