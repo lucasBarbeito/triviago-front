@@ -12,11 +12,21 @@ import {Alert} from "@mui/lab";
 
 const inter = Inter({ subsets: ['latin'] });
 
-const QuizInfo = ({ id, title, tags, creationDate, description, rating, questionCount=10, author = "@example.com", saved, setSaved}) => {
+const QuizInfo = ({ id, title, labels, creationDate, description, rating, questions, author = "@example.com", saved, setSaved}) => {
 
     const service = useRequestService()
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState("ERROR");
+    const [comments, setComments] = useState([]);
+
+    useEffect(() => {
+        service.fetchComments(id).then((commentsList) => {
+            setComments(commentsList);
+        }).catch((error) => {
+            console.error('Error fetching comments:', error);
+            setComments([]);
+        });
+    }, [id]);
 
     function formatDates(date) {
         const monthNames = [
@@ -72,8 +82,8 @@ const QuizInfo = ({ id, title, tags, creationDate, description, rating, question
                         </button>
                     </div>
                 </div>
-                    {tags&&(<div className={styles.tags}>
-                        {tags.join(', ')}
+                    {labels && (<div className={styles.tags}>
+                        {labels?.join(', ')}
                     </div>)}
                 <div className={styles.description}>
                     {description}
@@ -84,7 +94,7 @@ const QuizInfo = ({ id, title, tags, creationDate, description, rating, question
             <div className={styles.ownerData}>
                 Creado el {formatDates(creationDate)} por {author?.email}
             </div>
-            <div className={styles.divisor}/>        
+            <div className={styles.divisor}/>
             <div className={styles.rating}>
                 <RatingSection ratings={rating} questions={questionCount} startButton={true}/>
             </div>

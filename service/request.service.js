@@ -245,6 +245,39 @@ const RequestService = {
             throw error
         }
     }
+    },
+
+    rateQuiz: async (quizId, rating) => {
+        try {
+            const response = await axios.post(
+                `${url}/quiz/${quizId}/rate`,
+                { rating },
+                {
+                    headers: {
+                        'Authorization': 'Bearer ' + Cookies.get('jwt'),
+                    },
+                }
+            );
+            if (response.status === 200) {
+                return response.data;
+            }
+        } catch (error) {
+            throw new Error("Hubo un error al calificar el quiz, por favor intenta más tarde");
+        }
+    },
+
+    createQuiz: async (quizData) => {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}` // Token en el header
+            },
+        };
+        const response = await axios.post(url + "/quiz", quizData, config);
+        if (response.status === 200) {
+            return response.data;
+        }
+        else throw new error()
+    },
 
 }
 

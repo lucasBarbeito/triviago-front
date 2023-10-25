@@ -1,34 +1,54 @@
-import React from 'react';
-import Grid from '@mui/material/Grid';
+"use client";
+import React, { useState } from 'react';
 import styles from '../styles/QuizInfo.module.css';
+import { Button } from "@mui/material";
+import ConfirmationModal from './ConfirmationModal';
 
+function RatingSection({ ratings, comments, questions, id, showButton }) {
+    const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+    const [quizId, setQuizId] = useState(null);
 
-function RatingSection({ ratings, comments, questions, startButton }) {
-  return (
-    <Grid container>
+    const handleConfirmationModal = (id) => {
+        setQuizId(id);
+        setShowConfirmationModal(true);
+    }
 
-      {ratings !== undefined && (
-      <Grid item xs={2.4}>
-        <strong>{ratings}</strong> Puntos
-      </Grid>
-      )}
-      {questions && (
-      <Grid item xs={2.4}>
-        <strong>{questions}</strong> Preguntas
-      </Grid>
-      )}
-      {comments && (
-      <Grid item xs={2.4}>
-        <strong>{comments  }</strong> Comentarios
-      </Grid>
-      )}
-      {startButton && (
-      <Grid item xs={7.2} sx={{position: 'relative'}}>
-        <button className={styles.startButton}>Realizar</button>
-      </Grid>
-      )}
-    </Grid>
-  );
+    const handleCloseConfirmationModal = () => {
+        setQuizId(null);
+        setShowConfirmationModal(false);
+    }
+
+    return (
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ display: 'flex', gap: '64px' }}>
+                { ratings !== undefined && <div>
+                    <strong>{ratings}</strong> Puntos
+                </div>}
+                { questions !== undefined && <div>
+                    <strong>{questions}</strong> Preguntas
+                </div>}
+                { comments !== undefined && <div>
+                    <strong>{comments}</strong> Comentarios
+                </div>}
+            </div>
+            {showButton && (
+                <div>
+                    <Button
+                        variant="contained"
+                        style={{ backgroundColor: '#00CC66' }}
+                        onClick={() => handleConfirmationModal(id)}
+                    >
+                        Realizar
+                    </Button>
+                </div>
+            )}
+            {showConfirmationModal && (
+                <div className={styles.modalBackdrop}>
+                    <ConfirmationModal onClose={handleCloseConfirmationModal} quizId={quizId}/>
+                </div>
+            )}
+        </div>
+    );
 }
 
 export default RatingSection;
