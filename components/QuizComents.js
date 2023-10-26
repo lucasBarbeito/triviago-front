@@ -145,7 +145,7 @@ const QuizComents = (props) => {
                 <div className={styles.whiteBox}>
                     {openComment ? (
                         <div className={styles.comentBox} id="commentBox">
-                            <p className={styles.numberTextComents}>{comments.length} Comentarios</p>
+                            <p className={styles.numberTextComents}>{comments?.length} Comentarios</p>
                             <textarea
                                 type="text"
                                 id="comment"
