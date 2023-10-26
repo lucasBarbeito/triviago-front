@@ -12,8 +12,9 @@ import axios from "axios";
 
 const HomeScreen = () => {
     const [fetchingQuizzes, setFetchingQuizzes] = useState(true);
-    const [currentPage, setCurrentPage] = useState({content: [], totalPages: 0, pageable: {pageNumber: 0}});
-    const router = useRouter()
+    const [currentPage, setCurrentPage] = useState({ content: [], totalPages: 0, pageable: { pageNumber: 0 } });
+    const [comments, setComments] = useState([]);
+    const router = useRouter();
 
     const fetchQuizzes = (pageNumber) => {
         setFetchingQuizzes(true);
@@ -52,25 +53,26 @@ const HomeScreen = () => {
 
     return (
         <div className={styles.wrapper}>
-            <ResponsiveAppBar/>
+            <ResponsiveAppBar />
             <div className={styles.content}>
-                <button className={styles.button} onClick={()=>{router.push("/quizcreation")}}>+</button>
+                <button className={styles.button} onClick={() => { router.push("/quizcreation") }}>+</button>
                 <div className={styles.columns}>
                     <div className={styles.left}>
-                        <PrivateQuizSearcher/>
-                        <br/>
-                        <QuizFilter setFilteredQuizzes={setCurrentPage} setFetchingQuizzes={setFetchingQuizzes}/>
+                        <PrivateQuizSearcher />
+                        <br />
+                        <QuizFilter setFilteredQuizzes={setCurrentPage} setFetchingQuizzes={setFetchingQuizzes} />
                     </div>
                     <div className={styles.center}>
                         {
                             fetchingQuizzes
                                 ?
-                                <CircularProgress size="64px" style={{color: '#00CC66'}}/>
-                                :   <>
+                                <CircularProgress size="64px" style={{ color: '#00CC66' }} />
+                                : <>
                                     <div className={styles.quizzes}>
                                         {currentPage.content.map((quiz, index) => (
                                             <div key={`${index}-${quiz.title}`} className={styles.quizItem}>
-                                                <QuizPreview {...quiz} />
+                                                {console.log(quiz)}
+                                                <QuizPreview {...quiz} commentCount={comments.length} questionCount={quiz.questions?.length}/>
                                             </div>
                                         ))}
                                     </div>
@@ -85,10 +87,8 @@ const HomeScreen = () => {
                                 </>
                         }
                     </div>
-                    {/*<div className={styles.right}>Right</div>*/}
                 </div>
             </div>
-
         </div>
     );
 };

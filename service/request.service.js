@@ -185,6 +185,66 @@ const RequestService = {
         }
     },
 
+    saveQuiz: async (quizId, saved) => {
+        try {
+
+            const response = await axios.put(`${url}/user/${!saved? "save-quiz" : "remove-quiz"}/${quizId}`,
+                {},
+                {
+                    headers: {
+                        'Authorization': 'Bearer ' + Cookies.get('jwt')
+                    }
+                });
+
+            if (response.status === 200) {
+                return response.data
+            } else {
+                throw new Error("Error en la respuesta del servidor");
+            }
+        } catch (error) {
+            console.log(error)
+            throw error
+        }
+    },
+
+    getSavedQuizzes: async () => {
+        try {
+            const response = await axios.get(`${url}/user/saved-quizzes`, {
+                headers: {
+                    'Authorization': 'Bearer ' + Cookies.get('jwt')
+                }
+            });
+
+            if (response.status === 200) {
+                return response.data
+            } else {
+                throw new Error("Error en la respuesta del servidor");
+            }
+        } catch (error) {
+            console.log(error)
+            throw error
+        }
+    },
+
+    getQuiz: async (quizId) => {
+        try {
+            const response = await axios.get(`${url}/quiz/${quizId}`, {
+                headers: {
+                    'Authorization': 'Bearer ' + Cookies.get('jwt')
+                }
+            });
+
+            if (response.status === 200) {
+                return response.data
+            } else {
+                throw new Error("Error en la respuesta del servidor");
+            }
+        } catch (error) {
+            console.log(error)
+            throw error
+        }
+    },
+
     rateQuiz: async (quizId, rating) => {
         try {
             const response = await axios.post(
@@ -202,6 +262,19 @@ const RequestService = {
         } catch (error) {
             throw new Error("Hubo un error al calificar el quiz, por favor intenta más tarde");
         }
+    },
+
+    createQuiz: async (quizData) => {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}` // Token en el header
+            },
+        };
+        const response = await axios.post(url + "/quiz", quizData, config);
+        if (response.status === 200) {
+            return response.data;
+        }
+        else throw new error()
     },
 
     getUserInformation: async (userId) => {
