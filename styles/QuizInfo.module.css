@@ -125,10 +125,21 @@
     background-color: #667085;
 }
 
-.saveButton {
+.saveButton, .saveButtonSaved {
     border: none;
     background-color: transparent;
+    cursor: pointer;
+    transition: color 0.2s ease;
 }
+
+.saveButton {
+    color: black;
+}
+
+.saveButtonSaved {
+    color: #bbbbbb;
+}
+
 
 .startButton {
     display: flex;
