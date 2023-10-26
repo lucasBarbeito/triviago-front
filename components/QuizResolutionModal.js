@@ -1,7 +1,7 @@
 import styles from '../styles/QuizResolutionModal.module.css';
 import { useRouter } from 'next/navigation';
 
-const QuizResolutionModal = ({ onClose, quizId }) => {
+const QuizResolutionModal = ({ handleClose, quizId }) => {
     const router = useRouter();
 
     const handleSendResolution = () => {
@@ -14,7 +14,7 @@ const QuizResolutionModal = ({ onClose, quizId }) => {
                 <p className={styles.titleText}>Enviar resolucion</p>
                 <p className={styles.text}>¿Estás seguro que deseas enviar tu resolución del quiz?</p>
                 <div className={styles.buttonBox}>
-                    <button className={styles.cancelButton} onClick={onClose}>
+                    <button className={styles.cancelButton} onClick={handleClose}>
                         Cancelar
                     </button>
                     <button className={styles.confirmButton} onClick={handleSendResolution}>
