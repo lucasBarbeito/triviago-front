@@ -1,26 +1,14 @@
-"use client"
-
-import React, {useState} from "react";
+import React, { useState } from "react";
 import styles from '../styles/QuizQuestionAnswer.module.css';
 import FormControl from '@mui/material/FormControl';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from "@mui/material/Checkbox";
-import {Typography} from "@mui/material";
+import { Typography } from "@mui/material";
 
-
-const QuizQuestionAnswer = () => {
-    // const [answers, setAnswers] = useState([{}])
-    const answers = [
-        {
-            id: 1,
-            text: "Large Mock up question 1 (AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA)",
-            isCorrect: true
-        },
-        {id: 2, text: "Mock up question 2", isCorrect: false},
-        {id: 3, text: "Mock up question 3", isCorrect: false}
-    ]
+const QuizQuestionAnswer = ({ question }) => {
+    const [selectedAnswer, setSelectedAnswer] = useState(""); // Track the selected answer
 
     const textStyle = {
         color: '#000',
@@ -39,43 +27,52 @@ const QuizQuestionAnswer = () => {
         width: '100%',
     };
 
-    const [oneSelected, setOneSelected] = useState(false)
+    const handleRadioChange = (event) => {
+        const selectedValue = event.target.value;
+        setSelectedAnswer(selectedValue);
+    };
 
-    const correctCount = answers.reduce((count, answer) => {
-        return answer.isCorrect ? count + 1 : count;
-    }, 0);
-
-    function handleClickRadio(event) {
-        if (!oneSelected) {
-            setOneSelected(true)
+    const handleCheckboxChange = (event) => {
+        const selectedValue = event.target.value;
+        if (selectedAnswer === selectedValue) {
+            setSelectedAnswer(""); // Unselect if it was already selected
+        } else {
+            setSelectedAnswer(selectedValue);
         }
-    }
+    };
 
     return (
         <div className={styles.componentBox}>
-            <Typography className={styles.questionTitle}>Cuantas veces maradona golpeo un balon de futbol en la cancha del balon de futbol de balon de los balones cuantas veces deberian o no abrir o no fin</Typography>
+            <Typography className={styles.questionTitle}>{question?.content}</Typography>
             <div className={styles.answerBox}>
-                {correctCount > 1 ?
-                    (answers.map((answer) => {
+                {question?.multipleCorrectAnswers ?
+                    (question?.answers.map((answer) => {
                             return (
                                 <div key={answer.id} className={styles.answerRow}>
-                                    <Checkbox id={answer.id}/>
-                                    <p className={styles.answerOptionText}>{answer.text}</p>
+                                    <Checkbox
+                                        id={answer.id}
+                                        value={answer.content}
+                                        onChange={handleCheckboxChange}
+                                    />
+                                    <p className={styles.answerOptionText}>{answer.content}</p>
                                 </div>
                             );
                         })
-                    ) :
-                    (
+                    ) : (
                         <FormControl>
-                            <RadioGroup aria-labelledby="demo-radio-buttons-group-label"
-                                        name="radio-buttons-group">
-                                {answers.map((answer) => (
+                            <RadioGroup
+                                aria-labelledby="demo-radio-buttons-group-label"
+                                name="radio-buttons-group"
+                                value={selectedAnswer}
+                                onChange={handleRadioChange}
+                            >
+                                {question?.answers.map((answer) => (
                                     <FormControlLabel
                                         key={answer.id}
-                                        value={answer.text}
-                                        control={<Radio/>}
-                                        label={answer.text}
-                                        slotProps={{typography: textStyle}}
+                                        value={answer.content}
+                                        control={<Radio />}
+                                        label={answer.content}
+                                        slotProps={{ typography: textStyle }}
                                     />
                                 ))}
                             </RadioGroup>
@@ -87,4 +84,3 @@ const QuizQuestionAnswer = () => {
 };
 
 export default QuizQuestionAnswer;
-

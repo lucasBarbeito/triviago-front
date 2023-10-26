@@ -1,10 +1,10 @@
 "use client";
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import ResponsiveAppBar from "@components/ResponsiveAppBar";
 import axios from "axios";
 import API_URL from '@root/config';
-import { Button, Slide, Snackbar } from "@mui/material";
-import { Alert } from "@mui/lab";
+import {Button, Slide, Snackbar} from "@mui/material";
+import {Alert} from "@mui/lab";
 import styles from '../../../../styles/QuizComents.module.css';
 import modalStyles from '../../../../styles/QuizInfo.module.css';
 import Cookies from "js-cookie";
@@ -21,8 +21,16 @@ const quizSolve = () => {
     const [message, setMessage] = useState('');
     const params = useParams();
     const id = params.id;
+    const [showResolutionModal, setShowResolutionModal] = useState(false);
 
-    const [showResolutionModal, setShowResolutionModal] = useState(false); // Add state to control the modal
+    const questionsWithIsAnswered = quizData?.questions?.map((question) => ({
+        ...question,
+        is_answered: false
+    }));
+
+    const handleSendResolution = () => {
+        setShowResolutionModal(true);
+    };
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -52,10 +60,10 @@ const quizSolve = () => {
         fetchData();
     }, [id]);
 
-    const handleSendResolution = () => {
-        // Display the QuizResolutionModal when the "Enviar" button is clicked
-        setShowResolutionModal(true);
-    };
+    // const handleSendResolution = () => {
+    //     // Display the QuizResolutionModal when the "Enviar" button is clicked
+    //     setShowResolutionModal(true);
+    // };
 
     const handleCancelResolution = () => {
         setShowResolutionModal(false);
@@ -65,18 +73,27 @@ const quizSolve = () => {
 
     return (
         <div>
-            <ResponsiveAppBar />
+            <ResponsiveAppBar/>
             <br></br>
             <div className={styles.componentBox}>
+                {console.log(questionsWithIsAnswered)}
+                {console.log(quizData)}
                 <QuizPreview {...quizData} />
                 <br></br>
-                <QuizQuestionAnswer />
+                {questionsWithIsAnswered.map((question) => {
+                    return (
+                        <>
+                            <QuizQuestionAnswer question={question}/>
+                            <br/>
+                        </>
+                    )
+                })}
             </div>
             <br></br>
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <div style={{display: 'flex', justifyContent: 'center'}}>
                 <Button
                     variant="contained"
-                    style={{ backgroundColor: '#00CC66' }}
+                    style={{backgroundColor: '#00CC66'}}
                     onClick={handleSendResolution} // Call the function to display the modal
                 >
                     Enviar
@@ -84,7 +101,7 @@ const quizSolve = () => {
             </div>
             <br></br>
             <Snackbar open={open} autoHideDuration={5000} onClose={handleClose} TransitionComponent={Slide}
-                      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
+                      anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
                 <Alert onClose={handleClose} severity="error">
                     {message}
                 </Alert>
@@ -92,7 +109,7 @@ const quizSolve = () => {
 
             {showResolutionModal && (
                 <div className={modalStyles.modalBackdrop}>
-                    <QuizResolutionModal handleClose={handleCancelResolution} quizId={id} />
+                    <QuizResolutionModal handleClose={handleCancelResolution} quizId={id}/>
                 </div>
             )}
         </div>
