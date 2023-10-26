@@ -4,9 +4,9 @@ import styles from '../styles/QualificationTable.module.css';
 import {useRequestService} from "@/service/request.service";
 import {useParams} from "next/navigation";
 
-const QualificationTable = ({ data }) => {
+const QualificationTable = ({ quiz }) => {
     const service = useRequestService()
-    const { id } = useParams();
+    const id = quiz.id;
     const [quizQualifications, setQuizQualifications] = useState([])
 
     const getQualification = () => {
@@ -41,13 +41,13 @@ const QualificationTable = ({ data }) => {
     }, [id]);
 
 
-    function createData(user, rating, year, month, day, hour, minutes, position) {
+    function createData(user, correctAnswers, year, month, day, hour, minutes, position) {
         // Función auxiliar para agregar un "0" si el valor es menor que 10
         const addLeadingZero = (value) => (value < 10 ? `0${value}` : value);
 
         return {
             user: `${user}`,
-            rating: `${rating}`,
+            rating: `${correctAnswers}/${quiz.questions.length}`,
             date: `${addLeadingZero(month)}/${addLeadingZero(day)}/${year}`,
             time: `${addLeadingZero(hour)}:${addLeadingZero(minutes)}`,
             position: `#${position}`
