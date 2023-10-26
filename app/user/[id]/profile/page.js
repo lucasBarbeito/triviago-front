@@ -9,10 +9,12 @@ import {useRequestService} from "@/service/request.service";
 import jwt from "jsonwebtoken";
 import Cookies from "js-cookie";
 import TittleQuizzes from "@/components/TittleQuizzes";
+import {useRouter} from "next/navigation";
 
 const Page = () => {
 
     const service = useRequestService()
+    const router = useRouter()
     const [userId, setUserId] = useState('0')
     const [quizzes, setQuizzes] = useState([]);
     const [tokenId, setTokenId] = useState('1')
@@ -26,17 +28,23 @@ const Page = () => {
     useEffect(() => {
         const id = window.location.pathname.split('/')[2]
         const data = jwt.decode(Cookies.get('jwt'))
+        const quizUserFilter = {
+            userId : id
+        }
         setUserId(id)
         setTokenId(data.id)
 
         service.getUserInformation(id).then(user => {
             setCurrentUser(user)
             }).catch(error => {
+                if(error.response && (error.response.status === 404 || error.response.status === 500)) {
+                    router.push("/not-found")
+                }
                 console.error("Error", error);
-
             })
     }, [userId]);
 
+    if(currentUser === null) return (<div></div>)
 
     return (
         <div className={style.wrapper}>

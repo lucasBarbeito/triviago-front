@@ -51,6 +51,9 @@ const ResultPage = () => {
                 setSaved(isSaved);
             })
             .catch(error => {
+                if(error.response && error.response.status === 404) {
+                    router.push("/not-found")
+                }
                 console.error("Error:", error);
                 setMessage("Error al cargar el quiz");
                 // setOpen(true);
