@@ -94,5 +94,15 @@
 .react-rater.is-active {
     color: #00CC66; /* color of star rated */
 }
+.buttonsContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 735px;
+    height: 40px;
+    flex-shrink: 0;
+}
 
 
