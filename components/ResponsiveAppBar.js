@@ -13,6 +13,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import {Button} from "@mui/material";
 import Cookies from "js-cookie";
+import jwt from "jsonwebtoken";
 
 
 const ResponsiveAppBar = () => {
@@ -31,7 +32,9 @@ const ResponsiveAppBar = () => {
 
   const handleProfileClick = () => {
     handleCloseUserMenu();
-    router.push('/profile');
+      const data = jwt.decode(Cookies.get('jwt'))
+      const id = data.id
+      router.push(`/user/${id}/profile`);
   };
 
   const handleLogoClick = () => {
@@ -107,12 +110,20 @@ const ResponsiveAppBar = () => {
               onClose={handleCloseUserMenu}
             >
                 <MenuItem>
-                  <Typography textAlign="center">
-                  <Link href="/profile" style={{ color: 'black', textDecoration: 'none' }}>
-                      Mi perfil
-                      </Link>
-                  </Typography>
+                    <Typography textAlign="center">
+                        <Button onClick = {handleProfileClick}
+                                style={{
+                                    color: 'black',
+                                    textDecoration: 'none',
+                                    padding :0,
+                                    textTransform:'none',
+                                    fontSize:'1rem'
+                                }}>
+                            Mi perfil
+                        </Button>
+                    </Typography>
                 </MenuItem>
+
                 <MenuItem>
                 <Typography textAlign="center">
                   <Button onClick = {handleLogout}

@@ -170,7 +170,6 @@ const RequestService = {
 
     },
 
-
     filterQuizzes: async (quizFilter) => {
         // Codificar los valores de los parámetros en la URL
         const response = await axios.get(
@@ -277,6 +276,25 @@ const RequestService = {
         }
         else throw new error()
     },
+
+    getUserInformation: async (userId) => {
+        try{
+            const response = await axios.get(`${url}/user/${userId}`,
+                {
+                    headers:{
+                        'Authorization': 'Bearer ' + Cookies.get('jwt')
+                    }
+                });
+            if(response.status ===200){
+                return response.data
+            }
+
+        } catch (error){
+            throw error;
+        }
+    },
+
+
 
     getQualification: async (id) => {
         const config = {
