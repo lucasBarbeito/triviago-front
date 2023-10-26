@@ -278,6 +278,18 @@ const RequestService = {
         else throw new error()
     },
 
+    getQualification: async (id) => {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}` // Token en el header
+            },
+        };
+        const response = await axios.get(url + "/quiz/leaderboard/" + id, config);
+        if (response.status === 200) {
+            return response.data;
+        }
+        else throw new error()
+    }
 }
 
 export const useRequestService = () => RequestService
