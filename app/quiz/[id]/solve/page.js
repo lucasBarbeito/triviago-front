@@ -12,7 +12,7 @@ import QuizPreview from "@/components/QuizPreview";
 import QuizQuestionAnswer from "@/components/QuizQuestionAnswer";
 import QuizResolutionModal from "@/components/QuizResolutionModal";
 import {useParams} from "next/navigation";
-import {useRouter} from "next/router";
+import QuizResults from "@/components/QuizResults";
 
 const quizSolve = () => {
     const [quizData, setQuizData] = useState(null);
@@ -23,6 +23,8 @@ const quizSolve = () => {
     const id = params.id;
     const [showResolutionModal, setShowResolutionModal] = useState(false);
     const [questionsWithIsAnswered, setQuestionsWithIsAnswered] = useState([]);
+    const [showResults, setShowResults] = useState(false);
+    const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
 
 
     const handleSendResolution = () => {
@@ -78,6 +80,8 @@ const quizSolve = () => {
     }
 
     const sendQuizResult = async () => {
+        setShowResolutionModal(false);
+
         const resolvedQuestions = questionsWithIsAnswered
             .map(question => ({
                 questionId: question.id,
@@ -98,6 +102,8 @@ const quizSolve = () => {
             const response = await axios.post(API_URL + "/quiz-resolution", jsonModel, config)
             if (response.status === 200) {
                 console.log(response.data)
+                setCorrectAnswersCount(response.data.correctAnswers);
+                setShowResults(true);
             }
         } catch (e) {
             console.log(e)
@@ -147,6 +153,13 @@ const quizSolve = () => {
                     <QuizResolutionModal handleClose={handleCancelResolution} quizId={id} handleSendQuiz={sendQuizResult}/>
                 </div>
             )}
+
+            {showResults && (
+                <div className={modalStyles.modalBackdrop}>
+                    <QuizResults quizId={id} quizTitle={quizData?.title} quizQuestionNumber={questionsWithIsAnswered?.length} correctAnswers={correctAnswersCount}></QuizResults>
+                </div>
+            )}
+
         </div>
     );
 };
