@@ -57,6 +57,10 @@ const quizSolve = () => {
         setShowResolutionModal(true);
     };
 
+    const handleCancelResolution = () => {
+        setShowResolutionModal(false);
+    }
+
     if (quizData === null) return (<div></div>);
 
     return (
@@ -88,7 +92,7 @@ const quizSolve = () => {
 
             {showResolutionModal && (
                 <div className={modalStyles.modalBackdrop}>
-                    <QuizResolutionModal handleClose={handleSendResolution} quizId={id} />
+                    <QuizResolutionModal handleClose={handleCancelResolution} quizId={id} />
                 </div>
             )}
         </div>

@@ -4,7 +4,7 @@ import styles from '../styles/QuizInfo.module.css';
 import { Button } from "@mui/material";
 import ConfirmationModal from './ConfirmationModal';
 
-function RatingSection({ ratings, comments, questions, id, showButton }) {
+function RatingSection({ ratings, comments, questions, id, showButton, author}) {
     const [showConfirmationModal, setShowConfirmationModal] = useState(false);
     const [quizId, setQuizId] = useState(null);
 
@@ -44,7 +44,7 @@ function RatingSection({ ratings, comments, questions, id, showButton }) {
             )}
             {showConfirmationModal && (
                 <div className={styles.modalBackdrop}>
-                    <ConfirmationModal onClose={handleCloseConfirmationModal} quizId={quizId}/>
+                    <ConfirmationModal onClose={handleCloseConfirmationModal} quizId={quizId} author={author}/>
                 </div>
             )}
         </div>
