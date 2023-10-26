@@ -2,7 +2,7 @@
 import styles from '../styles/ConfirmationModal.module.css';
 import { useRouter } from 'next/navigation';
 
-const ConfirmationModal = ({ onClose, quizId , author}) => {
+const ConfirmationModal = ({ onClose, quizId , author, quizTitle}) => {
     const router = useRouter();
 
     const handleStartQuiz = () => {
@@ -14,7 +14,7 @@ const ConfirmationModal = ({ onClose, quizId , author}) => {
             <div className={styles.componentBox}>
                 <p className={styles.titleText}>Realizar quiz</p>
                 <p className={styles.text}>
-                    ¿Estás seguro que deseas realizar el quiz titulado “Titulo del quiz” creado por {author?.email}?
+                    ¿Estás seguro que deseas realizar el quiz titulado "{quizTitle}" creado por {author?.email}?
                 </p>
                 <div className={styles.buttonBox}>
                     <button className={styles.cancelButton} onClick={onClose}>

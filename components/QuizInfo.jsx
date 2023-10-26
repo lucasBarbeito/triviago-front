@@ -49,10 +49,10 @@ const QuizInfo = ({ id, title, labels, creationDate, description, rating, questi
                     console.log("Quiz saved successfully");
                     setSaved(!saved)
                 }).catch(error => {
-                    console.error("Error saving quiz:", error);
-                    setMessage("Error al guardar el quiz")
-                    setOpen(true)
-                })
+                console.error("Error saving quiz:", error);
+                setMessage("Error al guardar el quiz")
+                setOpen(true)
+            })
         } else {
             setMessage("Error al cargar el quiz");
             setOpen(true);
@@ -67,47 +67,46 @@ const QuizInfo = ({ id, title, labels, creationDate, description, rating, questi
     };
 
     return (
-    <>
-    <div className={`${styles.container} ${inter.className}`} >
-        <Stack spacing={1.75} sx={{ height: '100%' }}>
-            <div className={styles.info} >
-                <Stack spacing={0.75} sx={{ height: '100%' }}>
-                <div className={styles.header}>
-                    <div className={styles.title}>
-                        {title}
+        <>
+            <div className={`${styles.container} ${inter.className}`} >
+                <Stack spacing={1.75} sx={{ height: '100%' }}>
+                    <div className={styles.info} >
+                        <Stack spacing={0.75} sx={{ height: '100%' }}>
+                            <div className={styles.header}>
+                                <div className={styles.title}>
+                                    {title}
+                                </div>
+                                <div className={styles.date}>
+                                    <button className={saved ? styles.saveButton : styles.saveButtonSaved} onClick={()=>{handleSaveQuiz(id)}}>
+                                        <FontAwesomeIcon icon={faBookmark} style={{height: '1.1rem', marginTop: 8}}/>
+                                    </button>
+                                </div>
+                            </div>
+                            {labels && (<div className={styles.tags}>
+                                {labels?.join(', ')}
+                            </div>)}
+                            <div className={styles.description}>
+                                {description}
+                            </div>
+                        </Stack>
                     </div>
-                    <div className={styles.date}>
-                        <button className={saved ? styles.saveButton : styles.saveButtonSaved} onClick={()=>{handleSaveQuiz(id)}}>
-                        <FontAwesomeIcon icon={faBookmark} style={{height: '1.1rem', marginTop: 8}}/>
-                        </button>
+                    <div className={styles.divisor}/>
+                    <div className={styles.ownerData}>
+                        Creado el {formatDates(creationDate)} por {author?.email}
                     </div>
-                </div>
-                    {labels && (<div className={styles.tags}>
-                        {labels?.join(', ')}
-                    </div>)}
-                <div className={styles.description}>
-                    {description}
-                </div>
+                    <div className={styles.divisor}/>
+                    <div className={styles.rating}>
+                        <RatingSection ratings={rating} questions={questions?.length} comments={comments?.length} showButton={true} id={id} author={author} quizTitle={title}/>            </div>
                 </Stack>
             </div>
-            <div className={styles.divisor}/>
-            <div className={styles.ownerData}>
-                Creado el {formatDates(creationDate)} por {author?.email}
-            </div>
-            <div className={styles.divisor}/>
-            <div className={styles.rating}>
-                <RatingSection ratings={rating} questions={questions?.length} comments={comments?.length} showButton={true} id={id} author={author}/>
-            </div>
-        </Stack>
-    </div>
-        <Snackbar open={open} autoHideDuration={5000} onClose={handleClose} TransitionComponent={Slide}
-                  anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
-            <Alert onClose={handleClose} severity="error">
-                {message}
-            </Alert>
-        </Snackbar>
-    </>
-  );
+            <Snackbar open={open} autoHideDuration={5000} onClose={handleClose} TransitionComponent={Slide}
+                      anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
+                <Alert onClose={handleClose} severity="error">
+                    {message}
+                </Alert>
+            </Snackbar>
+        </>
+    );
 };
 
 export default QuizInfo;

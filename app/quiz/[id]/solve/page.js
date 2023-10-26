@@ -22,14 +22,17 @@ const quizSolve = () => {
     const params = useParams();
     const id = params.id;
     const [showResolutionModal, setShowResolutionModal] = useState(false);
+    const [questionsWithIsAnswered, setQuestionsWithIsAnswered] = useState([]);
 
-    const questionsWithIsAnswered = quizData?.questions?.map((question) => ({
-        ...question,
-        is_answered: false
-    }));
 
     const handleSendResolution = () => {
-        setShowResolutionModal(true);
+        const allAnswered = questionsWithIsAnswered.every((question) => question.is_answered);
+        if (allAnswered) {
+            setShowResolutionModal(true);
+        } else {
+            setMessage("Debe responder todas las preguntas para enviar la resolución");
+            setOpen(true);
+        }
     };
 
     const handleClose = (event, reason) => {
@@ -51,6 +54,14 @@ const quizSolve = () => {
 
                 if (response.status === 200) {
                     setQuizData(response.data);
+
+                    const initialQuestions = response.data?.questions?.map((question) => ({
+                        ...question,
+                        is_answered: false,
+                        selectedAnswers: [],
+                    }));
+
+                    setQuestionsWithIsAnswered(initialQuestions);
                 }
             } catch (error) {
                 setMessage('Hubo un error al buscar la información del quiz');
@@ -58,15 +69,40 @@ const quizSolve = () => {
             }
         };
         fetchData();
+
     }, [id]);
 
-    // const handleSendResolution = () => {
-    //     // Display the QuizResolutionModal when the "Enviar" button is clicked
-    //     setShowResolutionModal(true);
-    // };
 
     const handleCancelResolution = () => {
         setShowResolutionModal(false);
+    }
+
+    const sendQuizResult = async () => {
+        const resolvedQuestions = questionsWithIsAnswered
+            .map(question => ({
+                questionId: question.id,
+                selectedAnswersIds: question.selectedAnswers
+            }));
+
+        const jsonModel = {
+            quizId: parseInt(id, 10),
+            resolvedQuestions: resolvedQuestions
+        };
+
+        try {
+            const config = {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+            };
+            const response = await axios.post(API_URL + "/quiz-resolution", jsonModel, config)
+            if (response.status === 200) {
+                console.log(response.data)
+            }
+        } catch (e) {
+            console.log(e)
+        }
+
     }
 
     if (quizData === null) return (<div></div>);
@@ -76,11 +112,10 @@ const quizSolve = () => {
             <ResponsiveAppBar/>
             <br></br>
             <div className={styles.componentBox}>
-                {console.log(questionsWithIsAnswered)}
                 {console.log(quizData)}
                 <QuizPreview {...quizData} />
                 <br></br>
-                {questionsWithIsAnswered.map((question) => {
+                {questionsWithIsAnswered?.map((question) => {
                     return (
                         <>
                             <QuizQuestionAnswer question={question}/>
@@ -100,7 +135,7 @@ const quizSolve = () => {
                 </Button>
             </div>
             <br></br>
-            <Snackbar open={open} autoHideDuration={5000} onClose={handleClose} TransitionComponent={Slide}
+            <Snackbar open={open} autoHideDuration={2000} onClose={handleClose} TransitionComponent={Slide}
                       anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
                 <Alert onClose={handleClose} severity="error">
                     {message}
@@ -109,7 +144,7 @@ const quizSolve = () => {
 
             {showResolutionModal && (
                 <div className={modalStyles.modalBackdrop}>
-                    <QuizResolutionModal handleClose={handleCancelResolution} quizId={id}/>
+                    <QuizResolutionModal handleClose={handleCancelResolution} quizId={id} handleSendQuiz={sendQuizResult}/>
                 </div>
             )}
         </div>
