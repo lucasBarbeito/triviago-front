@@ -67,7 +67,7 @@ const ResultPage = () => {
 
             </div>
             <br></br>
-            <QuizComents/>
+            <QuizComents quiz={quiz}/>
             <Snackbar open={open} autoHideDuration={5000} onClose={handleClose} TransitionComponent={Slide}
                       anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
                 <Alert onClose={handleClose} severity="error">

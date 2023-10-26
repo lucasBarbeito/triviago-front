@@ -9,7 +9,7 @@ import QualificationTable from "@/components/QualificationTable";
 
 const jwt = require('jsonwebtoken');
 
-const QuizComents = (props) => {
+const QuizComents = ({quiz}) => {
     const [comment, setComment] = useState("");
     const [openComment, setOpenComment] = useState(true);
     const [comments, setComments] = useState([]);
@@ -145,7 +145,7 @@ const QuizComents = (props) => {
                 <div className={styles.whiteBox}>
                     {openComment ? (
                         <div className={styles.comentBox} id="commentBox">
-                            <p className={styles.numberTextComents}>{comments.length} Comentarios</p>
+                            <p className={styles.numberTextComents}>{comments?.length} Comentarios</p>
                             <textarea
                                 type="text"
                                 id="comment"
@@ -174,7 +174,7 @@ const QuizComents = (props) => {
                         </div>
                     ) : (
                         <div className={styles.comentBox} id="classificationtBox">
-                            <QualificationTable />
+                            <QualificationTable quiz={quiz}/>
                         </div>
                     )}
                 </div>
