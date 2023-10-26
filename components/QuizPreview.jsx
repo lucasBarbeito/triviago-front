@@ -8,7 +8,7 @@ import {useRequestService} from "@/service/request.service";
 
 const inter = Inter({ subsets: ['latin'] });
 
-const QuizPreview = ({ id, title, labels, creationDate, description, rating, questionCount=10, commentCount=10 }) => {
+const QuizPreview = ({ id, title, labels, creationDate, description, rating, questionCount=10, questions, commentCount=10 }) => {
     const router = useRouter()
     const [comments, setComments] = useState([]);
     const service = useRequestService();
@@ -43,7 +43,7 @@ const QuizPreview = ({ id, title, labels, creationDate, description, rating, que
                     {description}
                 </div>
                 <div className={styles.rating}>
-                    <RatingSection ratings={rating} comments={comments.length} questions={questionCount} id={id} showButton={false}/>
+                    <RatingSection ratings={rating} comments={comments.length} questions={questions?.length} id={id} showButton={false}/>
                 </div>
 
             </Stack>

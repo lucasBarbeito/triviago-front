@@ -53,7 +53,7 @@ const ResultPage = () => {
             .catch(error => {
                 console.error("Error:", error);
                 setMessage("Error al cargar el quiz");
-                setOpen(true);
+                // setOpen(true);
             });
     }, [saved]);
 
