@@ -14,7 +14,7 @@ const Page = () => {
 
     const service = useRequestService()
     const [userId, setUserId] = useState('0')
-    const [quizzes, setQuizzes] = useState([{id:1, title: 'Quiz', labels: [], creationDate:'04/04/2002', description:'lalala', rating:10, author: 'yo', questions:[]}]);
+    const [quizzes, setQuizzes] = useState([]);
     const [tokenId, setTokenId] = useState('1')
     const [currentUser, setCurrentUser] = useState({email: 'usuario@mail.com',
                                                                    firstName: 'Nombre',
