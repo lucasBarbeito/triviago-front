@@ -24,7 +24,6 @@ const Page = () => {
                                                                    birthDate: '04/07/1999',
                                                                    createdDate: '05/06/2023'})
 
-
     useEffect(() => {
         const id = window.location.pathname.split('/')[2]
         const data = jwt.decode(Cookies.get('jwt'))
@@ -56,7 +55,6 @@ const Page = () => {
                                         birthDate={currentUser.birthDate}
                                         createdAt={currentUser.createdDate??[2002,4,5]}
                                         isCurrentUser={tokenId.toString() === userId} />
-
             }
 
             { tokenId.toString() === userId ? (
@@ -79,7 +77,6 @@ const Page = () => {
                 <TittleQuizzes/>
                 )
             }
-
 
         </div>
     );

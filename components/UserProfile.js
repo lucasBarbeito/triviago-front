@@ -1,8 +1,8 @@
 'use client'
-import React, {useEffect, useState} from 'react';
+import React, { useState } from 'react';
 import styles from '../styles/UserProfile.module.css';
-import Image from "next/image";
-import {useRequestService} from "@/service/request.service";
+import Image from 'next/image';
+import DeleteAccountModal from './DeleteAccountModal';
 
 const UserProfile = ({
                          firstName,
@@ -10,17 +10,21 @@ const UserProfile = ({
                          email,
                          birthDate,
                          createdAt,
-                         isCurrentUser
-                         }) => {
-
+                         isCurrentUser,
+                     }) => {
+    const [showDeleteAccountModal, setShowDeleteAccountModal] = useState(false);
 
     const onDeleteClick = () => {
+        setShowDeleteAccountModal(true);
+    };
 
-    }
+    const handleDeleteAccount = () => {
+        // Implementar
+    };
 
     const onFollowClick = () => {
-
-    }
+        // Implementar
+    };
 
     const parseDate = (date) => {
 
@@ -83,9 +87,21 @@ const UserProfile = ({
             </div>
             <div className={styles.userActions}>
                 {isCurrentUser ? (
-                    <button onClick={onDeleteClick} className={styles.userActionDeleteButton}>Eliminar cuenta</button>
+                    <div>
+                        <button onClick={onDeleteClick} className={styles.userActionDeleteButton}>
+                            Eliminar cuenta
+                        </button>
+                        {showDeleteAccountModal && (
+                            <DeleteAccountModal
+                                onClose={() => setShowDeleteAccountModal(false)}
+                                handleDeleteAccount={handleDeleteAccount}
+                            />
+                        )}
+                    </div>
                 ) : (
-                    <button onClick={onFollowClick} className={styles.userActionFollowButton}>Seguir</button>
+                    <button onClick={onFollowClick} className={styles.userActionFollowButton}>
+                        Seguir
+                    </button>
                 )}
             </div>
         </div>
