@@ -24,7 +24,6 @@ const Page = () => {
                                                                    birthDate: '04/07/1999',
                                                                    createdDate: '05/06/2023'})
 
-
     useEffect(() => {
         const id = window.location.pathname.split('/')[2]
         const data = jwt.decode(Cookies.get('jwt'))
@@ -34,15 +33,29 @@ const Page = () => {
         setUserId(id)
         setTokenId(data.id)
 
-        service.getUserInformation(id).then(user => {
-            setCurrentUser(user)
-            }).catch(error => {
+        service.getUserInformation(id)
+            .then(user => {
+                setCurrentUser(user)
+            })
+            .catch(error => {
                 if(error.response && (error.response.status === 404 || error.response.status === 500)) {
                     router.push("/not-found")
                 }
                 console.error("Error", error);
             })
     }, [userId]);
+
+    useEffect(() => {
+        service.getOwnedQuizzes2(currentUser.email)
+            .then(quizzes => {
+                setQuizzes(quizzes);
+                console.log(quizzes)
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                throw error; // Re-lanzar el error para que se maneje en el useEffect.
+            });
+    }, [currentUser]);
 
     if(currentUser === null) return (<div></div>)
 
@@ -63,7 +76,7 @@ const Page = () => {
                 <>
                     <TabBar/>
                     <div className={style.quizzesContainer}>
-                        {quizzes.map((quiz) => (
+                        {quizzes?.map((quiz) => (
                             <QuizPreview id={quiz.id}
                                          title={quiz.title}
                                          labels={quiz.labels}
