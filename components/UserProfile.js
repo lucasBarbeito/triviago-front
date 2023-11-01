@@ -92,10 +92,12 @@ const UserProfile = ({
                             Eliminar cuenta
                         </button>
                         {showDeleteAccountModal && (
+                            <div className={styles.modalBackdrop}>
                             <DeleteAccountModal
                                 onClose={() => setShowDeleteAccountModal(false)}
                                 handleDeleteAccount={handleDeleteAccount}
                             />
+                                </div>
                         )}
                     </div>
                 ) : (
