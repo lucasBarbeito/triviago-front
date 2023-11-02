@@ -3,7 +3,6 @@ import React, {useEffect, useState} from 'react';
 import styles from '../styles/UserProfile.module.css';
 import Image from "next/image";
 import {useRequestService} from "@/service/request.service";
-import { Birthstone } from 'next/font/google';
 
 const UserProfile = ({firstName, lastName, email, birthDate, createdAt, isCurrentUser}) => { 
     
@@ -21,7 +20,7 @@ const UserProfile = ({firstName, lastName, email, birthDate, createdAt, isCurren
     currentDate.setFullYear(2017);
     const formattedDate = currentDate.toISOString().split('T')[0];
 
-    const formattedBirthDate = `${birthDate[0]}/${birthDate[1]}/${birthDate[2]}`;
+    const formattedBirthDate = `${birthDate[2]}/${birthDate[1]}/${birthDate[0]}`;
 
     const [isEditingName, setIsEditingName] = useState(false);
     const [name, setName] = useState(firstName);
@@ -50,10 +49,23 @@ const UserProfile = ({firstName, lastName, email, birthDate, createdAt, isCurren
         setEditBirthDate(event.target.value);
      }
 
-      // Función para formatear la fecha para el backend
-      const formatBirthDateForBackend = (date) => {
-        return date.replace(/-/g, ''); // Quita guiones para el formato "2010/04/10"
-      };
+     async function handleSaveName () {
+        try {
+            const newData = { firstName: name, lastName: lastEditName };
+            const updatedUser = await service.updateUserProfile(userId, newData);
+        } catch (error) {
+            setMessage("Error al guardar el nombre y apellido");
+        }
+    };
+
+    async function handleSaveBirthDate () {
+        try {
+            const updatedBirthDate = EditBirthDate;
+            const updatedUser = await service.updateUserBirthDate(userId, updatedBirthDate);
+        } catch (error) {
+            setMessage("Error al guardar la fecha de nacimiento");
+        }
+    };
 
     const parseDate = (date) => {
 
@@ -73,55 +85,6 @@ const UserProfile = ({firstName, lastName, email, birthDate, createdAt, isCurren
 
         return dayNumber + " de " + monthName + " del " + year;
     }
-
-    function cancelName() {
-        setName("");
-    }
-
-    async function logName() {
-        const trimmedName = name.trim();
-        if (trimmedName !== "") {
-            if (trimmedName.length <= 25) {
-                const data = jwt.decode(Cookies.get('jwt'));
-                const nameData = {
-                    content: trimmedName,
-                    userId: data.id,
-                };
-
-                const nam = await service.logName(nameData);
-                setName((prevState) => {
-                    if (Array.isArray(prevState)) {
-                        return [...prevState, nam];
-                    } else {
-                        return [nam];
-                    }
-                });
-                cancelName();
-            } else {
-                setMessage("El nombre no puede tener más de 25 caracteres");
-                setIsEditingName(true);
-            }
-        } else {
-            setMessage("El nombre no puede estar vacío");
-            setIsEditingName(true);
-        }
-    }
-
-    // function handleEditName(id, newName) {
-    //     if (newName !== null) {
-    //         if (newName <= 25) {
-    //             service.editName(id, newName).then(() => {
-    //                     setName(editedName);
-    //                 });
-    //             } else {
-    //                 setMessage("El nombre no puede tener más de 25 caracteres");
-    //                 setIsEditingName(true);
-    //             }
-    //         } else {
-    //             setMessage("El nombre no puede estar vacío");
-    //             setIsEditingName(true);
-    //     }
-    // }
 
 
     return (
@@ -172,9 +135,11 @@ const UserProfile = ({firstName, lastName, email, birthDate, createdAt, isCurren
                         </button>
                         <button
                             className={styles.saveButton}
+                            // onClick={handleSaveName}
                             onClick={() => {
                                 handleEditName;
                                 handleEditLastName;
+                                handleSaveName;
                                 setIsEditingName(false);
                                 setIsEditingLastName(false);
                             }}
@@ -219,6 +184,7 @@ const UserProfile = ({firstName, lastName, email, birthDate, createdAt, isCurren
                                 <button 
                                     onClick={() => {
                                         handleEditBirthDate;
+                                        handleSaveBirthDate;
                                         setIsEditingBirthDate(false);
                                     }}
                                     className={styles.saveButton}

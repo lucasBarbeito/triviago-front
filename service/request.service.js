@@ -309,23 +309,41 @@ const RequestService = {
         else throw new error()
     },
 
-    editName: async (id, newName) => {
+    updateUserProfile: async (userId, newData) => {
+        try {
+            const response = await axios.put(`${url}/user/${userId}`, newData, {
+                headers: {
+                    'Authorization': 'Bearer ' + Cookies.get('jwt'),
+                },
+            });
+
+            if (response.status === 200) {
+                return response.data;
+            }
+        } catch (error) {
+            console.error('Error al actualizar el perfil:', error);
+            throw error;
+        }
+    },
+
+    updateUserBirthDate: async (userId, newBirthDate) => {
         try {
             const response = await axios.put(
-                `${url}/user/${id}`,
-                {newName: newName},
+                `${url}/user/${userId}/profile`,
+                { birthDate: newBirthDate },
                 {
                     headers: {
-                        'Authorization': 'Bearer ' + localStorage.getItem('token')
-                    }
+                        'Authorization': 'Bearer ' + Cookies.get('jwt'),
+                    },
                 }
             );
 
             if (response.status === 200) {
-                return response.data
+                return response.data;
             }
         } catch (error) {
-            console.error(error);
+            console.error('Error al actualizar la fecha de nacimiento:', error);
+            throw error;
         }
     },
       
