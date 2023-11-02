@@ -310,59 +310,20 @@ const RequestService = {
         else throw new error()
     },
 
-    // getOwnedQuizzes: async (userEmail) => {
-    //     const response = await axios.get(`${url}/quiz`,
-    //         {
-    //             params: {
-    //                 id: 5
-    //             },
-    //             headers:{
-    //                 'Authorization': 'Bearer ' + Cookies.get('jwt')
-    //             }
-    //         });
-    //     if (response.status === 200) {
-    //         // Filtra los quizzes por email del creador
-    //         console.log("todos los quizzes")
-    //         console.log(response.data.content)
-    //         console.log("quizzes filtrados por email")
-    //         console.log(response.data.content.map(quiz => quiz.author.email))
-    //         console.log(userEmail)
-    //         return response.data.content.filter(quiz => quiz.author.email === userEmail);
-    //     } else {
-    //         throw new Error("Error al obtener los quizzes");
-    //     }
-    // },
-
-    getOwnedQuizzes2: async (userEmail, page = 0, allQuizzes = []) => {
-        const apiUrl = `${url}/quiz?page=${page}`;
-        const token = Cookies.get('jwt');
-
-        try {
-            const response = await axios.get(apiUrl, {
-                headers: {
-                    'Authorization': 'Bearer ' + token
+    getOwnedQuizzes: async () => {
+        const response = await axios.get(`${url}/quiz/me`,
+            {
+                headers:{
+                    'Authorization': 'Bearer ' + Cookies.get('jwt')
                 }
             });
-
-            if (response.status === 200) {
-                const quizzesOnPage = response.data.content;
-                allQuizzes = allQuizzes.concat(quizzesOnPage);
-
-                if (response.data.last) {
-                    console.log(allQuizzes)
-                    // Última página, retorna todos los quizzes
-                    return allQuizzes.filter(quiz => quiz.author.email === userEmail);
-                } else {
-                    // Sigue llamando recursivamente para la siguiente página
-                    return  useRequestService().getOwnedQuizzes2(userEmail, page + 1, allQuizzes);
-                }
-            } else {
-                throw new Error("Error al obtener los quizzes");
-            }
-        } catch (error) {
-            throw error;
+        if (response.status === 200) {
+            // Filtra los quizzes por email del creador
+            return response.data.content
+        } else {
+            throw new Error("Error al obtener los quizzes");
         }
-    }
+    },
 }
 
 export const useRequestService = () => RequestService

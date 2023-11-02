@@ -46,10 +46,9 @@ const Page = () => {
     }, [userId]);
 
     useEffect(() => {
-        service.getOwnedQuizzes2(currentUser.email)
+        service.getOwnedQuizzes()
             .then(quizzes => {
                 setQuizzes(quizzes);
-                console.log(quizzes)
             })
             .catch(error => {
                 console.error("Error:", error);
