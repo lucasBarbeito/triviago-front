@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import styles from '../styles/UserProfile.module.css';
 import Image from 'next/image';
 import DeleteAccountModal from './DeleteAccountModal';
+import {useRequestService} from "@/service/request.service";
 
 const UserProfile = ({
                          firstName,
@@ -11,15 +12,22 @@ const UserProfile = ({
                          birthDate,
                          createdAt,
                          isCurrentUser,
+                         userId,
                      }) => {
+
     const [showDeleteAccountModal, setShowDeleteAccountModal] = useState(false);
+    const requestService = useRequestService();
 
     const onDeleteClick = () => {
         setShowDeleteAccountModal(true);
     };
 
-    const handleDeleteAccount = () => {
-        // Implementar
+    const handleDeleteAccount = async () => {
+        try {
+            await requestService.deleteUser(userId);
+        } catch (error) {
+            console.error('Error al eliminar el usuario:', error);
+        }
     };
 
     const onFollowClick = () => {

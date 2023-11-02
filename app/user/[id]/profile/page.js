@@ -54,7 +54,9 @@ const Page = () => {
                                         lastName={currentUser.lastName}
                                         birthDate={currentUser.birthDate}
                                         createdAt={currentUser.createdDate??[2002,4,5]}
-                                        isCurrentUser={tokenId.toString() === userId} />
+                                        isCurrentUser={tokenId.toString() === userId}
+                                        userId={userId}
+            />
             }
 
             { tokenId.toString() === userId ? (
