@@ -6,6 +6,7 @@ import {Slide, Snackbar} from "@mui/material";
 import {Alert} from "@mui/lab"
 import {useRequestService} from "@/service/request.service";
 import {useRouter} from "next/navigation";
+import EmailModal from "@/components/EmailModal";
 
 
 const LoginForm = () => {
@@ -15,6 +16,7 @@ const LoginForm = () => {
     const [open, setOpen] = useState(false);
     const [message, setMessage] = useState("ERROR");
     const router = useRouter();
+    const [openModal, setOpenModal] = useState(false);
 
 
     function handlePassword(event) {
@@ -64,8 +66,9 @@ const LoginForm = () => {
 
     return (
         <form className={styles['form-container']}>
-            <div>
-                <label htmlFor="email">Email</label>
+            {openModal && <EmailModal open={openModal} onClose={() => setOpenModal(false)}/>}
+            < div>
+                < label htmlFor="email">Email</label>
                 <input type="email" id="email" name="email" placeholder="Ingresa tu email" onChange={handleEmail}/>
             </div>
             <div>
@@ -78,7 +81,7 @@ const LoginForm = () => {
 
             <p className={styles.text}>¿No tienes una cuenta? <a href="/signin" className={styles.link}>Regístrate</a>
             </p>
-            <p className={styles.text}><a href="#" className={styles.link}>¿Olvidaste tu contraseña?</a></p>
+            <p className={styles.link} onClick={() => setOpenModal(true)}>¿Olvidaste tu contraseña?</p>
             <Snackbar open={open} autoHideDuration={5000} onClose={handleClose} TransitionComponent={Slide}
                       anchorOrigin={{vertical: 'top', horizontal: 'center'}}>
                 <Alert onClose={handleClose} severity="error">
