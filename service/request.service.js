@@ -183,6 +183,7 @@ const RequestService = {
         if (response.status === 200) {
             return response.data;
         }
+        else throw new error()
     },
 
     saveQuiz: async (quizId, saved) => {
@@ -307,7 +308,22 @@ const RequestService = {
             return response.data;
         }
         else throw new error()
-    }
+    },
+
+    getOwnedQuizzes: async () => {
+        const response = await axios.get(`${url}/quiz/me`,
+            {
+                headers:{
+                    'Authorization': 'Bearer ' + Cookies.get('jwt')
+                }
+            });
+        if (response.status === 200) {
+            // Filtra los quizzes por email del creador
+            return response.data.content
+        } else {
+            throw new Error("Error al obtener los quizzes");
+        }
+    },
 }
 
 export const useRequestService = () => RequestService
