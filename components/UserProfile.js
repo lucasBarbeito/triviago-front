@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react';
 import styles from '../styles/UserProfile.module.css';
 import Image from "next/image";
 import {useRequestService} from "@/service/request.service";
+import { Birthstone } from 'next/font/google';
 
 const UserProfile = ({firstName, lastName, email, birthDate, createdAt, isCurrentUser}) => { 
     
@@ -16,37 +17,38 @@ const UserProfile = ({firstName, lastName, email, birthDate, createdAt, isCurren
 
     }
 
-    const formattedBirthDate = `${birthDate[2]}/${birthDate[1]}/${birthDate[0]}`;
-
-    const [isEditingName, setIsEditingName] = useState(false);
-    const [editedName, setEditedName] = useState("");
-    const [editedLastName, setEditedLastName] = useState("");
-   
-    const [isEditingBirthDate, setIsEditingBirthDate] = useState(false);
-    const [editedBirthDate, setEditedBirthDate] = useState("");
-
-
     const currentDate = new Date();
     currentDate.setFullYear(2017);
     const formattedDate = currentDate.toISOString().split('T')[0];
 
-    const handleEditName = () => {
+    const formattedBirthDate = `${birthDate[0]}/${birthDate[1]}/${birthDate[2]}`;
+
+    const [isEditingName, setIsEditingName] = useState(false);
+    const [name, setName] = useState(firstName);
+    console.log(firstName);
+
+    const [isEditingLastName, setIsEditingLastName] = useState(false);
+    const [lastEditName, setLastEditName] = useState(lastName);
+
+    const [isEditingBirthDate, setIsEditingBirthDate] = useState(false);
+    const [EditBirthDate, setEditBirthDate] = useState(formattedBirthDate);
+
+    const [message, setMessage] = useState("ERROR");
+     
+     const handleEditName = (event) => {
         setIsEditingName(true);
-        setEditedName(firstName);
-        setEditedLastName(lastName);
-    };
+        setName(event.target.value);
+     }
 
-    const handleEditLastName = () => {
-    setIsEditingName(true);
-    setEditedName(firstName);
-    setEditedLastName(lastName);
-    };
+     const handleEditLastName = (event) => {
+        setIsEditingLastName(true);
+        setLastEditName(event.target.value);
+     }
 
-const handleEditBirthDate = ({/*event*/}) => {
+     const handleEditBirthDate = (event) => {
         setIsEditingBirthDate(true);
-        setEditedBirthDate(birthDate);
-        // setEditingBirthDate(event.target.value);
-    }
+        setEditBirthDate(event.target.value);
+     }
 
       // Función para formatear la fecha para el backend
       const formatBirthDateForBackend = (date) => {
@@ -72,6 +74,56 @@ const handleEditBirthDate = ({/*event*/}) => {
         return dayNumber + " de " + monthName + " del " + year;
     }
 
+    function cancelName() {
+        setName("");
+    }
+
+    async function logName() {
+        const trimmedName = name.trim();
+        if (trimmedName !== "") {
+            if (trimmedName.length <= 25) {
+                const data = jwt.decode(Cookies.get('jwt'));
+                const nameData = {
+                    content: trimmedName,
+                    userId: data.id,
+                };
+
+                const nam = await service.logName(nameData);
+                setName((prevState) => {
+                    if (Array.isArray(prevState)) {
+                        return [...prevState, nam];
+                    } else {
+                        return [nam];
+                    }
+                });
+                cancelName();
+            } else {
+                setMessage("El nombre no puede tener más de 25 caracteres");
+                setIsEditingName(true);
+            }
+        } else {
+            setMessage("El nombre no puede estar vacío");
+            setIsEditingName(true);
+        }
+    }
+
+    // function handleEditName(id, newName) {
+    //     if (newName !== null) {
+    //         if (newName <= 25) {
+    //             service.editName(id, newName).then(() => {
+    //                     setName(editedName);
+    //                 });
+    //             } else {
+    //                 setMessage("El nombre no puede tener más de 25 caracteres");
+    //                 setIsEditingName(true);
+    //             }
+    //         } else {
+    //             setMessage("El nombre no puede estar vacío");
+    //             setIsEditingName(true);
+    //     }
+    // }
+
+
     return (
         <div className={styles.userInfoContainer}>
             <div className={styles.userBoxes}>
@@ -90,18 +142,18 @@ const handleEditBirthDate = ({/*event*/}) => {
                     <div>
                     <input
                         type="text"
-                        value={editedName}
-                        onChange={(e) => setEditedName(e.target.value)}
+                        id="name"
+                        // value={firstName}
+                        onChange={handleEditName}
                         className={styles.editInput}
                         style={{ maxWidth: "200px", width: "100%" }}
                         placeholder="Introducir nombre:"
                     />
                     <input
                         type="text"
-                        value={editedLastName}
-                        onChange={(e) => {
-                            setEditedLastName(e.target.value)
-                        }}
+                        id="lastname"
+                        // value={lastEditName}
+                        onChange={handleEditLastName}
                         className={styles.editInput}
                         style={{ maxWidth: "200px", width: "100%" }}
                         placeholder="Introducir apellido:"
@@ -110,8 +162,9 @@ const handleEditBirthDate = ({/*event*/}) => {
                         <button
                             onClick={() => {
                                 setIsEditingName(false);
-                                setEditedName('');
-                                setEditedLastName('');
+                                setIsEditingLastName(false);
+                                setName(firstName);
+                                setLastEditName(lastName);
                             }}
                             className={styles.cancelButton}
                         >
@@ -120,26 +173,21 @@ const handleEditBirthDate = ({/*event*/}) => {
                         <button
                             className={styles.saveButton}
                             onClick={() => {
-                                if (editedName.trim() === '' || editedLastName.trim() === '') { // Check if editedContent is not empty or only spaces
-                                    handleEditComment(currentComment.id, editedContent);
-                                    setCurrentComment((prevState) => ({
-                                        ...prevState,
-                                        content: editedContent,
-                                    }));
-                                    setIsEditing(false);
-                                }
+                                handleEditName;
+                                handleEditLastName;
+                                setIsEditingName(false);
+                                setIsEditingLastName(false);
                             }}
-                            disabled={editedName.trim() === '' || editedLastName.trim() === '' } // Disable the button if content is empty or only spaces
                             >
-                                    Guardar
-                                </button>
+                            Guardar
+                            </button>
                         </div>
                      </div>) : (<div className={styles.userInfoEditableContainer}>
-                        <p className={styles.userInfoSubtitle}>{firstName + ' ' + lastName } </p>
+                        <p className={styles.userInfoSubtitle}>{name + ' ' + lastEditName } </p>
                         {isCurrentUser && <Image
                                                 src="/assets/images/EditComment.png"
                                                 alt="editicon"
-                                                onClick={isEditingName ? onSaveClick : handleEditName}
+                                                onClick={handleEditName}
                                                 width={24}
                                                 height={24}
                                                 />
@@ -151,26 +199,27 @@ const handleEditBirthDate = ({/*event*/}) => {
                             <input
                                 id="date"
                                 type="date"
-                                value={editedBirthDate}
+                                value={EditBirthDate}
+                                defaultValue={EditBirthDate}
                                 className={styles.inputCalendar}
                                 max={formattedDate}
-                                onChange={(e) => setEditedBirthDate(e.target.value)}
+                                onChange={handleEditBirthDate}
                                 onKeyDown={(e) => e.preventDefault()}
                             />
                             <div className={styles.buttonContainer}>
                                 <button
                                     onClick={() => {
                                         setIsEditingBirthDate(false);
-                                        setEditedBirthDate('');
+                                        setEditBirthDate(formattedBirthDate);
                                     }}
                                     className={styles.cancelButton}
                                 >
                                     Cancelar
                                 </button>
-                                <button
+                                <button 
                                     onClick={() => {
+                                        handleEditBirthDate;
                                         setIsEditingBirthDate(false);
-                                        setEditedBirthDate('');
                                     }}
                                     className={styles.saveButton}
                                 >
@@ -180,11 +229,11 @@ const handleEditBirthDate = ({/*event*/}) => {
                         </div>
                     ) : (
                         <div className={styles.userInfoEditableContainer}>
-                            <p className={styles.userInfoSubtitle}>{formattedBirthDate}</p>
+                            <p className={styles.userInfoSubtitle}>{EditBirthDate}</p>
                             {isCurrentUser && <Image
                                 src="/assets/images/EditComment.png"
                                 alt="editicon"
-                                onClick={isEditingBirthDate ? onSaveClick : handleEditBirthDate}
+                                onClick={handleEditBirthDate}
                                 width={24}
                                 height={24}
                             />}

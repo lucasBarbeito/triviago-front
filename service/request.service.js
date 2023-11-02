@@ -307,7 +307,28 @@ const RequestService = {
             return response.data;
         }
         else throw new error()
-    }
+    },
+
+    editName: async (id, newName) => {
+        try {
+            const response = await axios.put(
+                `${url}/user/${id}`,
+                {newName: newName},
+                {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                }
+            );
+
+            if (response.status === 200) {
+                return response.data
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    },
+      
 }
 
 export const useRequestService = () => RequestService
