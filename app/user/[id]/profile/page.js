@@ -10,6 +10,7 @@ import jwt from "jsonwebtoken";
 import Cookies from "js-cookie";
 import TittleQuizzes from "@/components/TittleQuizzes";
 import {useRouter} from "next/navigation";
+import {Button} from "@mui/material";
 
 const Page = () => {
 
@@ -23,6 +24,7 @@ const Page = () => {
                                                                    lastName: 'Apellido',
                                                                    birthDate: '04/07/1999',
                                                                    createdDate: '05/06/2023'})
+    const email = jwt.decode(Cookies.get('jwt')).sub
 
 
     useEffect(() => {
@@ -36,15 +38,25 @@ const Page = () => {
 
         service.getUserInformation(id).then(user => {
             setCurrentUser(user)
+            setQuizzes(user.createdQuizzes)
             }).catch(error => {
                 if(error.response && (error.response.status === 404 || error.response.status === 500)) {
                     router.push("/not-found")
                 }
                 console.error("Error", error);
             })
+
     }, [userId]);
 
     if(currentUser === null) return (<div></div>)
+
+    const handleDeleteQuiz = (quizId) => {
+        service.deleteQuiz(quizId).then(() => {
+            setQuizzes((quizzes) => quizzes.filter((quiz) => quiz.id !== quizId));
+        }).catch((error) => {
+            console.error('Error deleting quiz:', error);
+        });
+    }
 
     return (
         <div className={style.wrapper}>
@@ -55,7 +67,8 @@ const Page = () => {
                                         lastName={currentUser.lastName}
                                         birthDate={currentUser.birthDate}
                                         createdAt={currentUser.createdDate??[2002,4,5]}
-                                        isCurrentUser={tokenId.toString() === userId} />
+                                        isCurrentUser={tokenId.toString() === userId}
+                                        />
 
             }
 
@@ -71,7 +84,11 @@ const Page = () => {
                                          description={quiz.description}
                                          rating={quiz.rating}
                                          author={quiz.author}
-                                         questions={quiz.questions}/>
+                                         questions={quiz.questions}
+                                         handleDeleteQuiz={() => handleDeleteQuiz(quiz.id)}
+                            isMyQuiz={email === quiz.author.email}
+                            />
+
                         ))}
                     </div>
                 </>
