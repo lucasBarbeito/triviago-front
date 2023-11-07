@@ -7,6 +7,7 @@ const DeleteAccountModal = ({ onClose, handleDeleteAccount }) => {
 
     const handleDeleteClick = () => {
         handleDeleteAccount();
+        router.push(`/signin`);
     };
 
     return (
