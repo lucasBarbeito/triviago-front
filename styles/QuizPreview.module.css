@@ -1,4 +1,10 @@
-
+.containerGrandote{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    max-width: 770px;
+}
 
 .container {
     display: flex;

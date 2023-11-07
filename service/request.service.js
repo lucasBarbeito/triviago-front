@@ -294,8 +294,6 @@ const RequestService = {
         }
     },
 
-
-
     getQualification: async (id) => {
         const config = {
             headers: {
@@ -307,7 +305,26 @@ const RequestService = {
             return response.data;
         }
         else throw new error()
+    },
+
+    deleteQuiz: async (id) => {
+        try {
+            const response = await axios.delete(`${url}/quiz/${id}`,
+                {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                }
+            );
+
+            if (response.status === 200) {
+                return true
+            }
+        } catch (error) {
+            console.error(error);
+        }
     }
+
 }
 
 export const useRequestService = () => RequestService
