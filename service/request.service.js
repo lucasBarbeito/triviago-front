@@ -188,7 +188,7 @@ const RequestService = {
     saveQuiz: async (quizId, saved) => {
         try {
 
-            const response = await axios.put(`${url}/user/${!saved? "save-quiz" : "remove-quiz"}/${quizId}`,
+            const response = await axios.put(`${url}/user/${!saved ? "save-quiz" : "remove-quiz"}/${quizId}`,
                 {},
                 {
                     headers: {
@@ -249,7 +249,7 @@ const RequestService = {
         try {
             const response = await axios.post(
                 `${url}/quiz/${quizId}/rate`,
-                { rating },
+                {rating},
                 {
                     headers: {
                         'Authorization': 'Bearer ' + Cookies.get('jwt'),
@@ -273,27 +273,25 @@ const RequestService = {
         const response = await axios.post(url + "/quiz", quizData, config);
         if (response.status === 200) {
             return response.data;
-        }
-        else throw new error()
+        } else throw new error()
     },
 
     getUserInformation: async (userId) => {
-        try{
+        try {
             const response = await axios.get(`${url}/user/${userId}`,
                 {
-                    headers:{
+                    headers: {
                         'Authorization': 'Bearer ' + Cookies.get('jwt')
                     }
                 });
-            if(response.status ===200){
+            if (response.status === 200) {
                 return response.data
             }
 
-        } catch (error){
+        } catch (error) {
             throw error;
         }
     },
-
 
 
     getQualification: async (id) => {
@@ -305,8 +303,7 @@ const RequestService = {
         const response = await axios.get(url + "/quiz/leaderboard/" + id, config);
         if (response.status === 200) {
             return response.data;
-        }
-        else throw new error()
+        } else throw new error()
     }
 }
 
