@@ -277,7 +277,7 @@ const RequestService = {
     },
 
     getUserInformation: async (userId) => {
-        try {
+        try{
             const response = await axios.get(`${url}/user/${userId}`,
                 {
                     headers: {
@@ -303,8 +303,36 @@ const RequestService = {
         const response = await axios.get(url + "/quiz/leaderboard/" + id, config);
         if (response.status === 200) {
             return response.data;
-        } else throw new error()
-    }
+        }
+        else throw new error()
+    },
+
+    editUserInformation: async (id, userInfo) => {
+        try {
+            const response = await axios.put(
+                `${url}/user/${id}`,
+                {
+                    firstName: userInfo.firstName,
+                    lastName: userInfo.lastName,
+                    birthDate: userInfo.birthDate,
+                },
+                {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                }
+            );
+            console.log("service")
+            console.log(response)
+            if (response.status === 200) {
+                return response.data
+            }
+        } catch (error) {
+            console.log("service")
+            console.log(error)
+            console.error(error);
+        }
+    },
 }
 
 export const useRequestService = () => RequestService
