@@ -18,11 +18,7 @@ const Page = () => {
     const [userId, setUserId] = useState('0')
     const [quizzes, setQuizzes] = useState([]);
     const [tokenId, setTokenId] = useState('1')
-    const [currentUser, setCurrentUser] = useState({email: 'usuario@mail.com',
-                                                                   firstName: 'Nombre',
-                                                                   lastName: 'Apellido',
-                                                                   birthDate: '04/07/1999',
-                                                                   createdDate: '05/06/2023'})
+    const [currentUser, setCurrentUser] = useState(null)
 
 
     useEffect(() => {
@@ -49,14 +45,15 @@ const Page = () => {
     return (
         <div className={style.wrapper}>
             <ResponsiveAppBar/>
-            { currentUser && <UserProfile
-                                        email={currentUser.email}
-                                        firstName={currentUser.firstName}
-                                        lastName={currentUser.lastName}
-                                        birthDate={currentUser.birthDate}
-                                        createdAt={currentUser.createdDate??[2002,4,5]}
-                                        isCurrentUser={tokenId.toString() === userId} />
-
+            {   currentUser &&
+                <UserProfile
+                    email={currentUser.email}
+                    firstName={currentUser.firstName}
+                    lastName={currentUser.lastName}
+                    birthDate={currentUser.birthDate}
+                    createdAt={currentUser.createdDate ?? [2023, 9, 10]}
+                    isCurrentUser={tokenId.toString() === userId}
+                />
             }
 
             { tokenId.toString() === userId ? (

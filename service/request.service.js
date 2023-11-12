@@ -309,44 +309,32 @@ const RequestService = {
         else throw new error()
     },
 
-    updateUserProfile: async (userId, newData) => {
-        try {
-            const response = await axios.put(`${url}/user/${userId}`, newData, {
-                headers: {
-                    'Authorization': 'Bearer ' + Cookies.get('jwt'),
-                },
-            });
-
-            if (response.status === 200) {
-                return response.data;
-            }
-        } catch (error) {
-            console.error('Error al actualizar el perfil:', error);
-            throw error;
-        }
-    },
-
-    updateUserBirthDate: async (userId, newBirthDate) => {
+    editUserInformation: async (id, userInfo) => {
         try {
             const response = await axios.put(
-                `${url}/user/${userId}/profile`,
-                { birthDate: newBirthDate },
+                `${url}/user/${id}`,
+                {
+                    firstName: userInfo.firstName,
+                    lastName: userInfo.lastName,
+                    birthDate: userInfo.birthDate,
+                },
                 {
                     headers: {
-                        'Authorization': 'Bearer ' + Cookies.get('jwt'),
-                    },
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
                 }
             );
-
+            console.log("service")
+            console.log(response)
             if (response.status === 200) {
-                return response.data;
+                return response.data
             }
         } catch (error) {
-            console.error('Error al actualizar la fecha de nacimiento:', error);
-            throw error;
+            console.log("service")
+            console.log(error)
+            console.error(error);
         }
     },
-      
 }
 
 export const useRequestService = () => RequestService
