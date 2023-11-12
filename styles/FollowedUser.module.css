@@ -1,0 +1,26 @@
+.boxComponent{
+    direction: flex;
+    flex-direction: column;
+    background: #FFF;
+    box-shadow: 0px 3.87229px 3.87229px 0px rgba(0, 0, 0, 0.25);
+}
+
+.emailText{
+    color: #000;
+    font-family: Inter, sans-serif;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.fullnameText{
+    color: #000;
+    text-align: justify;
+    font-family: Inter, sans-serif;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+

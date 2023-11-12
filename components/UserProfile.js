@@ -5,13 +5,31 @@ import Image from "next/image";
 import {useRequestService} from "@/service/request.service";
 
 const UserProfile = ({
+                         myId,
                          firstName,
                          lastName,
                          email,
                          birthDate,
                          createdAt,
                          isCurrentUser
-                         }) => {
+                     }) => {
+
+    const [isFollowing, setIsFollowing] = useState(false);
+    const service = useRequestService()
+    const id = window.location.pathname.split('/').slice(-2, -1)[0];
+
+
+    useEffect(() => {
+        // Cargar información de seguimiento al usuario al cargar la página
+        // service.isFollowing(myId, id)
+        //     .then(user => {
+        //         setIsFollowing(user.isFollowing);
+        //     })
+        //     .catch(error => {
+        //         console.error("Error al verificar si el usuario sigue a otro usuario:", error);
+        //     });
+    }, [myId, id]);
+
 
 
     const onDeleteClick = () => {
@@ -19,7 +37,23 @@ const UserProfile = ({
     }
 
     const onFollowClick = () => {
+        service.followUser(id)
+            .then(response => {
+                setIsFollowing(true);
+            })
+            .catch(error => {
+                console.error(`Error al seguir al usuario con ID ${id}: ${error.message}`);
+            });
+    }
 
+    const onUnfollowClick = () => {
+        service.unFollowUser(id)
+            .then(response => {
+                setIsFollowing(false);
+            })
+            .catch(error => {
+                console.error(`Error al dejar de seguir al usuario con ID ${id}: ${error.message}`);
+            });
     }
 
     const parseDate = (date) => {
@@ -58,26 +92,26 @@ const UserProfile = ({
                 <div className={styles.userInfo}>
                     <p className={styles.userInfoTitle}>{email}</p>
                     <div className={styles.userInfoEditableContainer}>
-                        <p className={styles.userInfoSubtitle}>{firstName + ' ' + lastName } </p>
+                        <p className={styles.userInfoSubtitle}>{firstName + ' ' + lastName} </p>
                         {isCurrentUser && <Image
-                                                src="/assets/images/EditComment.png"
-                                                alt="editicon"
-                                                width={24}
-                                                height={24}
-                                                />
+                            src="/assets/images/EditComment.png"
+                            alt="editicon"
+                            width={24}
+                            height={24}
+                        />
                         }
                     </div>
                     <div className={styles.userInfoEditableContainer}>
                         <p className={styles.userInfoSubtitle}>{`${birthDate[2]}/${birthDate[1]}/${birthDate[0]}`}</p>
                         {isCurrentUser && <Image
-                                                src="/assets/images/EditComment.png"
-                                                alt="editicon"
-                                                width={24}
-                                                height={24}
-                                                />
+                            src="/assets/images/EditComment.png"
+                            alt="editicon"
+                            width={24}
+                            height={24}
+                        />
                         }
                     </div>
-                    <p className={styles.userInfoSubtitle}>{ `Miembro desde el ${parseDate(createdAt)}`}</p>
+                    <p className={styles.userInfoSubtitle}>{`Miembro desde el ${parseDate(createdAt)}`}</p>
 
                 </div>
             </div>
@@ -85,7 +119,12 @@ const UserProfile = ({
                 {isCurrentUser ? (
                     <button onClick={onDeleteClick} className={styles.userActionDeleteButton}>Eliminar cuenta</button>
                 ) : (
-                    <button onClick={onFollowClick} className={styles.userActionFollowButton}>Seguir</button>
+                    isFollowing ? (
+                        <button onClick={onUnfollowClick} className={styles.userActionFollowButton}>Dejar de
+                            seguir</button>
+                    ) : (
+                        <button onClick={onFollowClick} className={styles.userActionFollowButton}>Seguir</button>
+                    )
                 )}
             </div>
         </div>

@@ -304,7 +304,49 @@ const RequestService = {
         if (response.status === 200) {
             return response.data;
         } else throw new error()
+    },
+
+    followUser: async (id) => {
+        try {
+            const response = await axios.post(`${url}/user/follow/${id}`,
+                {},
+                {
+                    headers: {
+                        'Authorization': 'Bearer ' + Cookies.get('jwt')
+                    }
+                });
+        } catch (error) {
+            console.error('Error al seguir el usuario:', error);
+        }
+    },
+
+    unFollowUser: async (id) => {
+        try {
+            const response = await axios.delete(`${url}/user/unfollow/${id}`,
+                {
+                    headers: {
+                        'Authorization': 'Bearer ' + Cookies.get('jwt')
+                    }
+                });
+        } catch (error) {
+            console.error('Error al seguir el usuario:', error);
+        }
+    },
+
+    getUserFollowers: async (myId, targetUserId) => {
+        try {
+            const response = await axios.get(`${url}/user/${myId}/following`, {
+                headers: {
+                    'Authorization': 'Bearer ' + Cookies.get('jwt')
+                }
+            });
+            const followingList = response.data;
+            return { followingList };
+        } catch (error) {
+            throw new Error("Error al verificar si el usuario sigue a otro usuario.");
+        }
     }
+
 }
 
 export const useRequestService = () => RequestService

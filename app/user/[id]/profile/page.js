@@ -10,6 +10,7 @@ import jwt from "jsonwebtoken";
 import Cookies from "js-cookie";
 import TittleQuizzes from "@/components/TittleQuizzes";
 import {useRouter} from "next/navigation";
+import FollowedUser from "@/components/FollowedUser";
 
 const Page = () => {
 
@@ -17,6 +18,7 @@ const Page = () => {
     const router = useRouter()
     const [userId, setUserId] = useState('0')
     const [quizzes, setQuizzes] = useState([]);
+    const [followUsers, setFollowUsers] = useState([]);
     const [tokenId, setTokenId] = useState('1')
     const [currentUser, setCurrentUser] = useState({email: 'usuario@mail.com',
                                                                    firstName: 'Nombre',
@@ -42,6 +44,17 @@ const Page = () => {
                 }
                 console.error("Error", error);
             })
+
+        service.getUserFollowers(id).then(response => {
+            console.log(response.followingList)
+            setFollowUsers(response.followingList)
+            }).catch(error => {
+                if(error.response && (error.response.status === 404 || error.response.status === 500)) {
+                    router.push("/not-found")
+                }
+                console.error("Error", error);
+        })
+
     }, [userId]);
 
     if(currentUser === null) return (<div></div>)
@@ -50,6 +63,7 @@ const Page = () => {
         <div className={style.wrapper}>
             <ResponsiveAppBar/>
             { currentUser && <UserProfile
+                                        myId ={tokenId}
                                         email={currentUser.email}
                                         firstName={currentUser.firstName}
                                         lastName={currentUser.lastName}
@@ -62,16 +76,21 @@ const Page = () => {
             { tokenId.toString() === userId ? (
                 <>
                     <TabBar/>
+                    {/*<div className={style.quizzesContainer}>*/}
+                    {/*    {quizzes.map((quiz) => (*/}
+                    {/*        <QuizPreview id={quiz.id}*/}
+                    {/*                     title={quiz.title}*/}
+                    {/*                     labels={quiz.labels}*/}
+                    {/*                     creationDate={quiz.creationDate}*/}
+                    {/*                     description={quiz.description}*/}
+                    {/*                     rating={quiz.rating}*/}
+                    {/*                     author={quiz.author}*/}
+                    {/*                     questions={quiz.questions}/>*/}
+                    {/*    ))}*/}
+                    {/*</div>*/}
                     <div className={style.quizzesContainer}>
-                        {quizzes.map((quiz) => (
-                            <QuizPreview id={quiz.id}
-                                         title={quiz.title}
-                                         labels={quiz.labels}
-                                         creationDate={quiz.creationDate}
-                                         description={quiz.description}
-                                         rating={quiz.rating}
-                                         author={quiz.author}
-                                         questions={quiz.questions}/>
+                        {followUsers.map((user) => (
+                            <FollowedUser email={user.email} lastname={user.lastName} name={user.firstName}/>
                         ))}
                     </div>
                 </>
