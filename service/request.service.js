@@ -333,7 +333,7 @@ const RequestService = {
         }
     },
 
-    getUserFollowers: async (myId, targetUserId) => {
+    getUserFollowers: async (myId) => {
         try {
             const response = await axios.get(`${url}/user/${myId}/following`, {
                 headers: {
