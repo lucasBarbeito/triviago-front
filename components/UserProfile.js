@@ -20,14 +20,13 @@ const UserProfile = ({
 
 
     useEffect(() => {
-        // Cargar información de seguimiento al usuario al cargar la página
-        // service.isFollowing(myId, id)
-        //     .then(user => {
-        //         setIsFollowing(user.isFollowing);
-        //     })
-        //     .catch(error => {
-        //         console.error("Error al verificar si el usuario sigue a otro usuario:", error);
-        //     });
+        service.isFollowing(id)
+            .then(user => {
+                setIsFollowing(user.isFollowing);
+            })
+            .catch(error => {
+                console.error("Error al verificar si el usuario sigue a otro usuario:", error);
+            });
     }, [myId, id]);
 
 

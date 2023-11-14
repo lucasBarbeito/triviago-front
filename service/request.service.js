@@ -343,6 +343,21 @@ const RequestService = {
             const followingList = response.data;
             return { followingList };
         } catch (error) {
+            throw new Error("Error al verificar al obtener la lista de seguidos de un usuario.");
+        }
+    },
+
+    isFollowing: async (id) => {
+        try {
+            const response = await axios.get(`${url}/user/isfollowing/${id}`, {
+                headers: {
+                    'Authorization': 'Bearer ' + Cookies.get('jwt')
+                }
+            });
+            const isFollowing = response.data;
+            console.log(response.data)
+            return {isFollowing};
+        }catch (error) {
             throw new Error("Error al verificar si el usuario sigue a otro usuario.");
         }
     }
