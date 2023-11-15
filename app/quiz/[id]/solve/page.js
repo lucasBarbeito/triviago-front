@@ -26,7 +26,6 @@ const quizSolve = () => {
     const [showResults, setShowResults] = useState(false);
     const [correctAnswersCount, setCorrectAnswersCount] = useState(0);
 
-
     const handleSendResolution = () => {
         const allAnswered = questionsWithIsAnswered.every((question) => question.is_answered);
         if (allAnswered) {

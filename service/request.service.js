@@ -6,7 +6,6 @@ const url = "http://localhost:8080"
 
 const RequestService = {
 
-
     signUp: async (signUpData) => {
         const response = await axios.post(`${url}/auth/signup`, signUpData)
 
@@ -303,7 +302,53 @@ const RequestService = {
         const response = await axios.get(url + "/quiz/leaderboard/" + id, config);
         if (response.status === 200) {
             return response.data;
-        } else throw new error()
+        }
+        else throw new error()
+    },
+
+    deleteUser: async (userId) => {
+        try {
+            const response = await axios.delete(`${url}/user/${userId}`, {
+                headers: {
+                    'Authorization': 'Bearer ' + Cookies.get('jwt')
+                }
+            });
+
+            if (response.status === 200) {
+                return response.data;
+            } else {
+                throw new Error("Error al eliminar el usuario");
+            }
+        } catch (error) {
+            throw error;
+        }
+    },
+
+    editUserInformation: async (id, userInfo) => {
+        try {
+            const response = await axios.put(
+                `${url}/user/${id}`,
+                {
+                    firstName: userInfo.firstName,
+                    lastName: userInfo.lastName,
+                    birthDate: userInfo.birthDate,
+                },
+                {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                }
+            );
+            console.log("service")
+            console.log(response)
+            if (response.status === 200) {
+                return response.data
+            }
+        } catch (error) {
+            console.log("service")
+            console.log(error)
+            console.error(error);
+        }
     },
 
     followUser: async (id) => {
