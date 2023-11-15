@@ -20,7 +20,6 @@ const Page = () => {
     const [tokenId, setTokenId] = useState('1')
     const [currentUser, setCurrentUser] = useState(null)
 
-
     useEffect(() => {
         const id = window.location.pathname.split('/')[2]
         const data = jwt.decode(Cookies.get('jwt'))
@@ -45,15 +44,15 @@ const Page = () => {
     return (
         <div className={style.wrapper}>
             <ResponsiveAppBar/>
-            {   currentUser &&
-                <UserProfile
-                    email={currentUser.email}
-                    firstName={currentUser.firstName}
-                    lastName={currentUser.lastName}
-                    birthDate={currentUser.birthDate}
-                    createdAt={currentUser.createdDate ?? [2023, 9, 10]}
-                    isCurrentUser={tokenId.toString() === userId}
-                />
+            { currentUser && <UserProfile
+                                        email={currentUser.email}
+                                        firstName={currentUser.firstName}
+                                        lastName={currentUser.lastName}
+                                        birthDate={currentUser.birthDate}
+                                        createdAt={currentUser.createdDate?? [2023, 9, 10]}
+                                        isCurrentUser={tokenId.toString() === userId}
+                                        userId={userId}
+            />
             }
 
             { tokenId.toString() === userId ? (
@@ -76,7 +75,6 @@ const Page = () => {
                 <TittleQuizzes/>
                 )
             }
-
 
         </div>
     );

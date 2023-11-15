@@ -1,7 +1,8 @@
 'use client'
-import React, {useEffect, useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '../styles/UserProfile.module.css';
-import Image from "next/image";
+import Image from 'next/image';
+import DeleteAccountModal from './DeleteAccountModal';
 import {useRequestService} from "@/service/request.service";
 import EditIcon from "@mui/icons-material/Edit";
 import {Button, Card, IconButton, Slide, Snackbar} from "@mui/material";
@@ -10,17 +11,34 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import 'dayjs/locale/en-gb';
 
-const UserProfile = ({firstName, lastName, email, birthDate, createdAt, isCurrentUser}) => { 
-    
-    const service = useRequestService();
-                            
-    const onDeleteClick = () => {
+const UserProfile = ({
+                         firstName,
+                         lastName,
+                         email,
+                         birthDate,
+                         createdAt,
+                         isCurrentUser,
+                         userId,
+                     }) => {
 
-    }
+    const [showDeleteAccountModal, setShowDeleteAccountModal] = useState(false);
+    const service = useRequestService();
+
+    const onDeleteClick = () => {
+        setShowDeleteAccountModal(true);
+    };
+
+    const handleDeleteAccount = async () => {
+        try {
+            await service.deleteUser(userId);
+        } catch (error) {
+            console.error('Error al eliminar el usuario:', error);
+        }
+    };
 
     const onFollowClick = () => {
-
-    }
+        // Implementar
+    };
 
     const [isEditingName, setIsEditingName] = useState(false);
     const [updatedInfo, setUpdatedInfo] = useState({firstName: "", lastName: "", birthDate: ""});
@@ -318,16 +336,27 @@ const UserProfile = ({firstName, lastName, email, birthDate, createdAt, isCurren
             </div>
             <div >
                 {isCurrentUser ? (
-                    <Button
-                        variant="contained"
-                        onClick={onDeleteClick}
-                        className={styles.userActionDeleteButton}
-                        style={{color: '#FFF', backgroundColor: '#EA0E0E', width: '175px'}}
-                        // style={{width: '150px'}}
-                        // color={'error'}
-                    >
-                        Eliminar cuenta
-                    </Button>
+                    <>
+                      <Button
+                          variant="contained"
+                          onClick={onDeleteClick}
+                          className={styles.userActionDeleteButton}
+                          style={{color: '#FFF', backgroundColor: '#EA0E0E', width: '175px'}}
+                          // style={{width: '150px'}}
+                          // color={'error'}
+                      >
+                          Eliminar cuenta
+                      </Button>
+                      {
+                        showDeleteAccountModal &&
+                        <div className={styles.modalBackdrop}>
+                            <DeleteAccountModal
+                                onClose={() => setShowDeleteAccountModal(false)}
+                                handleDeleteAccount={handleDeleteAccount}
+                            />
+                        </div>
+                      }
+                    </>
                 ) : (
                     <Button
                         onClick={onFollowClick}
