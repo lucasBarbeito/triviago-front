@@ -366,60 +366,61 @@ const UserProfile = ({
                             fontSize: "18px",
                             fontStyle: "normal",
                             fontWeight: 400,
-                            lineHeight: "normal"}}> {showDate(info.birthDate)}</Typography>
+                            lineHeight: "normal"
+                        }}> {showDate(info.birthDate)}</Typography>
                         {isCurrentUser &&
                             <IconButton
-                            aria-label="Editar fecha de nacimiento"
-                            color="#667085;"
-                            // sx={{position: 'relative', zIndEex: 0}}
-                            onClick={() => {
-                            setIsEditingBirthDate(true);
-                            setUpdatedInfo({
-                            firstName: info.firstName,
-                            lastName: info.lastName,
-                            birthDate: info.birthDate
-                        });
-                        }}
-                        >
-                            <EditIcon/>
-                        </IconButton>
+                                aria-label="Editar fecha de nacimiento"
+                                color="#667085;"
+                                // sx={{position: 'relative', zIndEex: 0}}
+                                onClick={() => {
+                                    setIsEditingBirthDate(true);
+                                    setUpdatedInfo({
+                                        firstName: info.firstName,
+                                        lastName: info.lastName,
+                                        birthDate: info.birthDate
+                                    });
+                                }}
+                            >
+                                <EditIcon/>
+                            </IconButton>
                         }
                     </div>
                 )}
-                    <Typography className={styles.userInfoSubtitle} style={{
-                marginTop: '8px', color: "#000",
-                fontFamily: "sans-serif",
-                fontSize: "18px",
-                fontStyle: "normal",
-                fontWeight: 400,
-                lineHeight: "normal",
-            }}>{`Miembro desde el ${parseCreatedAccountDate(createdAt)}`}</Typography>
-        </div>
-    <div className={styles.userActions}>
-        {isCurrentUser ? (
-            <button onClick={onDeleteClick} className={styles.userActionDeleteButton}>Eliminar cuenta</button>
-        ) : (
-            isFollowing ? (
-                <button onClick={onUnfollowClick} className={styles.userActionFollowButton}>Dejar de
-                    seguir</button>
-            ) : (
-                <button onClick={onFollowClick} className={styles.userActionFollowButton}>Seguir</button>
-            )
-        )}
-    </div>
-    <Snackbar
-        open={open}
-        autoHideDuration={5000}
-        onClose={handleCloseSnackbar}
-        TransitionComponent={Slide}
-        anchorOrigin={{vertical: 'top', horizontal: 'center'}}
-    >
-        <Alert severity={severity}>
-            {message}
-        </Alert>
-    </Snackbar>
-</Card>
-);
+                <Typography className={styles.userInfoSubtitle} style={{
+                    marginTop: '8px', color: "#000",
+                    fontFamily: "sans-serif",
+                    fontSize: "18px",
+                    fontStyle: "normal",
+                    fontWeight: 400,
+                    lineHeight: "normal",
+                }}>{`Miembro desde el ${parseCreatedAccountDate(createdAt)}`}</Typography>
+            </div>
+            <div className={styles.userActions}>
+                {isCurrentUser ? (
+                    <button onClick={onDeleteClick} className={styles.userActionDeleteButton}>Eliminar cuenta</button>
+                ) : (
+                    isFollowing ? (
+                        <button onClick={onUnfollowClick} className={styles.userActionFollowButton}>Dejar de
+                            seguir</button>
+                    ) : (
+                        <button onClick={onFollowClick} className={styles.userActionFollowButton}>Seguir</button>
+                    )
+                )}
+            </div>
+            <Snackbar
+                open={open}
+                autoHideDuration={5000}
+                onClose={handleCloseSnackbar}
+                TransitionComponent={Slide}
+                anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+            >
+                <Alert severity={severity}>
+                    {message}
+                </Alert>
+            </Snackbar>
+        </Card>
+    );
 };
 
 export default UserProfile;

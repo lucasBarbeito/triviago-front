@@ -2,8 +2,13 @@
     direction: flex;
     flex-direction: column;
     background: #FFF;
-    box-shadow: 0px 3.87229px 3.87229px 0px rgba(0, 0, 0, 0.25);
-    width: 766px;
+    box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.25);
+    width: 700px;
+}
+
+.boxComponent:hover {
+    transform: scale(1.02);
+    box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.3);
 }
 
 .emailText{
@@ -15,6 +20,8 @@
     line-height: normal;
     padding: 10px;
 }
+
+
 
 .fullnameText{
     color: #000;
