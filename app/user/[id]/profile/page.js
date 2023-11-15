@@ -86,7 +86,7 @@ const Page = () => {
                     {/*</div>*/}
                     <div className={style.quizzesContainer}>
                         {followUsers.map((user) => (
-                            <FollowedUser email={user.email} lastname={user.lastName} name={user.firstName}/>
+                            <FollowedUser email={user.email} lastname={user.lastName} name={user.firstName}/>//AGREGAR ACA UN ID DE USUARIO PARA REDIRECCION
                         ))}
                     </div>
                 </>
