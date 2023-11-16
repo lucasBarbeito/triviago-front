@@ -349,6 +349,26 @@ const RequestService = {
             console.error(error);
         }
     },
+
+    findByInvitationCode: async (invitationCode) => {
+        console.log(invitationCode)
+        console.log(localStorage.getItem("token"))
+        try {
+            const response = await axios.get(`${url}/quiz/private/${invitationCode}`,{
+                headers: {
+                    'Content-type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem("token")}`
+                }
+            })
+            if (response.status === 200) {
+                const quizData = response.data;
+                console.log("Quiz encontrado:", quizData);
+                return response.data;
+            }
+        } catch (error) {
+            console.log("error", error)
+        }
+    }
 }
 
 export const useRequestService = () => RequestService
